@@ -3,12 +3,12 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import Connexion from "./Components/Connexion/Connexion";
-import Contact from "./Components/Contact/Contact";
-// import App from './App';
-import Home from "./Components/Home/Home";
-import Navbar from "./Components/Navbar/Navbar";
-import Services from "./Components/Services/Services";
+// import Connexion from "./Components/Connexion/Connexion";
+// import Contact from "./Components/Contact/Contact";
+import App from "./App";
+// import Home from "./Components/Home/Home";
+// import Navbar from "./Components/Navbar/Navbar";
+// import Services from "./Components/Services/Services";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
@@ -16,11 +16,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
 	<React.StrictMode>
-		<Home />
-		<Connexion />
-		<Contact />
-		<Navbar />
-		<Services />
+		<App />
 	</React.StrictMode>
 );
 
