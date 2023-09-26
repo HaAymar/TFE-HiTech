@@ -3,6 +3,7 @@ import "./LoginSignup.css";
 import React, { useState } from "react";
 
 import emailIcon from "../../Assets/email.png";
+import logo from "../../Assets/logo.svg";
 import passIcon from "../../Assets/password.png";
 import userIcon from "../../Assets/person.png";
 
