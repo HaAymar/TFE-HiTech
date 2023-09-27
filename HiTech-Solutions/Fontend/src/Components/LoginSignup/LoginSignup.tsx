@@ -3,12 +3,19 @@ import "./LoginSignup.css";
 import React, { useState } from "react";
 
 import emailIcon from "../../Assets/email.png";
-import logo from "../../Assets/logo.svg";
 import passIcon from "../../Assets/password.png";
 import userIcon from "../../Assets/person.png";
 
 const LoginSignup = () => {
 	const [action, setAction] = useState("Sign up");
+
+	// ------ Formular ------- //
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+
+	let data = [{ name: name, email: email, password: password }];
+	console.log(data);
 
 	const SignUp = () => {
 		if (action === "Login") {
@@ -34,16 +41,31 @@ const LoginSignup = () => {
 				) : (
 					<div className="input">
 						<img src={userIcon} alt="" />
-						<input type="text" placeholder="Name" />
+						<input
+							type="text"
+							value={name}
+							placeholder="Name"
+							onChange={(e) => setName(e.target.value)}
+						/>
 					</div>
 				)}
 				<div className="input">
 					<img src={emailIcon} alt="" />
-					<input type="email" placeholder="Email" />
+					<input
+						type="email"
+						value={email}
+						placeholder="Email"
+						onChange={(e) => setEmail(e.target.value)}
+					/>
 				</div>
 				<div className="input">
 					<img src={passIcon} alt="" />
-					<input type="password" placeholder="Password" />
+					<input
+						type="password"
+						value={password}
+						placeholder="Password"
+						onChange={(e) => setPassword(e.target.value)}
+					/>
 				</div>
 			</div>
 			{action === "Login" ? (
