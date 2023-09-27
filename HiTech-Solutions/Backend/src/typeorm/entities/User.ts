@@ -1,12 +1,11 @@
-/* eslint-disable prettier/prettier */
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   username: string;
 
   @Column()
@@ -18,3 +17,4 @@ export class User {
   @Column({ nullable: true })
   authStrategy: string;
 }
+// The entities allows to creates tables using typeOrm methods
