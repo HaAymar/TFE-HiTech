@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { DeleteUserParams, UpdateUserParams } from '../../../utils/types';
 import { CreateUserParams } from '../../../utils/types';
 
 @Injectable()
