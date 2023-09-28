@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CreateUserParams } from '../../../utils/types';
+import { CreateUserParams, UpdateUserParams } from '../../../utils/types';
 
 @Injectable()
 export class UsersService {
