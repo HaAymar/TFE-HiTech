@@ -1,0 +1,17 @@
+body {
+	background-color: grey; /* Définit le fond de toute la page en gris */
+}
+.container {
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	margin-top: 80px;
+	width: 800px;
+	background: black;
+}
+.service-box {
+	background-color: white; /* ou toute autre couleur de fond souhaitée */
+	padding: 20px;
+	border-radius: 5px; /* Pour des coins arrondis */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optionnel: ajoute une ombre pour mieux distinguer les boîtes */
+}

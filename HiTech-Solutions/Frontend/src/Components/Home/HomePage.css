@@ -1,0 +1,129 @@
+.main-banner {
+	background-image: url("../../Assets/Home/bg5.jpg");
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100vh;
+	width: 100vw;
+	text-align: center;
+	display: flex;
+	padding-right: 10px;
+	align-items: center;
+	color: white;
+}
+
+.vertical-line {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: 25px;
+	padding-left: 30px;
+	border-left: 3px solid #5c9b9e; /* Ajustez la largeur et la couleur selon vos besoins */
+	height: 100%; /* La ligne verticale s'étend sur toute la hauteur de la colonne */
+
+	font-family: cursive;
+	text-align: left;
+}
+
+.body {
+	background-color: #eeecece7;
+}
+.main-banner h1 {
+	font-size: 2.5rem;
+	margin-bottom: 30px;
+}
+
+.service-section {
+	padding-bottom: 20px;
+	text-align: center;
+}
+
+.service-section h2 {
+	font-size: 1.5rem;
+	margin-bottom: 15px;
+}
+
+.service-section p {
+	margin-bottom: 30px;
+}
+
+.about-section {
+	background-color: #f8f9fa;
+	padding: 60px 0;
+}
+
+.about-section .about-text {
+	margin-bottom: 30px;
+}
+
+.about-section h2 {
+	font-size: 2rem;
+	margin-bottom: 20px;
+}
+
+.about-section h3 {
+	font-size: 1.25rem;
+	color: #007bff;
+	margin-bottom: 10px;
+}
+
+/* .service-box {
+	border: 1px solid #ddd;  
+	padding: 2px;
+	border-radius: 10px;
+	border: none;
+	background-color: rgb(67, 217, 236);
+	
+} */
+
+.service-box {
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px; /* Pour des coins arrondis */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optionnel: ajoute une ombre pour mieux distinguer les boîtes */
+}
+
+.about-section p {
+	margin-bottom: 15px;
+}
+
+.about-image img {
+	width: 100%;
+	height: auto;
+	border-radius: 60%; /* Pour obtenir un cercle, assurez-vous que l'image est un carré */
+}
+
+/* Boutons */
+.btn-primary {
+	background-color: #007bff;
+	border: none;
+}
+
+.btn-outline-primary {
+	border-color: #007bff;
+	color: #007bff;
+}
+
+.btn-primary:hover,
+.btn-outline-primary:hover {
+	background-color: #0056b3;
+	border-color: #0056b3;
+	color: #fff;
+}
+
+/* Media queries pour la réactivité */
+@media (max-width: 768px) {
+	.main-banner h1 {
+		font-size: 2rem;
+	}
+
+	.about-section .about-text,
+	.about-section .about-image {
+		text-align: center;
+	}
+
+	.about-section .about-image {
+		margin-top: 30px;
+	}
+}
