@@ -5,10 +5,8 @@
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	height: 100vh;
-	width: 100vw;
 	text-align: center;
 	display: flex;
-	padding-right: 10px;
 	align-items: center;
 	color: white;
 }
@@ -19,8 +17,8 @@
 	align-items: start;
 	gap: 25px;
 	padding-left: 30px;
-	border-left: 3px solid #5c9b9e; /* Ajustez la largeur et la couleur selon vos besoins */
-	height: 100%; /* La ligne verticale s'étend sur toute la hauteur de la colonne */
+	border-left: 3px solid #5c9b9e;
+	height: 100%;
 
 	font-family: cursive;
 	text-align: left;
@@ -28,6 +26,9 @@
 
 .body {
 	background-color: #eeecece7;
+	padding-top: 10px;
+	padding-bottom: 80px;
+	margin-top: 35px;
 }
 .main-banner h1 {
 	font-size: 2.5rem;
@@ -49,8 +50,9 @@
 }
 
 .about-section {
-	background-color: #f8f9fa;
-	padding: 60px 0;
+	border: 1px solid black;
+	border-radius: 15px;
+	padding-top: 50px;
 }
 
 .about-section .about-text {
@@ -65,7 +67,7 @@
 .about-section h3 {
 	font-size: 1.25rem;
 	color: #007bff;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 }
 
 /* .service-box {
@@ -80,8 +82,8 @@
 .service-box {
 	background-color: white;
 	padding: 20px;
-	border-radius: 5px; /* Pour des coins arrondis */
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optionnel: ajoute une ombre pour mieux distinguer les boîtes */
+	border-radius: 5px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .about-section p {
@@ -91,10 +93,9 @@
 .about-image img {
 	width: 100%;
 	height: auto;
-	border-radius: 60%; /* Pour obtenir un cercle, assurez-vous que l'image est un carré */
+	border-radius: 60%;
 }
 
-/* Boutons */
 .btn-primary {
 	background-color: #007bff;
 	border: none;
@@ -112,7 +113,6 @@
 	color: #fff;
 }
 
-/* Media queries pour la réactivité */
 @media (max-width: 768px) {
 	.main-banner h1 {
 		font-size: 2rem;

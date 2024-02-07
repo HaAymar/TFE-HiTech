@@ -5,7 +5,8 @@ import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { BsArrowRight } from "react-icons/bs";
 
-import Bg from "../../Assets/Home/bg.jpg";
+import Bg from "../../Assets/Home/pro.webp";
+import Footer from "../Footer/index";
 import NavBar from "../Navbar/Navbar"; // Importez votre composant NavBar
 import OurServices from "./OurServices";
 
@@ -21,11 +22,12 @@ const Home = () => {
 								style={{
 									color: "#0bb6e0",
 									fontFamily: "Georgia",
+									fontSize: "2.8rem",
 								}}
 							>
 								Welcome to our Web Site HiTech-Solutions
 							</h1>
-							<h4>
+							<h4 style={{ fontSize: "2rem" }}>
 								Notre site propose plusieurs services dont, la{" "}
 								<br />
 								formation en informatique pour les demandeurs{" "}
@@ -64,7 +66,10 @@ const Home = () => {
 							className="about-text"
 							style={{ transition: "opacity 0.5s ease" }}
 						>
-							<h2>We Provide Best Design Solution In City.</h2>
+							<h3>
+								We offer qualitative training services as well
+								as IT troubleshooting.
+							</h3>
 							<p>
 								Lorem ipsum dolor sit amet, consectetur velit
 								incididunt ut labore et dolore magna aliqua.
@@ -100,6 +105,9 @@ const Home = () => {
 					</Row>
 				</Container>
 			</div>
+			<Container>
+				<Footer />
+			</Container>
 		</>
 	);
 };

@@ -1,10 +1,8 @@
-import "./OurServices.css"; // Assurez-vous de créer un fichier CSS pour styliser votre page
+import "./OurServices.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-
-// Importez votre composant NavBar
 
 const OurServices = () => {
 	return (
@@ -12,7 +10,6 @@ const OurServices = () => {
 			<Container
 				className="service-section"
 				style={{
-					backgroundColor: "grey",
 					marginTop: "40px",
 					width: "900px",
 				}}

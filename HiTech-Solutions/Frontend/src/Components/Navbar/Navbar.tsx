@@ -68,7 +68,7 @@ const NavBar: React.FC = () => {
 								paddingTop: "1%",
 							}}
 						>
-							Home
+							HOME
 						</Nav.Link>
 						<Nav.Link
 							href="#services"
@@ -79,7 +79,7 @@ const NavBar: React.FC = () => {
 								paddingTop: "1%",
 							}}
 						>
-							Services
+							SERVICES
 						</Nav.Link>
 						<Nav.Link
 							href="#contact"
@@ -90,7 +90,7 @@ const NavBar: React.FC = () => {
 								paddingTop: "1%",
 							}}
 						>
-							Contact
+							CONTACT
 						</Nav.Link>
 						<Nav.Link
 							href="#help"
@@ -101,7 +101,7 @@ const NavBar: React.FC = () => {
 								paddingTop: "1%",
 							}}
 						>
-							About Us
+							ABOUT US
 						</Nav.Link>
 					</Nav>
 					<Form className="d-flex mx-auto justify-content-center align-items-center">
@@ -121,7 +121,6 @@ const NavBar: React.FC = () => {
 								backgroundColor: "#cac8c8d3",
 							}}
 						/>
-						<Button variant="outline-light">Search</Button>
 					</Form>
 					<NavDropdown
 						title={<FaGlobe />}
