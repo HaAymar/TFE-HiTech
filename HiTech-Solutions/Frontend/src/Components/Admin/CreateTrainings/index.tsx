@@ -2,6 +2,7 @@ import "./style.css";
 
 import React, { useState } from "react";
 import { Button, Container, Form, Modal, Table } from "react-bootstrap";
+import { RiImageAddFill } from "react-icons/ri";
 
 interface Formation {
 	id: number;
@@ -11,7 +12,29 @@ interface Formation {
 }
 
 const CreationFormations: React.FC = () => {
-	const [formations, setFormations] = useState<Formation[]>([]);
+	let currentFormations: Formation[] = [
+		{
+			id: 1,
+			titre: "Adminisration réseau",
+			description: "- Linux \n- Configuration des services \n",
+			photo: null,
+		},
+		{
+			id: 2,
+			titre: "Virtualisation",
+			description: "- Hypervisor ESXi \n- VMWARE\n- OSytem",
+			photo: null,
+		},
+		{
+			id: 3,
+			titre: "Dev Web",
+			description:
+				"- Backend (Php, Node.js)\n- Frontend (React Js, Angular Js ..)",
+			photo: null,
+		},
+	];
+	const [formations, setFormations] =
+		useState<Formation[]>(currentFormations);
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [selectedFormation, setSelectedFormation] =
 		useState<Formation | null>(null);
@@ -29,7 +52,7 @@ const CreationFormations: React.FC = () => {
 		setFormations([...formations, newFormation]);
 		handleCloseModal();
 	};
-
+	console.log(formations);
 	const handleDeleteFormation = (id: number) => {
 		const updatedFormations = formations.filter(
 			(formation) => formation.id !== id
@@ -158,30 +181,51 @@ const CreationFormations: React.FC = () => {
 							/>
 						</Form.Group>
 						<Form.Group controlId="formPhoto">
-							<Form.Label>Photo</Form.Label>
-							<Form.Control
-								type="file"
-								// onChange={(e) =>
-								// 	setPhoto(
-								// 		e.target.files
-								// 			? e.target.files[0]
-								// 			: null
-								// 	)
-								// }
-							/>
+							<div className="upload-btn">
+								<label
+									htmlFor="file-upload"
+									className="custom-file-upload"
+								>
+									<div className="icon">
+										<RiImageAddFill />
+										Upload Photo
+									</div>
+								</label>
+								<input id="file-upload" type="file" />
+							</div>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant="danger" onClick={handleCloseModal}>
+					<Button
+						variant="danger"
+						onClick={handleCloseModal}
+						style={{
+							border: "none",
+						}}
+					>
 						Annuler
 					</Button>
 					{selectedFormation ? (
-						<Button variant="primary" onClick={handleEditFormation}>
+						<Button
+							variant="primary"
+							onClick={handleEditFormation}
+							style={{
+								backgroundColor: "#5c9b9e",
+								border: "none",
+							}}
+						>
 							Enregistrer les modifications
 						</Button>
 					) : (
-						<Button variant="primary" onClick={handleAddFormation}>
+						<Button
+							variant="primary"
+							onClick={handleAddFormation}
+							style={{
+								backgroundColor: "#5c9b9e",
+								border: "none",
+							}}
+						>
 							Ajouter
 						</Button>
 					)}

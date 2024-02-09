@@ -67,8 +67,8 @@ const Home = () => {
 							style={{ transition: "opacity 0.5s ease" }}
 						>
 							<h3>
-								We offer qualitative training services as well
-								as IT troubleshooting.
+								We provide high-quality training and IT
+								troubleshooting services
 							</h3>
 							<p>
 								Lorem ipsum dolor sit amet, consectetur velit
