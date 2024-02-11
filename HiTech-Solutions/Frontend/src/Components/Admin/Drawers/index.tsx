@@ -1,4 +1,6 @@
 import {
+	CDBBadge,
+	CDBContainer,
 	CDBSidebar,
 	CDBSidebarContent,
 	CDBSidebarFooter,
@@ -6,13 +8,27 @@ import {
 	CDBSidebarMenu,
 	CDBSidebarMenuItem,
 } from "cdbreact";
-import React from "react";
+import React, { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 
 import NavBar from "../../Navbar/Navbar";
 import Admin from "../CreateTrainings/index";
 
 const DashboardSidebar = () => {
+	const [option] = useState([
+		{
+			text: "Option 1",
+			value: "1",
+		},
+		{
+			text: "Option 2",
+			value: "2",
+		},
+		{
+			text: "Option 3",
+			value: "3",
+		},
+	]);
 	return (
 		<div style={{ overflow: "hidden" }}>
 			<NavBar />
