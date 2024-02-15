@@ -60,7 +60,7 @@ const NavBar: React.FC = () => {
 				<Navbar.Collapse id="navbarScroll" style={{}}>
 					<Nav className="me-auto my-2 my-lg-2 mx-auto" navbarScroll>
 						<Nav.Link
-							href="#Home"
+							href="/"
 							className="mx-3"
 							style={{
 								fontWeight: "bold",
@@ -71,7 +71,7 @@ const NavBar: React.FC = () => {
 							HOME
 						</Nav.Link>
 						<Nav.Link
-							href="#services"
+							href="/service"
 							className="mx-3"
 							style={{
 								fontWeight: "bold",
@@ -82,7 +82,7 @@ const NavBar: React.FC = () => {
 							SERVICES
 						</Nav.Link>
 						<Nav.Link
-							href="#contact"
+							href="/contact"
 							className="mx-3"
 							style={{
 								fontWeight: "bold",

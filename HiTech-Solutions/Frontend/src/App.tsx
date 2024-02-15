@@ -5,10 +5,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Admin from "../src/Components/Admin/CreateTrainings/index";
 import Drawer from "./Components/Admin/Drawers/index";
+import Contact from "./Components/Contact/Contact";
 import Home from "./Components/Home/Home";
 import OurServices from "./Components/Home/OurServices";
 import LoginSignup from "./Components/LoginSignup/LoginSignup";
 import NavBar from "./Components/Navbar/Navbar";
+import Services from "./Components/Services/Services";
 
 function App() {
 	return (
@@ -20,6 +22,8 @@ function App() {
 				<Route path="/NavBar" element={<NavBar />} />
 				<Route path="/admin" element={<Admin />} />
 				<Route path="/drawer" element={<Drawer />} />
+				<Route path="/service" element={<Services />} />
+				<Route path="/contact" element={<Contact />} />
 			</Routes>
 		</Router>
 	);

@@ -1,4 +1,10 @@
-.content-board {
-	width: 100%;
-	background-color: red;
+.hoverColor1:hover,
+.hoverColor:hover {
+	background-color: #3b4750;
+}
+.hoverColor1 {
+	color: grey;
+}
+.drawerFooter {
+	font-family: "Times New Roman", Times, serif;
 }

@@ -1,6 +1,6 @@
+import "./style.css";
+
 import {
-	CDBBadge,
-	CDBContainer,
 	CDBSidebar,
 	CDBSidebarContent,
 	CDBSidebarFooter,
@@ -10,25 +10,39 @@ import {
 } from "cdbreact";
 import React, { useState } from "react";
 import { Col, Row } from "react-bootstrap";
+import { FaRegCircleQuestion } from "react-icons/fa6";
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 
 import NavBar from "../../Navbar/Navbar";
 import Admin from "../CreateTrainings/index";
+import CreatingTroubleshooting from "../CreateTroubleshootings";
 
 const DashboardSidebar = () => {
-	const [option] = useState([
-		{
-			text: "Option 1",
-			value: "1",
-		},
-		{
-			text: "Option 2",
-			value: "2",
-		},
-		{
-			text: "Option 3",
-			value: "3",
-		},
-	]);
+	const [isMembersOpen, setIsMembersOpen] = useState(false);
+	const [isServicesOpen, setIsServicesOpen] = useState(false);
+
+	const [displayFormation, setDisplayFormation] = useState(false);
+	const [displayTroubleshooting, setDisplayTroubleshooting] = useState(false);
+
+	const toogleFormation = () => {
+		console.log(displayFormation);
+		setDisplayFormation(true);
+		setDisplayTroubleshooting(false);
+	};
+
+	const toogleTroubleshooting = () => {
+		console.log(displayFormation);
+		setDisplayFormation(false);
+		setDisplayTroubleshooting(true);
+	};
+
+	const toggleMembers = () => {
+		setIsMembersOpen(!isMembersOpen);
+	};
+
+	const toggleServices = () => {
+		setIsServicesOpen(!isServicesOpen);
+	};
 	return (
 		<div style={{ overflow: "hidden" }}>
 			<NavBar />
@@ -52,20 +66,99 @@ const DashboardSidebar = () => {
 							<div
 								style={{
 									paddingTop: "60px",
+									color: "#40b9af",
 								}}
 							>
-								<CDBSidebarHeader>Dashboard</CDBSidebarHeader>
+								<CDBSidebarHeader>
+									Dashboard HiTech
+								</CDBSidebarHeader>
 							</div>
 
 							<CDBSidebarContent className="sidebar-content">
 								<CDBSidebarMenu>
-									<CDBSidebarMenuItem icon="user">
-										Members
-									</CDBSidebarMenuItem>
-									<CDBSidebarMenuItem icon="cogs">
-										Services
-									</CDBSidebarMenuItem>
-									<CDBSidebarMenuItem icon="envelope">
+									<div className="members">
+										<div onClick={toggleMembers}>
+											<CDBSidebarMenuItem
+												icon="user"
+												className="hoverColor"
+											>
+												Members{" "}
+												<span className="arrow">
+													{isMembersOpen ? (
+														<RiArrowDropDownLine />
+													) : (
+														<RiArrowDropUpLine />
+													)}
+												</span>
+											</CDBSidebarMenuItem>
+										</div>
+
+										{isMembersOpen && (
+											<div
+												className="sub-menu"
+												style={{
+													display: "flex",
+													flexDirection: "column",
+													paddingLeft: "30px",
+												}}
+											>
+												<CDBSidebarMenuItem className="hoverColor1">
+													Professeurs
+												</CDBSidebarMenuItem>
+												<CDBSidebarMenuItem className="hoverColor1">
+													Etudiants
+												</CDBSidebarMenuItem>
+											</div>
+										)}
+									</div>
+									<div className="services">
+										<div onClick={toggleServices}>
+											<CDBSidebarMenuItem
+												icon="cogs"
+												className="hoverColor"
+											>
+												Services{" "}
+												<span className="arrow">
+													{isServicesOpen ? (
+														<RiArrowDropDownLine />
+													) : (
+														<RiArrowDropUpLine />
+													)}
+												</span>
+											</CDBSidebarMenuItem>
+										</div>
+
+										{isServicesOpen && (
+											<div
+												className="sub-menu"
+												style={{
+													display: "flex",
+													flexDirection: "column",
+													paddingLeft: "30px",
+												}}
+											>
+												<div onClick={toogleFormation}>
+													<CDBSidebarMenuItem className="hoverColor1">
+														Formations
+													</CDBSidebarMenuItem>
+												</div>
+												<div
+													onClick={
+														toogleTroubleshooting
+													}
+												>
+													<CDBSidebarMenuItem className="hoverColor1">
+														Dépannages
+													</CDBSidebarMenuItem>
+												</div>
+											</div>
+										)}
+									</div>
+
+									<CDBSidebarMenuItem
+										icon="envelope"
+										className="hoverColor"
+									>
 										Messages
 									</CDBSidebarMenuItem>
 								</CDBSidebarMenu>
@@ -76,16 +169,16 @@ const DashboardSidebar = () => {
 									paddingBottom: "25px",
 								}}
 							>
-								<CDBSidebarFooter>
+								<CDBSidebarFooter className="drawerFooter">
 									HiTech-Solutions
 								</CDBSidebarFooter>
 							</div>
 						</CDBSidebar>
 					</div>
 				</Col>
-				<Col>
-					<Admin />
-				</Col>
+				{displayFormation && <Admin />}
+
+				{displayTroubleshooting && <CreatingTroubleshooting />}
 			</Row>
 		</div>
 	);

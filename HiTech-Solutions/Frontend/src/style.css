@@ -1,0 +1,10 @@
+/* styles.css */
+
+/* Include Tailwind CSS base styles */
+@tailwind base;
+
+/* Include Tailwind CSS component styles */
+@tailwind components;
+
+/* Include Tailwind CSS utility styles */
+@tailwind utilities;

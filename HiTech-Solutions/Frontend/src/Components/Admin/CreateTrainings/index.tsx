@@ -1,7 +1,16 @@
 import "./style.css";
 
 import React, { useState } from "react";
-import { Button, Container, Form, Modal, Table } from "react-bootstrap";
+import {
+	Button,
+	Col,
+	Container,
+	Form,
+	Modal,
+	Row,
+	Table,
+} from "react-bootstrap";
+import { IoIosAdd } from "react-icons/io";
 import { RiImageAddFill } from "react-icons/ri";
 
 interface Formation {
@@ -15,7 +24,7 @@ const CreationFormations: React.FC = () => {
 	let currentFormations: Formation[] = [
 		{
 			id: 1,
-			titre: "Adminisration réseau",
+			titre: "Admin réseau",
 			description: "- Linux \n- Configuration des services \n",
 			photo: null,
 		},
@@ -52,7 +61,7 @@ const CreationFormations: React.FC = () => {
 		setFormations([...formations, newFormation]);
 		handleCloseModal();
 	};
-	console.log(formations);
+
 	const handleDeleteFormation = (id: number) => {
 		const updatedFormations = formations.filter(
 			(formation) => formation.id !== id
@@ -91,67 +100,103 @@ const CreationFormations: React.FC = () => {
 	};
 
 	return (
-		<Container className="containerTable">
-			<div className="header">
-				<h1>Gestion des formations</h1>
-				<p>
-					<b>Connecté en tant qu'administrateur :</b> Aymar Davy
-					Hakizimana
-				</p>
+		<Container
+			className="containerTable"
+			style={{ width: "800px", backgroundColor: "#dadde0" }}
+		>
+			<div className="headerDashboard">
+				<div>
+					<h4>Gestion des formations</h4>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							gap: "10px",
+						}}
+					>
+						<h6>Filtrer par : </h6>{" "}
+						<select
+							style={{
+								border: "none", // Enlève la bordure par défaut
+								borderRadius: "5px", // Ajoute un rayon de 10px
+								padding: "4px", // Agrandit la bordure à 2px
+								borderColor: "#ccc", // Couleur de la bordure
+							}}
+						>
+							<option value="">Choisir une option</option>
+							<option value="option1">A</option>
+							<option value="option2">a</option>
+							{/* Ajoutez autant d'options que nécessaire */}
+						</select>
+					</div>
+				</div>
 
-				<Button
-					variant="primary"
-					onClick={() => setShowModal(true)}
-					style={{ width: "200px" }}
-				>
-					Ajouter une formation
-				</Button>
-
-				<Table striped bordered hover>
-					<thead>
-						<tr>
-							<th style={{ textAlign: "center" }}>Titre</th>
-							<th style={{ textAlign: "center" }}>Description</th>
-							<th style={{ textAlign: "center" }}>Actions</th>
-						</tr>
-					</thead>
-
-					<tbody>
-						{formations.map((formation) => (
-							<tr key={formation.id}>
-								<td style={{ textAlign: "center" }}>
-									{formation.titre}
-								</td>
-								<td style={{ textAlign: "center" }}>
-									{formation.description}
-								</td>
-								<td>
-									<div className="buttons">
-										<Button
-											variant="info"
-											onClick={() =>
-												handleShowModal(formation)
-											}
-										>
-											Modifier
-										</Button>
-
-										<Button
-											variant="danger"
-											onClick={() =>
-												handleDeleteFormation(
-													formation.id
-												)
-											}
-										>
-											Supprimer
-										</Button>
-									</div>
-								</td>
+				<div className="">
+					<Button
+						onClick={() => setShowModal(true)}
+						style={{ backgroundColor: "#314353" }}
+					>
+						<IoIosAdd />
+						Ajouter une formation
+					</Button>
+				</div>
+			</div>
+			<div className="content">
+				<div style={{ overflowY: "auto", maxHeight: "500px" }}>
+					<Table striped bordered hover>
+						<thead className="sticky-header">
+							<tr>
+								<th style={{ textAlign: "center" }}>Titre</th>
+								<th style={{ textAlign: "center" }}>
+									Description
+								</th>
+								<th style={{ textAlign: "center" }}>Actions</th>
 							</tr>
-						))}
-					</tbody>
-				</Table>
+						</thead>
+
+						<tbody>
+							{formations.map((formation) => (
+								<tr key={formation.id}>
+									<td style={{ textAlign: "center" }}>
+										{formation.titre}
+									</td>
+									<td style={{ textAlign: "center" }}>
+										{formation.description}
+									</td>
+									<td>
+										<div className="buttons">
+											<Button
+												variant="info"
+												onClick={() =>
+													handleShowModal(formation)
+												}
+												style={{
+													color: "white",
+													backgroundColor: "#40b9af",
+													border: "none",
+												}}
+											>
+												Modifier
+											</Button>
+
+											<Button
+												variant="danger"
+												onClick={() =>
+													handleDeleteFormation(
+														formation.id
+													)
+												}
+											>
+												Supprimer
+											</Button>
+										</div>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</Table>
+				</div>
 			</div>
 			<Modal show={showModal} onHide={handleCloseModal}>
 				<Modal.Header closeButton>
