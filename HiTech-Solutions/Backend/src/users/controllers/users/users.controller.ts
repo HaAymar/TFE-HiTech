@@ -1,7 +1,16 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
 
 import { CreateUserDto } from '../../dtos/CreateUser.dto';
-import { DeleteUserDto } from '../../dtos/DeleteUser.dto';
+// import { DeleteUserDto } from '../../dtos/DeleteUser.dto';
 import { UpdateUserDto } from '../../dtos/UpdateUser.dto';
 import { UsersService } from '../../services/users/users.service';
 
