@@ -63,7 +63,7 @@
 
 .tableScroll {
 	overflow-y: auto;
-	max-height: 400px;
+	max-height: 450px;
 }
 
 .sticky-header {

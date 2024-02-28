@@ -1,5 +1,31 @@
+import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+
 export class CreateUserDto {
-  username: string;
-  password: string;
-  //   confirmPassword: string;
+  @IsNumber()
+  readonly idRole: number;
+
+  @IsNumber()
+  readonly idSection: number;
+
+  @IsString()
+  readonly name: string;
+
+  @IsString()
+  readonly surname: string;
+
+  @IsString()
+  readonly email: string;
+
+  @IsNumber()
+  readonly tel: string;
+
+  @IsNotEmpty()
+  @IsDate()
+  readonly dateInscription: Date;
+
+  @IsDate()
+  readonly dateDeFin: Date;
+
+  @IsString()
+  readonly password: string;
 }

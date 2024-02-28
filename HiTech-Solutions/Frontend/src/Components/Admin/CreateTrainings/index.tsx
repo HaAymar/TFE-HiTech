@@ -1,47 +1,30 @@
 import "./style.css";
 
+import axios from "axios";
 import React, { useState } from "react";
-import {
-	Button,
-	Col,
-	Container,
-	Form,
-	Modal,
-	Row,
-	Table,
-} from "react-bootstrap";
+import { Button, Container, Form, Modal, Table } from "react-bootstrap";
 import { IoIosAdd } from "react-icons/io";
 import { RiImageAddFill } from "react-icons/ri";
+import { useRecoilValue } from "recoil";
+
+import { fetchFormations } from "../../Stores/formationsState";
 
 interface Formation {
 	id: number;
-	titre: string;
+	name: string;
 	description: string;
 	photo: File | null;
 }
 
+interface CreateFormation {
+	name: string;
+	description: string;
+	photo: string;
+}
+
 const CreationFormations: React.FC = () => {
-	let currentFormations: Formation[] = [
-		{
-			id: 1,
-			titre: "Admin réseau",
-			description: "- Linux \n- Configuration des services \n",
-			photo: null,
-		},
-		{
-			id: 2,
-			titre: "Virtualisation",
-			description: "- Hypervisor ESXi \n- VMWARE\n- OSytem",
-			photo: null,
-		},
-		{
-			id: 3,
-			titre: "Dev Web",
-			description:
-				"- Backend (Php, Node.js)\n- Frontend (React Js, Angular Js ..)",
-			photo: null,
-		},
-	];
+	const currentFormations = useRecoilValue(fetchFormations);
+
 	const [formations, setFormations] =
 		useState<Formation[]>(currentFormations);
 	const [showModal, setShowModal] = useState<boolean>(false);
@@ -49,24 +32,58 @@ const CreationFormations: React.FC = () => {
 		useState<Formation | null>(null);
 	const [titre, setTitre] = useState<string>("");
 	const [description, setDescription] = useState<string>("");
-	const [photo, setPhoto] = useState<File | null>(null);
+	const [photo, setphoto] = useState<File | null>(null);
 
-	const handleAddFormation = () => {
-		const newFormation: Formation = {
-			id: formations.length + 1,
-			titre: titre,
+	const handleCreateFormation = async () => {
+		const newFormation: CreateFormation = {
+			name: titre,
 			description: description,
-			photo: photo,
+			photo: "my photo",
 		};
-		setFormations([...formations, newFormation]);
+
+		console.log(newFormation);
 		handleCloseModal();
+
+		try {
+			const response = await axios.post(
+				"http://localhost:3001/formations",
+				newFormation,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+
+			console.log("The data was inserted correctly", response.data);
+		} catch (error) {
+			console.error("Error adding training", error);
+		}
 	};
 
-	const handleDeleteFormation = (id: number) => {
-		const updatedFormations = formations.filter(
-			(formation) => formation.id !== id
-		);
-		setFormations(updatedFormations);
+	const handleDeleteFormation = async (id: number) => {
+		console.log(id);
+		try {
+			await axios.delete(`http://localhost:3001/formations/${id}`, {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			const updatedFormations = formations.filter(
+				(formation) => formation.id !== id
+			);
+			setFormations(updatedFormations);
+
+			console.log(`Formation with id ${id} was deleted successfully.`);
+
+			handleCloseModal();
+		} catch (error) {
+			console.error(
+				"Erreur lors de la suppression de la formation",
+				error
+			);
+		}
 	};
 
 	const handleShowModal = (formation: Formation) => {
@@ -78,24 +95,42 @@ const CreationFormations: React.FC = () => {
 		setSelectedFormation(null);
 		setTitre("");
 		setDescription("");
-		setPhoto(null);
 		setShowModal(false);
 	};
 
-	const handleEditFormation = () => {
+	const handleEditFormation = async () => {
 		if (selectedFormation) {
-			const updatedFormations = formations.map((formation) =>
-				formation.id === selectedFormation.id
-					? {
-							...formation,
-							titre: titre,
-							description: description,
-							photo: photo,
-					  }
-					: formation
-			);
-			setFormations(updatedFormations);
-			handleCloseModal();
+			const updatedFormation = {
+				name: titre,
+				description: description,
+				photo: photo,
+			};
+
+			try {
+				await axios.put(
+					`http://localhost:3001/formations/${selectedFormation.id}`,
+					updatedFormation,
+					{
+						headers: {
+							"Content-Type": "application/json",
+						},
+					}
+				);
+
+				const updatedFormations = formations.map((formation) =>
+					formation.id === selectedFormation.id
+						? { ...formation, ...updatedFormation }
+						: formation
+				);
+				setFormations(updatedFormations);
+
+				handleCloseModal();
+				console.log(
+					`Formation with id ${selectedFormation.id}identity was updated successfully.`
+				);
+			} catch (error) {
+				console.error("Error while modifying the training", error);
+			}
 		}
 	};
 
@@ -118,16 +153,15 @@ const CreationFormations: React.FC = () => {
 						<h6>Filtrer par : </h6>{" "}
 						<select
 							style={{
-								border: "none", // Enlève la bordure par défaut
-								borderRadius: "5px", // Ajoute un rayon de 10px
-								padding: "4px", // Agrandit la bordure à 2px
-								borderColor: "#ccc", // Couleur de la bordure
+								border: "none",
+								borderRadius: "5px",
+								padding: "4px",
+								borderColor: "#ccc",
 							}}
 						>
 							<option value="">Choisir une option</option>
 							<option value="option1">A</option>
 							<option value="option2">a</option>
-							{/* Ajoutez autant d'options que nécessaire */}
 						</select>
 					</div>
 				</div>
@@ -143,7 +177,7 @@ const CreationFormations: React.FC = () => {
 				</div>
 			</div>
 			<div className="content">
-				<div style={{ overflowY: "auto", maxHeight: "500px" }}>
+				<div className="tableScroll">
 					<Table striped bordered hover>
 						<thead className="sticky-header">
 							<tr>
@@ -156,10 +190,10 @@ const CreationFormations: React.FC = () => {
 						</thead>
 
 						<tbody>
-							{formations.map((formation) => (
+							{formations.map((formation: Formation) => (
 								<tr key={formation.id}>
 									<td style={{ textAlign: "center" }}>
-										{formation.titre}
+										{formation.name}
 									</td>
 									<td style={{ textAlign: "center" }}>
 										{formation.description}
@@ -236,7 +270,18 @@ const CreationFormations: React.FC = () => {
 										Upload Photo
 									</div>
 								</label>
-								<input id="file-upload" type="file" />
+								<input
+									id="file-upload"
+									// type="file"
+									// onChange={(e) => {
+									// 	if (
+									// 		e.target.files &&
+									// 		e.target.files[0]
+									// 	) {
+									// 		setphoto(e.target.files[0]);
+									// 	}
+									// }}
+								/>
 							</div>
 						</Form.Group>
 					</Form>
@@ -265,7 +310,7 @@ const CreationFormations: React.FC = () => {
 					) : (
 						<Button
 							variant="primary"
-							onClick={handleAddFormation}
+							onClick={handleCreateFormation}
 							style={{
 								backgroundColor: "#5c9b9e",
 								border: "none",

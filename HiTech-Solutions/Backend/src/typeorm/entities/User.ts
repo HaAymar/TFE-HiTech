@@ -1,20 +1,37 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+
+import { Role } from './Role';
+import { Section } from './Section';
 
 @Entity({ name: 'users' })
 export class User {
-  @PrimaryGeneratedColumn({ type: 'bigint' })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
-  username: string;
+  @Column()
+  name: string;
+
+  @Column()
+  surname: string;
+
+  @Column()
+  email: string;
+
+  @Column({ nullable: true })
+  tel: string;
+
+  @Column({ name: 'date_inscription', type: 'date', nullable: true })
+  dateInscription: Date;
+
+  @Column({ name: 'date_de_fin', type: 'date', nullable: true })
+  dateDeFin: Date;
 
   @Column()
   password: string;
 
-  @Column()
-  createdAt: Date;
+  @ManyToOne(() => Section, (section) => section.users)
+  section: Section;
 
-  @Column({ nullable: true })
-  authStrategy: string;
+  @ManyToOne(() => Role)
+  role: Role;
 }
-// The entities allows to creates tables using typeOrm methods

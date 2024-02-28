@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CreateUserParams, UpdateUserParams } from '../../../utils/types';
+import { CreateUserDto } from '../dtos/CreateUser.dto';
 
 @Injectable()
 export class UsersService {
@@ -14,21 +14,22 @@ export class UsersService {
   findUsers() {
     return this.userRepository.find();
   }
+  //------------------ In INSCRIPTION /!\ There is an error idRole and idSection do not accept the registration /!\ ------------------//
 
-  createUser(userDetails: CreateUserParams) {
+  createUser(userDetails: CreateUserDto) {
     const newUser = this.userRepository.create({
       ...userDetails,
-      createdAt: new Date(),
+      dateInscription: new Date(),
     });
     console.log(newUser);
     return this.userRepository.save(newUser);
   }
 
-  updateUser(id: number, updateUserDetails: UpdateUserParams) {
-    return this.userRepository.update({ id }, { ...updateUserDetails });
-  }
+  // updateUser(id: number, updateUserDetails: UpdateUserParams) {
+  //   return this.userRepository.update({ id }, { ...updateUserDetails });
+  // }
 
-  deleteUser(id: number) {
-    return this.userRepository.delete({ id });
-  }
+  // deleteUser(id: number) {
+  //   return this.userRepository.delete({ id });
+  // }
 }

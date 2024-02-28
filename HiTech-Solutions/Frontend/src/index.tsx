@@ -2,6 +2,7 @@ import "./index.css";
 
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { RecoilRoot } from "recoil";
 
 // import Connexion from "./Components/Connexion/Connexion";
 // import Contact from "./Components/Contact/Contact";
@@ -16,7 +17,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
 	<React.StrictMode>
-		<App />
+		<RecoilRoot>
+			<App />
+		</RecoilRoot>
 	</React.StrictMode>
 );
 

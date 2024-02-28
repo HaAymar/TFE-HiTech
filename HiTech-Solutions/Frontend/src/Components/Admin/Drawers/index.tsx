@@ -8,7 +8,7 @@ import {
 	CDBSidebarMenu,
 	CDBSidebarMenuItem,
 } from "cdbreact";
-import React, { useState } from "react";
+import React, { startTransition, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { FaRegCircleQuestion } from "react-icons/fa6";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
@@ -26,14 +26,18 @@ const DashboardSidebar = () => {
 
 	const toogleFormation = () => {
 		console.log(displayFormation);
-		setDisplayFormation(true);
-		setDisplayTroubleshooting(false);
+		startTransition(() => {
+			setDisplayFormation(true);
+			setDisplayTroubleshooting(false);
+		});
 	};
 
 	const toogleTroubleshooting = () => {
 		console.log(displayFormation);
-		setDisplayFormation(false);
-		setDisplayTroubleshooting(true);
+		startTransition(() => {
+			setDisplayFormation(false);
+			setDisplayTroubleshooting(true);
+		});
 	};
 
 	const toggleMembers = () => {

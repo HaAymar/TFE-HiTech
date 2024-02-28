@@ -3,7 +3,7 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Admin from "../src/Components/Admin/CreateTrainings/index";
+import Admin from "./Components/Admin/CreateTrainings/index";
 import Drawer from "./Components/Admin/Drawers/index";
 import Contact from "./Components/Contact/Contact";
 import Home from "./Components/Home/Home";

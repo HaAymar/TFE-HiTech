@@ -105,9 +105,8 @@ const Home = () => {
 					</Row>
 				</Container>
 			</div>
-			<Container>
-				<Footer />
-			</Container>
+
+			<Footer />
 		</>
 	);
 };
