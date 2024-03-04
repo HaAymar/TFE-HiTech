@@ -1,20 +1,18 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './style.css';
 
-import React, { useState } from "react";
-import { Nav } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { FaGlobe } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
+import React, { useState } from 'react';
+import { Nav } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { FaGlobe, FaSearch } from 'react-icons/fa';
 
-import Français from "../../Assets/Flags/fr.png";
-import Nederlands from "../../Assets/Flags/nl.png";
-import English from "../../Assets/Flags/uk.png";
-import Logo from "../../Assets/ll1.png";
+import Français from '../../Assets/Flags/fr.png';
+import Nederlands from '../../Assets/Flags/nl.png';
+import English from '../../Assets/Flags/uk.png';
+import Logo from '../../Assets/ll1.png';
 
 interface Country {
 	code: string;
@@ -35,7 +33,7 @@ const NavBar: React.FC = () => {
 	]);
 
 	return (
-		<Navbar expand="lg" className="bg-secondary" fixed="top">
+		<Navbar expand="lg" fixed="top" style={{ backgroundColor: "#3991b4" }}>
 			<Container fluid>
 				<div
 					style={{
@@ -58,39 +56,57 @@ const NavBar: React.FC = () => {
 				</div>
 				<Navbar.Toggle aria-controls="navbarScroll" />
 				<Navbar.Collapse id="navbarScroll" style={{}}>
-					<Nav className="me-auto my-2 my-lg-2 mx-auto" navbarScroll>
+					<Nav
+						className="me-auto my-2 my-lg-1 mx-auto"
+						navbarScroll
+						style={{
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "center",
+						}}
+					>
 						<Nav.Link
 							href="/"
 							className="mx-3"
 							style={{
 								fontWeight: "bold",
 								color: "white",
-								paddingTop: "1%",
 							}}
 						>
-							HOME
+							Home
 						</Nav.Link>
-						<Nav.Link
-							href="/service"
-							className="mx-3"
+						<NavDropdown
 							style={{
-								fontWeight: "bold",
-								color: "white",
-								paddingTop: "1%",
+								display: "flex",
 							}}
+							title={
+								<span
+									style={{
+										color: "white",
+										fontWeight: "bold",
+									}}
+								>
+									Services
+								</span>
+							}
+							id="nav-dropdown-services"
 						>
-							SERVICES
-						</Nav.Link>
+							<NavDropdown.Item href="/formation">
+								Formation
+							</NavDropdown.Item>
+							<NavDropdown.Item href="/depannage">
+								Dépannage
+							</NavDropdown.Item>
+						</NavDropdown>
 						<Nav.Link
 							href="/contact"
 							className="mx-3"
 							style={{
 								fontWeight: "bold",
 								color: "white",
-								paddingTop: "1%",
 							}}
 						>
-							CONTACT
+							Contact
 						</Nav.Link>
 						<Nav.Link
 							href="#help"
@@ -98,10 +114,9 @@ const NavBar: React.FC = () => {
 							style={{
 								fontWeight: "bold",
 								color: "white",
-								paddingTop: "1%",
 							}}
 						>
-							ABOUT US
+							About Us
 						</Nav.Link>
 					</Nav>
 					<Form className="d-flex mx-auto justify-content-center align-items-center">
@@ -112,13 +127,13 @@ const NavBar: React.FC = () => {
 						<Form.Control
 							type="search"
 							placeholder="Search"
-							className="me-3 mr-100 w-75" // Ajout de la classe w-75
+							className="me-3 mr-100 w-75"
 							aria-label="Search"
 							style={{
 								minWidth: "350px",
 								borderRadius: "20px",
 								border: "none",
-								backgroundColor: "#cac8c8d3",
+								backgroundColor: "#ffffffd2",
 							}}
 						/>
 					</Form>

@@ -1,0 +1,13 @@
+.custom-card {
+	max-width: 300px;
+	max-height: 600px;
+	margin: auto;
+}
+.read-more-link {
+	color: #007bff;
+	text-decoration: none;
+}
+
+.read-more-link:hover {
+	text-decoration: underline;
+}

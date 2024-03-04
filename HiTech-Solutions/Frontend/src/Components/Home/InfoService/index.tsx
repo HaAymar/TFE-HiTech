@@ -1,8 +1,8 @@
-import "./OurServices.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import './style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import React from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
 const OurServices = () => {
 	return (

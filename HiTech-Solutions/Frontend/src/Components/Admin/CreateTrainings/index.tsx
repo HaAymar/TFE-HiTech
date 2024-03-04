@@ -1,13 +1,13 @@
-import "./style.css";
+import './style.css';
 
-import axios from "axios";
-import React, { useState } from "react";
-import { Button, Container, Form, Modal, Table } from "react-bootstrap";
-import { IoIosAdd } from "react-icons/io";
-import { RiImageAddFill } from "react-icons/ri";
-import { useRecoilValue } from "recoil";
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Button, Container, Form, Modal, Table } from 'react-bootstrap';
+import { IoIosAdd } from 'react-icons/io';
+import { RiImageAddFill } from 'react-icons/ri';
+import { useRecoilValue } from 'recoil';
 
-import { fetchFormations } from "../../Stores/formationsState";
+import { fetchFormations } from '../../Stores/formationsState';
 
 interface Formation {
 	id: number;
@@ -23,6 +23,7 @@ interface CreateFormation {
 }
 
 const CreationFormations: React.FC = () => {
+	// ------ Taking all current  formation in DB ------ //
 	const currentFormations = useRecoilValue(fetchFormations);
 
 	const [formations, setFormations] =
@@ -32,7 +33,7 @@ const CreationFormations: React.FC = () => {
 		useState<Formation | null>(null);
 	const [titre, setTitre] = useState<string>("");
 	const [description, setDescription] = useState<string>("");
-	const [photo, setphoto] = useState<File | null>(null);
+	const [photo] = useState<File | null>(null);
 
 	const handleCreateFormation = async () => {
 		const newFormation: CreateFormation = {
@@ -56,6 +57,8 @@ const CreationFormations: React.FC = () => {
 			);
 
 			console.log("The data was inserted correctly", response.data);
+			const newFormationAdded = response.data;
+			setFormations((formations) => [...formations, newFormationAdded]);
 		} catch (error) {
 			console.error("Error adding training", error);
 		}

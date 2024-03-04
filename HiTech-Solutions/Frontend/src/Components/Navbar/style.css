@@ -1,1 +1,4 @@
- 
+/* Ajoutez plus de contexte à votre sélecteur pour augmenter la spécificité */
+.navbar-dark .navbar-nav .nav-dropdown-title {
+	color: white;
+}

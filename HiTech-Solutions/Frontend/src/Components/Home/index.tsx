@@ -1,14 +1,14 @@
-import "./HomePage.css"; // Assurez-vous de créer un fichier CSS pour styliser votre page
-import "bootstrap/dist/css/bootstrap.min.css";
+import './style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import React from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { BsArrowRight } from "react-icons/bs";
+import React from 'react';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import { BsArrowRight } from 'react-icons/bs';
 
-import Bg from "../../Assets/Home/pro.webp";
-import Footer from "../Footer/index";
-import NavBar from "../Navbar/Navbar"; // Importez votre composant NavBar
-import OurServices from "./OurServices";
+import Bg from '../../Assets/Home/pro.webp';
+import Footer from '../Footer/index';
+import NavBar from '../Navbar/index';
+import OurServices from './InfoService/index';
 
 const Home = () => {
 	return (
@@ -99,7 +99,6 @@ const Home = () => {
 							className="about-image"
 							style={{ transition: "opacity 0.5s ease" }}
 						>
-							{/* Assurez-vous d'ajouter les images dans votre dossier public ou de les importer */}
 							<img src={Bg} alt="About us" />
 						</Col>
 					</Row>
