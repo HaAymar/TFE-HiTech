@@ -29,6 +29,6 @@ jobs:
         run:  npm run test:unit
         working-directory: ./HiTech-Solutions/Frontend
 
-      #- name: Build the project
-      # run: npm run build
-      # working-directory: ./HiTech-Solutions/Frontend
+      - name: Build the project
+        run: npm run build
+        working-directory: ./HiTech-Solutions/Frontend
