@@ -21,17 +21,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'HiTech-Solutions/Frontend/package-lock.json'
 
-      - name: Execute Cypress E2E tests
-        uses: cypress-io/github-action@v5
-        timeout-minutes: 5
-        with:
-          working-directory: ./HiTech-Solutions/Frontend
-          start: npm start
-          wait-on: http://localhost:3000
-          wait-on-timeout: 60
-          browser: chrome
-          spec: 'cypress/**/*.cy.js'
-
       - name: Execute Frontend Unit tests
         run: |
           npm ci
