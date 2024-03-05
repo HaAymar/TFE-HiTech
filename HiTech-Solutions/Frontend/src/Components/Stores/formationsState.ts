@@ -1,5 +1,5 @@
-import axios from "axios";
-import { atom, selector, useRecoilCallback, useRecoilState } from "recoil";
+import axios from 'axios';
+import { atom, selector } from 'recoil';
 
 export interface Formation {
 	id: number;
