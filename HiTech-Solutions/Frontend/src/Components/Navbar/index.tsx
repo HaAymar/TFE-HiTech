@@ -33,7 +33,11 @@ const NavBar: React.FC = () => {
 	]);
 
 	return (
-		<Navbar expand="lg" fixed="top" style={{ backgroundColor: "#3991b4" }}>
+		<Navbar
+			expand="lg"
+			fixed="top"
+			style={{ backgroundColor: "#3991b47c" }}
+		>
 			<Container fluid>
 				<div
 					style={{
@@ -116,7 +120,7 @@ const NavBar: React.FC = () => {
 								color: "white",
 							}}
 						>
-							About Us
+							About us
 						</Nav.Link>
 					</Nav>
 					<Form className="d-flex mx-auto justify-content-center align-items-center">
