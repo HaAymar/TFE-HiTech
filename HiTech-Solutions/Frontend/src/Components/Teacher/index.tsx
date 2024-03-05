@@ -43,10 +43,26 @@ const FormulaireTest: React.FC = () => {
 	};
 
 	return (
-		<Container className="contentTest">
-			<Button variant="primary" onClick={handleShow}>
-				Ajouter un Test
-			</Button>
+		<Container
+			className="contentTest"
+			style={{ width: "850px", backgroundColor: "#dadde0" }}
+		>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					gap: "50%",
+				}}
+			>
+				<h5>Creation d'une nouveau test</h5>
+				<Button
+					onClick={handleShow}
+					style={{ width: "150px", backgroundColor: "#314353" }}
+				>
+					Ajouter un Test
+				</Button>
+			</div>
 
 			<Modal show={showModal} onHide={handleClose}>
 				<Modal.Header closeButton>
@@ -80,7 +96,7 @@ const FormulaireTest: React.FC = () => {
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3">
-							<Form.Label>Points</Form.Label>
+							<Form.Label>Points de cotation</Form.Label>
 							<Form.Control
 								type="number"
 								value={points}
@@ -96,23 +112,42 @@ const FormulaireTest: React.FC = () => {
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
-						Fermer
+					<Button
+						variant="danger"
+						onClick={handleClose}
+						style={{ backgroundColor: "#d84b4b" }}
+					>
+						Annuler
 					</Button>
-					<Button variant="primary" onClick={ajouterTest}>
+					<Button
+						onClick={ajouterTest}
+						style={{ backgroundColor: "#43928d" }}
+					>
 						Ajouter
 					</Button>
 				</Modal.Footer>
 			</Modal>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+			>
+				<p className="text-container">
+					La liste des tests à faire durant la formation pour les
+					étudiants inscrit dans ce cours.
+				</p>
+			</div>
 
 			<Table striped bordered hover className="mt-4">
 				<thead>
 					<tr>
-						<th>#</th>
+						<th>N°</th>
 						<th>Titre</th>
 						<th>Description</th>
-						<th>Date</th>
-						<th>Points</th>
+						<th style={{ width: "100px" }}>Date</th>
+						<th> Cotations</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -126,8 +161,8 @@ const FormulaireTest: React.FC = () => {
 							<td>{test.points}</td>
 							<td>
 								<Button
-									variant="danger"
 									onClick={() => supprimerTest(test.id)}
+									style={{ backgroundColor: "#d84b4b" }}
 								>
 									Supprimer
 								</Button>

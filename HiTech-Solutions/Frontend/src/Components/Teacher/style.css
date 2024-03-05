@@ -1,7 +1,30 @@
 .contentTest {
 	display: flex;
 	gap: 20px;
-	border: 1px solid black;
+	border: none;
 	border-radius: 15px;
 	padding-top: 30px;
+}
+
+.modal-header {
+	border-bottom: none;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #a6c1dd;
+}
+
+.modal-title {
+	color: #33364d;
+	font-weight: 600;
+}
+
+.modal-footer {
+	border-top: none;
+}
+.text-container {
+	text-align: center;
+	max-width: 400px;
+	margin: auto;
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+		sans-serif;
+	color: #6f7077;
 }

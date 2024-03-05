@@ -169,7 +169,7 @@ const CreationFormations: React.FC = () => {
 					</div>
 				</div>
 
-				<div className="">
+				<div>
 					<Button
 						onClick={() => setShowModal(true)}
 						style={{ backgroundColor: "#314353" }}

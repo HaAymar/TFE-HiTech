@@ -74,7 +74,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 					>
 						<CDBSidebar
 							textColor="#fff"
-							backgroundColor="#314353"
+							backgroundColor=" #1f3842e6"
 							className={""}
 							breakpoint={0}
 							toggled={false}
