@@ -1,9 +1,9 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './style.css'; // Importing CSS Module
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css"; // Importing CSS Module
 
-import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import React from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const Footer: React.FC = () => {
 	return (
@@ -19,14 +19,16 @@ const Footer: React.FC = () => {
 			>
 				<Row style={{ marginBottom: "20px" }}>
 					<Col>
-						<h5 style={{ fontWeight: "600" }}>Our Address</h5>
+						<h5 style={{ fontWeight: "600" }}>Localisation</h5>
 						<p>Rue des Glands 43 </p>
 						<p>1190 Forest</p>
 
-						<h5 style={{ fontWeight: "600" }}>Phone Number</h5>
+						<h5 style={{ fontWeight: "600" }}>
+							Numéro de téléphone
+						</h5>
 						<p>+32 456 7890</p>
 
-						<h5 style={{ fontWeight: "600" }}>Follow Us</h5>
+						<h5 style={{ fontWeight: "600" }}>Suivez nous</h5>
 						<Col>
 							<a
 								href="https://facebook.com"
@@ -49,7 +51,7 @@ const Footer: React.FC = () => {
 						</Col>
 					</Col>
 					<Col>
-						<h5 style={{ fontWeight: "600" }}>Support</h5>
+						<h5 style={{ fontWeight: "600" }}>Soutien</h5>
 						<p>Centre d'aide</p>
 						<h5 style={{ fontWeight: "600" }}>Services</h5>
 						<p>Centre de formation pour les demandeurs d'emplois</p>
@@ -67,7 +69,8 @@ const Footer: React.FC = () => {
 					<Col className="mt-4">
 						<div className="footerContent">
 							© {new Date().getFullYear()} ASBL HiTech-Solutions.
-							All rights reserved. | Data protection with GDPR
+							Tous droits réservés. | Protection des données avec
+							le RGPD
 						</div>
 					</Col>
 				</Row>

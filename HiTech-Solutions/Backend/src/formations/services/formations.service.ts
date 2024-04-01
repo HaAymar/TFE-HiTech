@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Service } from '../../typeorm/entities/Services';
+import { Formation } from '../../typeorm/entities/Formations';
 import { CreateFormationDto } from '../dtos/createFormation';
 import { DeleteFormationDto } from '../dtos/deleteFormation';
 import { UpdateFormationDto } from '../dtos/updateFormation';
@@ -11,8 +11,8 @@ import { UpdateFormationDto } from '../dtos/updateFormation';
 @Injectable()
 export class FormationsService {
   constructor(
-    @InjectRepository(Service)
-    private formationsRepository: Repository<Service>,
+    @InjectRepository(Formation)
+    private formationsRepository: Repository<Formation>,
   ) {}
   findFormations() {
     return this.formationsRepository.find();

@@ -3,12 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CoursesModule } from './courses/courses.module';
 import { FormationsModule } from './Formations/formations.module';
 import { Course } from './typeorm/entities/Courses';
 import { CreationTest } from './typeorm/entities/CreationTest';
+import { Formation } from './typeorm/entities/Formations';
 import { Role } from './typeorm/entities/Role';
-import { Section } from './typeorm/entities/Section';
-import { Service } from './typeorm/entities/Services';
 import { TeachersCourse } from './typeorm/entities/TeachCourses';
 import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
@@ -22,19 +22,12 @@ import { UsersModule } from './users/users.module';
       username: 'testuser',
       password: 'testuser123',
       database: 'nestjssql',
-      entities: [
-        User,
-        Role,
-        CreationTest,
-        TeachersCourse,
-        Service,
-        Section,
-        Course,
-      ],
+      entities: [User, Role, CreationTest, TeachersCourse, Formation, Course],
       synchronize: true,
     }),
     UsersModule,
     FormationsModule,
+    CoursesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

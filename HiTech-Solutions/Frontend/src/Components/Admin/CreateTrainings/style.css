@@ -76,7 +76,23 @@
 .headerDashboard {
 	display: flex;
 	flex-direction: row;
-	gap: 305px;
+	gap: 150px;
 	justify-content: center;
 	align-items: center;
+}
+.descripText {
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+		sans-serif;
+	color: #6f7077;
+}
+.addButton {
+	display: flex;
+	gap: 20px;
+}
+
+/* ---------------- Editing radious ---------------*/
+
+.descripEdit {
+	border: none;
+	border-radius: 5px;
 }

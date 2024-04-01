@@ -1,14 +1,13 @@
-import './style.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "./style.css";
 
-import React from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
-import { BsArrowRight } from 'react-icons/bs';
+import React from "react";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { BsArrowRight } from "react-icons/bs";
 
-import Bg from '../../Assets/Home/pro.webp';
-import Footer from '../Footer/index';
-import NavBar from '../Navbar/index';
-import OurServices from './InfoService/index';
+import Bg from "../../Assets/Home/pro.webp";
+import Footer from "../Footer/index";
+import NavBar from "../Navbar/index";
+import OurServices from "./InfoService/index";
 
 const Home = () => {
 	return (
@@ -25,7 +24,7 @@ const Home = () => {
 									fontSize: "2.8rem",
 								}}
 							>
-								Welcome to our Web Site HiTech-Solutions
+								Bienvenue sur notre site Web HiTech-Solutions
 							</h1>
 							<h4 style={{ fontSize: "2rem" }}>
 								Notre site propose plusieurs services dont, la{" "}
@@ -41,6 +40,7 @@ const Home = () => {
 									padding: "15px",
 									backgroundColor: "#60badd",
 									border: "none",
+									width: "200px",
 								}}
 							>
 								EN SAVOIR PLUS{" "}
@@ -58,17 +58,26 @@ const Home = () => {
 			</Container>
 
 			<OurServices />
-			<div className="body">
-				<Container className="about-section">
+			<div className="bodyAbout">
+				<Container
+					className="about-section"
+					style={{ width: "  800px" }}
+				>
 					<Row>
 						<Col
 							md={6}
 							className="about-text"
-							style={{ transition: "opacity 0.5s ease" }}
+							style={{
+								transition: "opacity 0.5s ease",
+								display: "flex",
+								flexDirection: "column",
+								gap: "20px",
+							}}
 						>
 							<h3>
-								We provide high-quality training and IT
-								troubleshooting services
+								Nous fournissons une formation et une
+								informatique de haute qualité services de
+								dépannage
 							</h3>
 							<p>
 								Lorem ipsum dolor sit amet, consectetur velit
@@ -76,22 +85,27 @@ const Home = () => {
 							</p>
 							<Row>
 								<Col>
-									<h3>Our Mission</h3>
+									<h3>Notre Mission</h3>
 									<p>
 										Lorem ipsum dolor sit amet techno magna
 										aliquam in design.
 									</p>
 								</Col>
 								<Col>
-									<h3>Our Vision</h3>
+									<h3>Notre Vision</h3>
 									<p>
 										Lorem ipsum dolor sit amet techno magna
 										aliquam in design.
 									</p>
 								</Col>
 							</Row>
-							<Button variant="outline-primary">
-								Discover More
+							<Button
+								style={{
+									backgroundColor: "#60badd",
+									width: "150px",
+								}}
+							>
+								Découvrir plus
 							</Button>
 						</Col>
 						<Col

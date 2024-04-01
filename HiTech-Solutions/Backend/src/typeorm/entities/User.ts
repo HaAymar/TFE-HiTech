@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
+import { Formation } from './Formations';
 import { Role } from './Role';
-import { Section } from './Section';
 
 @Entity({ name: 'users' })
 export class User {
@@ -29,8 +29,8 @@ export class User {
   @Column()
   password: string;
 
-  @ManyToOne(() => Section, (section) => section.users)
-  section: Section;
+  @ManyToOne(() => Formation, (formation) => formation.user)
+  formation: Formation;
 
   @ManyToOne(() => Role)
   role: Role;

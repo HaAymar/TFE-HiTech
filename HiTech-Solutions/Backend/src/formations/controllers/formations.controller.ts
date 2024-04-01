@@ -33,7 +33,7 @@ export class FormationsController {
     @Param('id', ParseIntPipe) formationId: DeleteFormationDto,
   ) {
     await this.formationService.deleteFormation(formationId);
-    console.log(formationId);
+    console.log('La formation ', formationId, 'a été supprimé !');
   }
 
   @Put(':id')
