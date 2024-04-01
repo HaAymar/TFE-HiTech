@@ -1,8 +1,8 @@
-import './style.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "./style.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import React from "react";
+import { Col, Container, Row } from "react-bootstrap";
 
 const OurServices = () => {
 	return (
@@ -20,7 +20,7 @@ const OurServices = () => {
 				<Row style={{ gap: "50px" }}>
 					<Col className="service-box">
 						<h2 style={{ fontWeight: "600", color: "#1695c7" }}>
-							Formation en Technology
+							Formation en Technologie
 						</h2>
 						<p>
 							Lorem ipsum dolor sit amet techno magna aliquam dom
@@ -29,7 +29,7 @@ const OurServices = () => {
 					</Col>
 					<Col className="service-box">
 						<h2 style={{ fontWeight: "600", color: "#1695c7" }}>
-							Service de dépannage IT
+							Service de dépannage informatique
 						</h2>
 						<p>
 							Lorem ipsum dolor sit amet techno magna aliquam dom

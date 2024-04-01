@@ -1,17 +1,21 @@
-import './style.css';
+import "./style.css";
 
 import {
-    CDBSidebar, CDBSidebarContent, CDBSidebarFooter, CDBSidebarHeader, CDBSidebarMenu,
-    CDBSidebarMenuItem
-} from 'cdbreact';
-import React, { startTransition, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
+	CDBSidebar,
+	CDBSidebarContent,
+	CDBSidebarFooter,
+	CDBSidebarHeader,
+	CDBSidebarMenu,
+	CDBSidebarMenuItem,
+} from "cdbreact";
+import React, { startTransition, useState } from "react";
+import { Col, Row } from "react-bootstrap";
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 
-import NavBar from '../../Navbar/index';
-import FormulaireTest from '../../Teacher/index';
-import Admin from '../CreateTrainings/index';
-import CreatingTroubleshooting from '../CreateTroubleshootings';
+import NavBar from "../../Navbar/index";
+import FormulaireTest from "../../Teacher/index";
+import Admin from "../CreateTrainings/index";
+import CreatingTroubleshooting from "../CreateTroubleshootings";
 
 interface DashboardSidebarProps {
 	role: "admin" | "teacher";
@@ -74,7 +78,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 					>
 						<CDBSidebar
 							textColor="#fff"
-							backgroundColor=" #1f3842e6"
+							backgroundColor=" #245b70e6"
 							className={""}
 							breakpoint={0}
 							toggled={false}
@@ -230,7 +234,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 															icon="cogs"
 															className="hoverColor"
 														>
-															Test manager{" "}
+															Formations{" "}
 															<span className="arrow">
 																{isManTestOpen ? (
 																	<RiArrowDropDownLine />
@@ -258,29 +262,23 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 																}
 															>
 																<CDBSidebarMenuItem className="hoverColor1">
-																	Course 1
+																	Admin
+																	réseaux
 																</CDBSidebarMenuItem>
 															</div>
 															<div>
 																<CDBSidebarMenuItem className="hoverColor1">
-																	Course 2
+																	Dev web
 																</CDBSidebarMenuItem>
 															</div>
 															<div>
 																<CDBSidebarMenuItem className="hoverColor1">
-																	Course 3
+																	Virtualisation
 																</CDBSidebarMenuItem>
 															</div>
 														</div>
 													)}
 												</div>
-
-												<CDBSidebarMenuItem
-													icon="envelope"
-													className="hoverColor"
-												>
-													Messages
-												</CDBSidebarMenuItem>
 											</>
 										)}
 									</div>

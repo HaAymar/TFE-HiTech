@@ -1,18 +1,18 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './style.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css";
 
-import React, { useState } from 'react';
-import { Nav } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { FaGlobe, FaSearch } from 'react-icons/fa';
+import React, { useState } from "react";
+import { Nav } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { FaGlobe, FaSearch } from "react-icons/fa";
 
-import Français from '../../Assets/Flags/fr.png';
-import Nederlands from '../../Assets/Flags/nl.png';
-import English from '../../Assets/Flags/uk.png';
-import Logo from '../../Assets/ll1.png';
+import Français from "../../Assets/Flags/fr.png";
+import Nederlands from "../../Assets/Flags/nl.png";
+import English from "../../Assets/Flags/uk.png";
+import Logo from "../../Assets/ll1.png";
 
 interface Country {
 	code: string;
@@ -36,7 +36,10 @@ const NavBar: React.FC = () => {
 		<Navbar
 			expand="lg"
 			fixed="top"
-			style={{ backgroundColor: "#3991b47c" }}
+			style={{
+				backgroundColor: "#3991b47c",
+				backdropFilter: "blur(10px)",
+			}}
 		>
 			<Container fluid>
 				<div
@@ -77,7 +80,7 @@ const NavBar: React.FC = () => {
 								color: "white",
 							}}
 						>
-							Home
+							Accueil
 						</Nav.Link>
 						<NavDropdown
 							style={{
@@ -96,7 +99,7 @@ const NavBar: React.FC = () => {
 							id="nav-dropdown-services"
 						>
 							<NavDropdown.Item href="/formation">
-								Formation
+								Formations
 							</NavDropdown.Item>
 							<NavDropdown.Item href="/depannage">
 								Dépannage
@@ -120,7 +123,7 @@ const NavBar: React.FC = () => {
 								color: "white",
 							}}
 						>
-							About us
+							À propos
 						</Nav.Link>
 					</Nav>
 					<Form className="d-flex mx-auto justify-content-center align-items-center">
@@ -130,7 +133,7 @@ const NavBar: React.FC = () => {
 
 						<Form.Control
 							type="search"
-							placeholder="Search"
+							placeholder="Recherche"
 							className="me-3 mr-100 w-75"
 							aria-label="Search"
 							style={{

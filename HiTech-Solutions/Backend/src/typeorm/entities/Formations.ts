@@ -26,6 +26,9 @@ export class Formation {
   @ManyToOne(() => User)
   user: User;
 
-  @OneToMany(() => Course, (course) => course.formation)
+  @OneToMany(() => Course, (course) => course.formation, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   courses: Course[];
 }

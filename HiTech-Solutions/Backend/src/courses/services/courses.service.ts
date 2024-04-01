@@ -6,6 +6,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Course } from '../../typeorm/entities/Courses';
 import { Formation } from '../../typeorm/entities/Formations';
 
+// import { DeleteCourseDto } from '../dtos/deleteCourses';
+
 @Injectable()
 export class CoursesService {
   constructor(
@@ -45,5 +47,16 @@ export class CoursesService {
     const savedCourse = await this.courseRepository.save(course);
     console.log('New course:', savedCourse);
     return savedCourse;
+  }
+
+  async deleteCoursesByFormationId(formationId: number): Promise<void> {
+    await this.courseRepository
+      .createQueryBuilder()
+      .delete()
+      .from(Course)
+      .where('formationId = :formationId', { formationId })
+      .execute();
+
+    await this.formationRepository.delete(formationId);
   }
 }

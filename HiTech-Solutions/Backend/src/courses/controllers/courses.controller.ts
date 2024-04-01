@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 
 import { Course } from '../../typeorm/entities/Courses';
 import { CoursesService } from '../services/courses.service';
@@ -23,5 +31,12 @@ export class CoursesController {
     @Body() courseData: Partial<Course>,
   ): Promise<Course> {
     return this.coursesService.addCourseToFormation(formationId, courseData);
+  }
+
+  @Delete('formation/:formationId')
+  async deleteCoursesByFormationId(
+    @Param('formationId', ParseIntPipe) formationId: number,
+  ): Promise<void> {
+    await this.coursesService.deleteCoursesByFormationId(formationId);
   }
 }
