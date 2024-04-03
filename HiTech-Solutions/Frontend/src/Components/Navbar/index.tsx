@@ -167,7 +167,7 @@ const NavBar: React.FC = () => {
 						))}
 					</NavDropdown>
 					<Nav className="mx-3">
-						<Nav.Link href="#login">Connexion</Nav.Link>
+						<Nav.Link href="/login">Connexion</Nav.Link>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
