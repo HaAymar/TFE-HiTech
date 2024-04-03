@@ -16,6 +16,17 @@ export class UsersService {
   }
   //------------------ In INSCRIPTION /!\ There is an error idRole and idSection do not accept the registration /!\ ------------------//
 
+  async findOneByEmail(email: string): Promise<User | undefined> {
+    return this.userRepository.findOne({
+      where: { email },
+      relations: ['role'],
+    });
+  }
+
+  async findOneById(id: number): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { id } });
+  }
+
   createUser(userDetails: CreateUserDto) {
     const newUser = this.userRepository.create({
       ...userDetails,

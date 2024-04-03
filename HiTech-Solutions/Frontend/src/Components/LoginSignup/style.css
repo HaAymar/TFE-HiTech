@@ -1,0 +1,36 @@
+.login-page,
+.login-page body {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+
+.login-page {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	background-color: #3759667c;
+}
+
+.logo-container img {
+	width: 160px;
+	height: auto;
+}
+
+.ContLogin {
+	display: flex;
+	border: none;
+	border-radius: 15px;
+	width: 560px;
+	padding: 4%;
+	margin-top: 10px;
+	background-color: #33364d;
+	color: aliceblue;
+}
+
+.inputForm {
+	width: 350px;
+}

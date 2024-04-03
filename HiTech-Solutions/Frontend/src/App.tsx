@@ -8,7 +8,7 @@ import Drawer from "./Components/Admin/Drawers/index";
 import Contact from "./Components/Contact/Contact";
 import Home from "./Components/Home/index";
 import OurServices from "./Components/Home/index";
-import LoginSignup from "./Components/LoginSignup/LoginSignup";
+import Login from "./Components/LoginSignup/index";
 import NavBar from "./Components/Navbar/index";
 import Services from "./Components/Services/index";
 import StudentPage from "./Components/Student/index";
@@ -20,7 +20,6 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/ourServices" element={<OurServices />} />
-				<Route path="/login" element={<LoginSignup />} />
 				<Route path="/NavBar" element={<NavBar />} />
 				<Route path="/admin" element={<Admin />} />
 				<Route path="/drawer" element={<Drawer role="teacher" />} />
@@ -28,6 +27,7 @@ function App() {
 				<Route path="/contact" element={<Contact />} />
 				<Route path="/test" element={<FormulaireTest />} />
 				<Route path="/student" element={<StudentPage />} />
+				<Route path="/login" element={<Login />} />
 			</Routes>
 		</Router>
 	);

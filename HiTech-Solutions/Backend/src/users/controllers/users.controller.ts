@@ -16,7 +16,6 @@ export class UsersController {
 
   @Post()
   createUser(@Body() createUserDto: CreateUserDto) {
-    // const { ...userDetails, confirmPassword } = createUserDto;
     console.log(createUserDto);
     this.userService.createUser(createUserDto);
   }
