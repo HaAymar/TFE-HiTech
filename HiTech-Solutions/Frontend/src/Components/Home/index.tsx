@@ -16,41 +16,55 @@ const Home = () => {
 			<Container fluid className="main-banner">
 				<Row>
 					<Col>
-						<div className="vertical-line">
+						<div
+							style={{
+								borderLeft: "5px solid #0bb6e0",
+								paddingLeft: "20px",
+								marginBottom: "20px",
+							}}
+						>
 							<h1
 								style={{
 									color: "#0bb6e0",
-									fontFamily: "Georgia",
+									fontFamily: "Georgia, serif",
 									fontSize: "2.8rem",
+									marginBottom: "0.5em", // Réduit l'espace entre les en-têtes
 								}}
 							>
-								Bienvenue sur notre site Web HiTech-Solutions
+								Bienvenue sur HiTech-Solutions
 							</h1>
-							<h4 style={{ fontSize: "2rem" }}>
-								Notre site propose plusieurs services dont, la{" "}
-								<br />
-								formation en informatique pour les demandeurs{" "}
-								<br />
-								d'emplois et service de dépannage en IT
+							<h4
+								style={{
+									fontSize: "1.6rem",
+									fontWeight: "normal",
+									color: "#333", // Ajoute un contraste doux pour une meilleure lisibilité
+									lineHeight: "1.6", // Améliore la lisibilité du texte
+								}}
+							>
+								<strong>
+									Découvrez nos services de formation en
+									informatique pour les demandeurs d'emplois
+									et nos solutions de dépannage IT.
+								</strong>
 							</h4>
 							<Button
 								variant="primary"
-								className="me-5"
+								className="mt-3"
 								style={{
 									padding: "15px",
-									backgroundColor: "#60badd",
+									backgroundColor: "#0bb6e0",
 									border: "none",
-									width: "200px",
+									width: "220px", // Légère augmentation pour équilibrer le bouton
+									fontSize: "1.2rem", // Augmente la taille de la police du bouton pour améliorer la visibilité
 								}}
 							>
-								EN SAVOIR PLUS{" "}
-								<span
+								En savoir plus{" "}
+								<BsArrowRight
 									style={{
 										marginLeft: "5px",
+										fontSize: "1.5rem",
 									}}
-								>
-									<BsArrowRight />
-								</span>
+								/>
 							</Button>
 						</div>
 					</Col>
@@ -61,59 +75,71 @@ const Home = () => {
 			<div className="bodyAbout">
 				<Container
 					className="about-section"
-					style={{ width: "  800px" }}
+					style={{ maxWidth: "800px", margin: "auto" }}
 				>
 					<Row>
 						<Col
 							md={6}
 							className="about-text"
 							style={{
-								transition: "opacity 0.5s ease",
+								padding: "15px",
 								display: "flex",
 								flexDirection: "column",
 								gap: "20px",
+								backgroundColor: "#f9f9f9",
+								boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+								borderRadius: "10px",
 							}}
 						>
-							<h3>
-								Nous fournissons une formation et une
-								informatique de haute qualité services de
-								dépannage
-							</h3>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur velit
-								incididunt ut labore et dolore magna aliqua.
-							</p>
-							<Row>
-								<Col>
-									<h3>Notre Mission</h3>
-									<p>
-										Lorem ipsum dolor sit amet techno magna
-										aliquam in design.
-									</p>
-								</Col>
-								<Col>
-									<h3>Notre Vision</h3>
-									<p>
-										Lorem ipsum dolor sit amet techno magna
-										aliquam in design.
-									</p>
-								</Col>
-							</Row>
-							<Button
-								style={{
-									backgroundColor: "#60badd",
-									width: "150px",
-								}}
+							<h3
+								style={{ color: "#0a6473", fontWeight: "bold" }}
 							>
-								Découvrir plus
-							</Button>
+								Notre Mission
+							</h3>
+							<p style={{ fontSize: "16px", lineHeight: "1.6" }}>
+								Notre objectif est de promouvoir les
+								technologies de l'information et de la
+								communication (TIC). Les activités qui
+								constituent ce projet incluent :
+							</p>
+							<ul style={{ paddingLeft: "20px" }}>
+								<li>
+									Éducation en technologies informatiques,
+									électroniques et de télécommunications (aux
+									seniors et autres intéressés)
+								</li>
+								<li>Réduction de la fracture numérique</li>
+								<li>
+									Conceptions et exécutions de projets
+									relatifs aux TICs
+								</li>
+								<li>
+									Dépannage des équipements, réseaux
+									informatiques et de télécommunications
+								</li>
+							</ul>
 						</Col>
 						<Col
 							md={6}
 							className="about-image"
-							style={{ transition: "opacity 0.5s ease" }}
+							style={{
+								padding: "20px",
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+								overflow: "hidden",
+								borderRadius: "10px",
+							}}
 						>
-							<img src={Bg} alt="About us" />
+							<img
+								src={Bg}
+								alt="About us"
+								style={{
+									width: "100%",
+									height: "auto",
+									maxWidth: "500px",
+								}}
+							/>
 						</Col>
 					</Row>
 				</Container>

@@ -1,9 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Formation } from './Formations';
-import { Role } from './Role';
+import { Admin } from './Admin';
+import { Student } from './Student';
+import { Teacher } from './Teacher';
 
-@Entity({ name: 'users' })
+@Entity('Users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -14,24 +15,22 @@ export class User {
   @Column()
   surname: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
-
-  @Column({ nullable: true })
-  tel: string;
-
-  @Column({ name: 'date_inscription', type: 'date', nullable: true })
-  dateInscription: Date;
-
-  @Column({ name: 'date_de_fin', type: 'date', nullable: true })
-  dateDeFin: Date;
 
   @Column()
   password: string;
 
-  @ManyToOne(() => Formation, (formation) => formation.user)
-  formation: Formation;
+  @Column({ nullable: true })
+  tel: string;
 
-  @ManyToOne(() => Role)
-  role: Role;
+  // Define relationships
+  @OneToMany(() => Admin, (admin) => admin.user)
+  admins: Admin[];
+
+  @OneToMany(() => Student, (student) => student.user)
+  students: Student[];
+
+  @OneToMany(() => Teacher, (teacher) => teacher.user)
+  teachers: Teacher[];
 }

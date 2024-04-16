@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 
 import React, { useState } from "react";
-import { Nav } from "react-bootstrap";
+import { Button, Nav } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
@@ -167,7 +167,16 @@ const NavBar: React.FC = () => {
 						))}
 					</NavDropdown>
 					<Nav className="mx-3">
-						<Nav.Link href="/login">Connexion</Nav.Link>
+						<Nav.Link href="/login">
+							<Button
+								style={{
+									backgroundColor: "#50b2d8",
+									border: "none",
+								}}
+							>
+								Connexion
+							</Button>
+						</Nav.Link>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

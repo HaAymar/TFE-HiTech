@@ -27,7 +27,6 @@
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
 		sans-serif;
 	color: #6f7077;
-	/* font-weight: ; */
 }
 .titleHeader {
 	display: flex;
@@ -39,4 +38,46 @@
 .modalTest {
 	display: flex;
 	flex-direction: row;
+}
+.editText {
+	border: none;
+	border-radius: 5px;
+	background-color: #dcdde0;
+	height: 50px;
+}
+/* Dans votre fichier CSS (suppose que vous utilisez CSS pur) */
+.contentTest {
+	background-color: "#dadde0";
+	width: 100%; /* prend toute la largeur disponible par défaut */
+	max-width: 1200px; /* largeur maximale que le container peut prendre */
+	margin-right: auto; /* centre le container horizontalement */
+	margin-left: auto; /* centre le container horizontalement */
+}
+
+/* Media queries pour les écrans plus petits */
+@media (max-width: 1199px) {
+	.contentTest {
+		width: 90%; /* prend 90% de la largeur disponible sur les écrans plus petits */
+	}
+}
+
+@media (max-width: 991px) {
+	.contentTest {
+		width: 85%; /* prend 85% de la largeur disponible sur les écrans moyens */
+	}
+}
+
+@media (max-width: 767px) {
+	.contentTest {
+		width: 80%; /* prend 80% de la largeur disponible sur les petits écrans */
+	}
+}
+
+@media (max-width: 575px) {
+	.contentTest {
+		width: 95%; /* prend 95% de la largeur disponible sur les très petits écrans */
+	}
+}
+.buttonColor {
+	background-color: #40b9af;
 }

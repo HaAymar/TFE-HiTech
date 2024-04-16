@@ -4,6 +4,7 @@ import "./style.css"; // Importing CSS Module
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { RiTwitterXLine } from "react-icons/ri";
 
 const Footer: React.FC = () => {
 	return (
@@ -22,7 +23,7 @@ const Footer: React.FC = () => {
 						<h5 style={{ fontWeight: "600" }}>Localisation</h5>
 						<p>Rue des Glands 43 </p>
 						<p>1190 Forest</p>
-
+						<p>Bruxelles, Belgique</p>
 						<h5 style={{ fontWeight: "600" }}>
 							Numéro de téléphone
 						</h5>
@@ -46,13 +47,13 @@ const Footer: React.FC = () => {
 								href="https://twitter.com"
 								style={{ color: "white" }}
 							>
-								<FaTwitter />
+								<RiTwitterXLine />
 							</a>
 						</Col>
 					</Col>
 					<Col>
-						<h5 style={{ fontWeight: "600" }}>Soutien</h5>
-						<p>Centre d'aide</p>
+						<h5 style={{ fontWeight: "600" }}>Contact</h5>
+						<p>Email: admin@hitchsolutions.be</p>
 						<h5 style={{ fontWeight: "600" }}>Services</h5>
 						<p>Centre de formation pour les demandeurs d'emplois</p>
 						<p>Service de dépannage</p>

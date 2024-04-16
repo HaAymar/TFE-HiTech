@@ -8,11 +8,14 @@ import {
 	CDBSidebarMenu,
 	CDBSidebarMenuItem,
 } from "cdbreact";
-import React, { startTransition, useState } from "react";
+import React, { startTransition, useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
+import { useRecoilValue } from "recoil";
 
-import NavBar from "../../Navbar/index";
+import NavBarDrawer from "../../Navbar/NavBarDrawer/index";
+import { fetchFormations } from "../../Stores/formationsState";
+import { userIdState } from "../../Stores/userIdState";
 import FormulaireTest from "../../Teacher/index";
 import Admin from "../CreateTrainings/index";
 import CreatingTroubleshooting from "../CreateTroubleshootings";
@@ -20,7 +23,16 @@ import CreatingTroubleshooting from "../CreateTroubleshootings";
 interface DashboardSidebarProps {
 	role: "admin" | "teacher";
 }
+
 const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
+	const defaultStyle: React.CSSProperties = {
+		backgroundColor: "#245b70e6",
+		paddingRight: "20px",
+		marginLeft: "auto",
+		borderBottomLeftRadius: "15px",
+		width: "100%",
+		maxWidth: "calc(100% - 17%)",
+	};
 	const [isMembersOpen, setIsMembersOpen] = useState(false);
 	const [isServicesOpen, setIsServicesOpen] = useState(false);
 	const [isManTestOpen, setIsManTestOpen] = useState(false);
@@ -28,16 +40,21 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 	const [displayTest, setDisplayTest] = useState(false);
 	const [displayTroubleshooting, setDisplayTroubleshooting] = useState(false);
 
+	const [collectId, setCollectId] = useState<number>(0);
+
+	const formations = useRecoilValue(fetchFormations);
+
 	const toogleFormation = () => {
-		console.log(displayFormation);
+		console.log("Salut", displayFormation);
 		startTransition(() => {
 			setDisplayFormation(true);
 			setDisplayTroubleshooting(false);
 			setDisplayTest(false);
 		});
 	};
-	const toogleTest = () => {
-		console.log(displayTest);
+	const toogleTest = (id: number) => {
+		setCollectId(id);
+
 		startTransition(() => {
 			setDisplayFormation(false);
 			setDisplayTroubleshooting(false);
@@ -46,7 +63,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 	};
 
 	const toogleTroubleshooting = () => {
-		console.log(displayFormation);
+		console.log("hehe", displayFormation);
 		startTransition(() => {
 			setDisplayFormation(false);
 			setDisplayTroubleshooting(true);
@@ -65,15 +82,23 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 	const toggleManTest = () => {
 		setIsManTestOpen(!isManTestOpen);
 	};
+
+	useEffect(() => {
+		console.log("HEY", collectId);
+	}, [collectId]);
+
 	return (
 		<div style={{ overflow: "hidden" }}>
-			<NavBar />
+			<NavBarDrawer customStyle={defaultStyle} />
+
 			<Row>
 				<Col xs={12} md={2}>
 					<div
 						style={{
 							height: "100vh",
 							overflow: "hidden",
+							position: "fixed",
+							maxWidth: "35vh",
 						}}
 					>
 						<CDBSidebar
@@ -87,7 +112,6 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 						>
 							<div
 								style={{
-									paddingTop: "60px",
 									color: "#40b9af",
 								}}
 							>
@@ -256,28 +280,31 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 																	"30px",
 															}}
 														>
-															<div
-																onClick={
-																	toogleTest
-																}
-															>
-																<CDBSidebarMenuItem className="hoverColor1">
-																	Admin
-																	réseaux
-																</CDBSidebarMenuItem>
-															</div>
-															<div>
-																<CDBSidebarMenuItem className="hoverColor1">
-																	Dev web
-																</CDBSidebarMenuItem>
-															</div>
-															<div>
-																<CDBSidebarMenuItem className="hoverColor1">
-																	Virtualisation
-																</CDBSidebarMenuItem>
-															</div>
+															{formations.map(
+																(formation) => (
+																	<div
+																		onClick={() =>
+																			toogleTest(
+																				formation.id
+																			)
+																		}
+																	>
+																		<CDBSidebarMenuItem className="hoverColor1">
+																			{
+																				formation.name
+																			}
+																		</CDBSidebarMenuItem>
+																	</div>
+																)
+															)}
 														</div>
 													)}
+													<CDBSidebarMenuItem
+														icon="envelope"
+														className="hoverColor"
+													>
+														Emails
+													</CDBSidebarMenuItem>
 												</div>
 											</>
 										)}
@@ -298,7 +325,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 					</div>
 				</Col>
 				{displayFormation && <Admin />}
-				{displayTest && <FormulaireTest />}
+				{displayTest && <FormulaireTest idFormation={collectId} />}
 				{displayTroubleshooting && <CreatingTroubleshooting />}
 			</Row>
 		</div>

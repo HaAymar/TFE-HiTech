@@ -10,6 +10,15 @@ import {
 	Modal,
 	Row,
 } from "react-bootstrap";
+import { useRecoilValue } from "recoil";
+
+import { Course, Formation, TeacherCourse, User } from "../../types";
+import { teacherCoursesState } from "../Stores/coursesState";
+
+//------ Id formation----//
+interface CoursesDisplayComponentProps {
+	idFormation: number | null; // Ajout de la prop idFormation
+}
 
 // Interface pour définir la structure d'un test
 interface ITest {
@@ -21,8 +30,13 @@ interface ITest {
 	courseId: number;
 }
 
+interface FormationWithCourses extends Formation {
+	coursesT: Course[];
+}
 // Composant principal
-const FormulaireTest: React.FC = () => {
+const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
+	idFormation,
+}) => {
 	// Données simulées pour les cours
 	const courses = [
 		{ id: 1, title: "Dév Web" },
@@ -32,6 +46,13 @@ const FormulaireTest: React.FC = () => {
 	];
 
 	// États
+	const [editingTestId, setEditingTestId] = useState<null | number>(null);
+
+	const [editedDescription, setEditedDescription] = useState("");
+	const [editedTitre, setEditedTitre] = useState("");
+	const [editedDate, setEditedDate] = useState("");
+	const [editedPoints, setEditedPoints] = useState<number | "">("");
+
 	const [tests, setTests] = useState<ITest[]>([]);
 	const [showTestModal, setShowTestModal] = useState(false);
 	const [showListModal, setShowListModal] = useState(false);
@@ -49,6 +70,30 @@ const FormulaireTest: React.FC = () => {
 		setShowTestModal(false);
 		setCurrentTestId(null); // Réinitialiser le test sélectionné pour modification
 		resetForm();
+	};
+
+	const activerEdition = (test: ITest) => {
+		setEditingTestId(test.id);
+		setEditedDescription(test.description);
+	};
+
+	const sauvegarderModification = (testId: number) => {
+		const updatedTests = tests.map((test) => {
+			if (test.id === testId) {
+				return {
+					...test,
+					titre: editedTitre,
+					description: editedDescription,
+					date: editedDate,
+					// Assurez-vous que `points` est un nombre. Utilisez 0 ou une autre valeur par défaut si `editedPoints` est une chaîne vide.
+					points: editedPoints === "" ? 0 : editedPoints,
+				};
+			}
+			return test;
+		});
+		setTests(updatedTests);
+		setEditingTestId(null); // Sortir du mode d'édition
+		// Réinitialiser les états édités si nécessaire
 	};
 
 	// Afficher le modal de test pour ajout ou modification
@@ -128,61 +173,117 @@ const FormulaireTest: React.FC = () => {
 		return tests.filter((test) => test.courseId === courseId);
 	};
 
+	const coursesT = useRecoilValue(teacherCoursesState);
+	console.log("courses", coursesT);
+	// const simplifiedFormations: FormationWithCourses[] = coursesT.reduce(
+	// 	(acc: FormationWithCourses[], course: Course) => {
+	// 		let formation = acc.find((f) => f.id === course.formation.id);
+
+	// 		if (!formation) {
+	// 			formation = { ...course.formation, coursesT: [] };
+	// 			acc.push(formation);
+	// 		}
+
+	// 		formation.coursesT.push(course);
+
+	// 		return acc;
+	// 	},
+	// 	[]
+	// );
+
+	// console.log("Yes", simplifiedFormations);
+	// const selectedFormationCourses =
+	// 	simplifiedFormations.find((formation) => formation.id === idFormation)
+	// ?.coursesT || [];
+
+	const selectedFormationCourses = coursesT.filter(
+		(course: any) => course.formationId === idFormation
+	);
+	const nameFormation = selectedFormationCourses[0].formationName;
+	console.log("Hey hey", nameFormation);
 	return (
 		<Container
 			className="contentTest"
-			style={{ width: "1200px", backgroundColor: "#dadde0" }}
+			style={{ width: "80%", backgroundColor: "#dadde0" }}
 		>
 			<div className="titleHeader">
-				<h5 style={{ fontWeight: "700" }}>
-					Liste des cours en administration réseau{" "}
-				</h5>
+				<h3 style={{ fontWeight: "700" }}>
+					Liste des cours en {nameFormation}
+				</h3>
 				<p className="text-container">
-					Le lorem ipsum est, en imprimerie, une suite de mots sans
-					signification utilisée à titre provisoire pour calibrer une
-					mise en page,
+					Afin de pouvoir créer un test de ce cours, vous pouvez
+					cliquer sur le bouton « Créer un Test » après la création
+					cliquer sur « Liste des Tests où vous allez trouver tous les
+					tests créer
 				</p>
 			</div>
-			<Row className="justify-content-md-center">
-				{courses.map((course, index) => (
-					<Col key={index} xs={12} md={6} lg={4}>
-						<Card style={{ width: "18rem", margin: "1rem" }}>
-							<Card.Body>
-								<Card.Title
-									style={{
-										display: "flex",
-										alignItems: "center",
-										justifyContent: "center",
-									}}
+			{selectedFormationCourses.length === 0 ? (
+				<div
+					className="text-center"
+					style={{
+						color: "grey",
+					}}
+				>
+					<p>
+						<strong>
+							Vous ne possédez pas encore de cours dans cette
+							formation
+						</strong>{" "}
+					</p>
+				</div>
+			) : (
+				<Row className="justify-content-md-center">
+					{selectedFormationCourses.map(
+						(course: any, index: number) => (
+							<Col key={index} xs={12} md={6} lg={4}>
+								<Card
+									style={{ width: "18rem", margin: "1rem" }}
 								>
-									{course.title}
-								</Card.Title>
-								<div
-									className="d-flex justify-content-center"
-									style={{ gap: "20px" }}
-								>
-									<Button
-										onClick={() =>
-											handleShowTestModal(course.id)
-										}
-										style={{ backgroundColor: "#314353" }}
-									>
-										Ajouter un Test
-									</Button>
-									<Button
-										variant="secondary"
-										onClick={() =>
-											handleShowListModal(course.id)
-										}
-									>
-										Liste des Tests
-									</Button>
-								</div>
-							</Card.Body>
-						</Card>
-					</Col>
-				))}
-			</Row>
+									<Card.Body>
+										<Card.Title
+											style={{
+												display: "flex",
+												alignItems: "center",
+												justifyContent: "center",
+											}}
+										>
+											{course.courseName}
+										</Card.Title>
+										<div
+											className="d-flex justify-content-center"
+											style={{ gap: "20px" }}
+										>
+											<Button
+												onClick={() =>
+													handleShowTestModal(
+														course.courseId
+													)
+												}
+												style={{
+													backgroundColor: "#314353",
+													border: "none",
+												}}
+											>
+												Créer un Test
+											</Button>
+											<Button
+												variant="secondary"
+												onClick={() =>
+													handleShowListModal(
+														course.courseId
+													)
+												}
+											>
+												Liste des Tests
+											</Button>
+										</div>
+									</Card.Body>
+								</Card>
+							</Col>
+						)
+					)}
+				</Row>
+			)}
 
 			<Modal show={showListModal} onHide={handleCloseListModal} size="lg">
 				<Modal.Header closeButton>
@@ -192,8 +293,9 @@ const FormulaireTest: React.FC = () => {
 					{currentCourseId &&
 					trouverTestsParCours(currentCourseId).length > 0 ? (
 						trouverTestsParCours(currentCourseId).map(
-							(test, key) => (
+							(test, index) => (
 								<div
+									key={test.id}
 									className="test-list-item mb-3"
 									style={{
 										display: "flex",
@@ -201,49 +303,119 @@ const FormulaireTest: React.FC = () => {
 										gap: "10px",
 									}}
 								>
-									<h5>
-										<strong>
-											{key + 1}. {test.titre}
-										</strong>
-									</h5>
-									<p>
-										<strong>Description:</strong>{" "}
-										{test.description}
-									</p>
-									<p>
-										<strong>Date:</strong> {test.date}
-									</p>
-									<p>
-										<strong>Points:</strong> {test.points}
-									</p>
+									<strong>
+										{index + 1}. {test.titre}
+									</strong>
+									{editingTestId === test.id ? (
+										<>
+											<input
+												className="editText"
+												defaultValue={test.titre}
+												onChange={(e) =>
+													setEditedTitre(
+														e.target.value
+													)
+												}
+											/>
+											<Form.Control
+												style={{
+													border: "none",
+													backgroundColor: "#dcdde0",
+												}}
+												as="textarea"
+												rows={3}
+												defaultValue={test.description}
+												onChange={(e) =>
+													setEditedDescription(
+														e.target.value
+													)
+												}
+											/>
+											<Form.Control
+												type="date"
+												defaultValue={test.date}
+												onChange={(e) =>
+													setEditedDate(
+														e.target.value
+													)
+												}
+											/>
+											<Form.Control
+												type="number"
+												defaultValue={test.points.toString()}
+												onChange={(e) =>
+													setEditedPoints(
+														e.target.value === ""
+															? ""
+															: Number(
+																	e.target
+																		.value
+															  )
+													)
+												}
+											/>
+										</>
+									) : (
+										<>
+											<div>
+												<strong>Titre:</strong>{" "}
+												{test.titre}
+											</div>
+
+											<div>
+												<strong>Description:</strong>{" "}
+												{test.description}
+											</div>
+											<div>
+												<strong>Date:</strong>{" "}
+												{test.date}
+											</div>
+											<div>
+												<strong>Points:</strong>{" "}
+												{test.points}
+											</div>
+										</>
+									)}
 									<div
 										style={{ display: "flex", gap: "10px" }}
 									>
-										<Button
-											style={{
-												backgroundColor: "#40b9af",
-												border: "none",
-											}}
-											variant="primary"
-											size="sm"
-											onClick={() =>
-												handleShowTestModal(
-													currentCourseId,
-													test.id
-												)
-											}
-										>
-											Modifier
-										</Button>
-										<Button
-											variant="danger"
-											size="sm"
-											onClick={() =>
-												supprimerTest(test.id)
-											}
-										>
-											Supprimer
-										</Button>
+										{editingTestId === test.id ? (
+											<Button
+												variant="success"
+												size="sm"
+												onClick={() =>
+													sauvegarderModification(
+														test.id
+													)
+												}
+											>
+												Sauvegarder
+											</Button>
+										) : (
+											<>
+												<Button
+													style={{
+														backgroundColor:
+															"#40b9af",
+													}}
+													size="sm"
+													onClick={() =>
+														activerEdition(test)
+													}
+												>
+													Modifier
+												</Button>
+												<Button
+													variant="danger"
+													size="sm"
+													onClick={() =>
+														supprimerTest(test.id)
+													}
+												>
+													Supprimer
+												</Button>
+											</>
+										)}
 									</div>
 								</div>
 							)
@@ -252,6 +424,7 @@ const FormulaireTest: React.FC = () => {
 						<p>Aucun test trouvé pour ce cours.</p>
 					)}
 				</Modal.Body>
+
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleCloseListModal}>
 						Fermer
@@ -259,7 +432,6 @@ const FormulaireTest: React.FC = () => {
 				</Modal.Footer>
 			</Modal>
 
-			{/* Modal pour ajouter/modifier un test */}
 			<Modal show={showTestModal} onHide={handleCloseTestModal}>
 				<Modal.Header closeButton>
 					<Modal.Title>
@@ -315,7 +487,12 @@ const FormulaireTest: React.FC = () => {
 					<Button variant="secondary" onClick={handleCloseTestModal}>
 						Annuler
 					</Button>
-					<Button onClick={ajouterOuModifierTest}>
+					<Button
+						onClick={ajouterOuModifierTest}
+						style={{
+							backgroundColor: "#40b9af",
+						}}
+					>
 						{currentTestId ? "Modifier" : "Ajouter"}
 					</Button>
 				</Modal.Footer>

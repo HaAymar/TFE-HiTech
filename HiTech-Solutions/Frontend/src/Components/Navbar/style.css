@@ -2,3 +2,9 @@
 .navbar-dark .navbar-nav .nav-dropdown-title {
 	color: white;
 }
+/* Dans votre fichier CSS */
+.navbarCustom {
+	background-color: #3991b47c;
+	backdrop-filter: blur(10px);
+	padding-left: 20px; /* Ajuster selon le besoin */
+}
