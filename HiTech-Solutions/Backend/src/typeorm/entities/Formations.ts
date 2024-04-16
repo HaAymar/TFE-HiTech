@@ -1,34 +1,16 @@
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-
-import { Course } from './Courses';
-import { User } from './User';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'formations' })
 export class Formation {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column()
   name: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   description: string;
 
   @Column({ nullable: true })
   photo: string;
-
-  @ManyToOne(() => User)
-  user: User;
-
-  @OneToMany(() => Course, (course) => course.formation, {
-    cascade: true,
-    onDelete: 'CASCADE',
-  })
-  courses: Course[];
 }

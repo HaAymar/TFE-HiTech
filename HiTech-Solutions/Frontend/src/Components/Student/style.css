@@ -1,15 +1,31 @@
 .contentStudent {
-	border: 1px solid black;
-	width: 1000px;
+	display: flex;
+	gap: 20px;
+	border: none;
+	border-radius: 15px;
+	padding-top: 15px;
+	position: fixed;
+}
+.custom-accordion-header .accordion-button {
+	background-color: #1d9ebe;
+	color: white;
 }
 
-/* .contentProgress {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-} */
-/* .progressBar {
-	display: flex;
-	flex-direction: column;
-} */
+.custom-accordion-header .accordion-button:not(.collapsed) {
+	background-color: #2292be;
+}
+.custom-accordion-body {
+	max-height: 70vh; /* Ajustez en fonction de l'espace occupé par d'autres éléments */
+	overflow-y: auto; /* Active le défilement vertical si le contenu dépasse */
+}
+.student-page-container {
+	height: 100vh; /* Hauteur fixée à la hauteur de la vue */
+	overflow: hidden; /* Empêche le scroll interne */
+}
+.student-page-container .custom-accordion-body {
+	max-height: 70vh; /* Hauteur maximale pour le défilement interne */
+	overflow-y: auto; /* Permet le défilement vertical */
+}
+.scrollPage {
+	overflow: hidden;
+}

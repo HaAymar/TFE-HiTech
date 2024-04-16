@@ -307,7 +307,7 @@ const CreationFormations: React.FC = () => {
 	return (
 		<Container
 			className="containerTable"
-			style={{ width: "1200px", backgroundColor: "#dadde0" }}
+			style={{ width: "78%", backgroundColor: "#dadde0" }}
 		>
 			<div className="headerDashboard">
 				<div>
@@ -335,14 +335,14 @@ const CreationFormations: React.FC = () => {
 				<div className="addButton">
 					<Button
 						onClick={() => setShowModalForm(true)}
-						style={{ backgroundColor: "#314353" }}
+						style={{ backgroundColor: "#314353", border: "none" }}
 					>
 						<IoIosAdd />
 						Ajouter une formation
 					</Button>
 					<Button
 						onClick={() => setShowModalCours(true)}
-						style={{ backgroundColor: "#314353" }}
+						style={{ backgroundColor: "#314353", border: "none" }}
 					>
 						<IoIosAdd />
 						Ajouter un cours

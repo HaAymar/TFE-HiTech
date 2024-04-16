@@ -27,7 +27,6 @@
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
 		sans-serif;
 	color: #6f7077;
-	/* font-weight: ; */
 }
 .titleHeader {
 	display: flex;
@@ -39,4 +38,45 @@
 .modalTest {
 	display: flex;
 	flex-direction: row;
+}
+.editText {
+	border: none;
+	border-radius: 5px;
+	background-color: #dcdde0;
+	height: 50px;
+}
+
+.contentTest {
+	background-color: "#dadde0";
+	width: 100%;
+	max-width: 1200px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+@media (max-width: 1199px) {
+	.contentTest {
+		width: 90%;
+	}
+}
+
+@media (max-width: 991px) {
+	.contentTest {
+		width: 85%;
+	}
+}
+
+@media (max-width: 767px) {
+	.contentTest {
+		width: 80%;
+	}
+}
+
+@media (max-width: 575px) {
+	.contentTest {
+		width: 95%;
+	}
+}
+.buttonColor {
+	background-color: #40b9af;
 }

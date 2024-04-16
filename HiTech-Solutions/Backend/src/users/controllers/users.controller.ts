@@ -11,7 +11,7 @@ export class UsersController {
   constructor(private userService: UsersService) {}
   @Get()
   async getUsers() {
-    return await this.userService.findUsers();
+    return await this.userService.findAllUsersWithRoles();
   }
 
   @Post()

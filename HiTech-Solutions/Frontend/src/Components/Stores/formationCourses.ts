@@ -1,7 +1,6 @@
-// services/courseService.ts
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001/courses"; // Remplacez par l'URL de base de votre API
+const BASE_URL = "http://localhost:3001/courses";
 
 export const findByFormationName = async (name: string) => {
 	try {

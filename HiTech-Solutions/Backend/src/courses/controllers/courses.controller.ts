@@ -25,6 +25,13 @@ export class CoursesController {
     return this.coursesService.findCourses();
   }
 
+  @Get('/teacher/:userId')
+  getTeacherCourses(
+    @Param('userId', ParseIntPipe) userId: number,
+  ): Promise<Course[]> {
+    return this.coursesService.findTeacherCourses(userId);
+  }
+
   @Post(':formationId')
   async addCourseToFormation(
     @Param('formationId') formationId: number,

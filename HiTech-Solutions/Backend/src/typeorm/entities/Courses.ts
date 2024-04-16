@@ -1,8 +1,14 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { Formation } from './Formations';
 
-@Entity({ name: 'courses' })
+@Entity('Courses')
 export class Course {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,9 +16,7 @@ export class Course {
   @Column()
   name: string;
 
-  // @OneToMany(() => TeachersCourses, (teachersCourses) => teachersCourses.course)
-  // teachersCourses: TeachersCourses[];
-
-  @ManyToOne(() => Formation, (formation) => formation.courses)
+  @ManyToOne(() => Formation)
+  @JoinColumn({ name: 'id_formation' })
   formation: Formation;
 }
