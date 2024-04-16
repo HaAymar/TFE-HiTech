@@ -17,16 +17,15 @@ const RoleDrawer: React.FC = () => {
 		return null;
 	}
 
-	const decoded: DecodedToken = jwtDecode<DecodedToken>(token); // Assurez-vous de déclarer `DecodedToken`
-	const role = decoded.RoleName; // Utilisez `RoleName` correctement en fonction de ce que contient votre JWT
-
+	const decoded: DecodedToken = jwtDecode<DecodedToken>(token);
+	const role = decoded.RoleName;
 	switch (role) {
 		case "Teacher":
 			return <Drawer role="teacher" />;
 		case "Admin":
 			return <Drawer role="admin" />;
 		default:
-			navigate("/"); // Utilisez navigate pour la redirection
+			navigate("/");
 			return null;
 	}
 };

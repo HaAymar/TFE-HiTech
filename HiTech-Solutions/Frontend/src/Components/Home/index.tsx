@@ -21,6 +21,10 @@ const Home = () => {
 								borderLeft: "5px solid #0bb6e0",
 								paddingLeft: "20px",
 								marginBottom: "20px",
+								display: "flex",
+								flexDirection: "column",
+								justifyContent: "center",
+								alignItems: "center",
 							}}
 						>
 							<h1
@@ -28,7 +32,7 @@ const Home = () => {
 									color: "#0bb6e0",
 									fontFamily: "Georgia, serif",
 									fontSize: "2.8rem",
-									marginBottom: "0.5em", // Réduit l'espace entre les en-têtes
+									marginBottom: "0.5em",
 								}}
 							>
 								Bienvenue sur HiTech-Solutions
@@ -37,8 +41,8 @@ const Home = () => {
 								style={{
 									fontSize: "1.6rem",
 									fontWeight: "normal",
-									color: "#333", // Ajoute un contraste doux pour une meilleure lisibilité
-									lineHeight: "1.6", // Améliore la lisibilité du texte
+									color: "#333",
+									lineHeight: "1.6",
 								}}
 							>
 								<strong>
@@ -54,8 +58,8 @@ const Home = () => {
 									padding: "15px",
 									backgroundColor: "#0bb6e0",
 									border: "none",
-									width: "220px", // Légère augmentation pour équilibrer le bouton
-									fontSize: "1.2rem", // Augmente la taille de la police du bouton pour améliorer la visibilité
+									width: "220px",
+									fontSize: "1.2rem",
 								}}
 							>
 								En savoir plus{" "}

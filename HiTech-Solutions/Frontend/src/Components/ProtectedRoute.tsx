@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
 	element: React.ComponentType;
@@ -15,7 +15,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 	element: Component,
 	allowedRoles,
 }) => {
-	const location = useLocation();
 	const userToken = localStorage.getItem("token");
 	let userRole = "";
 

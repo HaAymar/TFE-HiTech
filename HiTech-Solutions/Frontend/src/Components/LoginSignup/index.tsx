@@ -20,7 +20,7 @@ interface CustomJwtPayload {
 const LoginPage: React.FC = () => {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-	const [userC, setUserC] = useState<number>(0);
+
 	const setUserId = useSetRecoilState(userIdState);
 	const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ const LoginPage: React.FC = () => {
 					jwtDecode<CustomJwtPayload>(token);
 				localStorage.setItem("token", token);
 				console.log("User login", user.UserId);
-				setUserC(user.UserId);
+
 				setUserId(user.UserId);
 				console.log("User login", user.UserId);
 				if (user.RoleName === "Student") {

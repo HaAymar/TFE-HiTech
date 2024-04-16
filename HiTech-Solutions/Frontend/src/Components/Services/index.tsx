@@ -7,7 +7,7 @@ import { useRecoilValue } from "recoil";
 
 import admin from "../../Assets/Services/admin.jpeg";
 import NavBar from "../Navbar/index";
-import { fetchFormations } from "../Stores/formationsState"; // Assurez-vous que le chemin d'importation est correct
+import { fetchFormations } from "../Stores/formationsState";
 
 const Services: React.FC = () => {
 	const formations = useRecoilValue(fetchFormations);

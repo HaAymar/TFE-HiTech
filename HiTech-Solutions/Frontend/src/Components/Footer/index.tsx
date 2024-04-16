@@ -3,7 +3,7 @@ import "./style.css"; // Importing CSS Module
 
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
 
 const Footer: React.FC = () => {

@@ -15,7 +15,6 @@ import { useRecoilValue } from "recoil";
 
 import NavBarDrawer from "../../Navbar/NavBarDrawer/index";
 import { fetchFormations } from "../../Stores/formationsState";
-import { userIdState } from "../../Stores/userIdState";
 import FormulaireTest from "../../Teacher/index";
 import Admin from "../CreateTrainings/index";
 import CreatingTroubleshooting from "../CreateTroubleshootings";
