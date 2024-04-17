@@ -5,8 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthController } from './auth/auth.controller';
+import { AuthModule } from './auth/auth.module';
 import { CoursesModule } from './courses/courses.module';
-import { FormationsModule } from './Formations/formations.module';
+import { FormationsModule } from './formations/formations.module';
 import { Admin } from './typeorm/entities/Admin';
 import { Course } from './typeorm/entities/Courses';
 import { CreationTest } from './typeorm/entities/CreationTest';
@@ -19,7 +20,6 @@ import { Teacher } from './typeorm/entities/Teacher';
 import { Test } from './typeorm/entities/Test';
 import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
