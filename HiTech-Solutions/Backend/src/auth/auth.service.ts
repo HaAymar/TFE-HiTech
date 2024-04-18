@@ -14,7 +14,7 @@ export class AuthService {
   async validateUser({ email, password }: AuthPayloadDto) {
     const usersInfo = await this.userService.findAllUsersWithRoles();
     const findUser = usersInfo.find((user) => user.Email === email);
-    console.log(usersInfo);
+    console.log('users', usersInfo);
     console.log(findUser);
     if (!findUser) return null;
 
