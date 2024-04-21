@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
+import { AllExceptionsFilter } from './common/index';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ async function bootstrap() {
   // };
 
   app.use(cors());
+  app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(3001);
 }
 bootstrap();
