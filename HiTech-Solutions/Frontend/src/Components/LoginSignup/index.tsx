@@ -15,17 +15,20 @@ import { userIdState } from "../Stores/userIdState";
 interface CustomJwtPayload {
 	RoleName: string;
 	UserId: number;
+	Name: string;
+	Surname: string;
 }
 
 const LoginPage: React.FC = () => {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-
+	const [error, setError] = useState<string>("");
 	const setUserId = useSetRecoilState(userIdState);
 	const navigate = useNavigate();
 
 	const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault(); // Empêche le rechargement de la page
+		console.log(email);
 		try {
 			const response = await axios.post(
 				"http://localhost:3001/auth/login",
@@ -40,17 +43,21 @@ const LoginPage: React.FC = () => {
 				const user: CustomJwtPayload =
 					jwtDecode<CustomJwtPayload>(token);
 				localStorage.setItem("token", token);
-				console.log("User login", user.UserId);
+
+				const initials = user.Name.charAt(0) + user.Surname.charAt(0);
+				console.log("User login", initials);
+
+				// navigate(`/student?initials=${initials}`);
 
 				setUserId(user.UserId);
 				console.log("User login", user.UserId);
 				if (user.RoleName === "Student") {
-					navigate("/student");
+					navigate(`/student?initials=${initials}`);
 				} else if (
 					user.RoleName === "Teacher" ||
 					user.RoleName === "Admin"
 				) {
-					navigate("/drawer");
+					navigate(`/drawer?initials=${initials}`);
 				} else {
 					navigate("/");
 				}
@@ -59,6 +66,7 @@ const LoginPage: React.FC = () => {
 			if (axios.isAxiosError(error)) {
 				if (error.response) {
 					console.error("Failed to login:", error.response.data);
+					setError("*Identification invalide!");
 				} else if (error.request) {
 					console.error("No response received:", error.request);
 				} else {
@@ -89,7 +97,9 @@ const LoginPage: React.FC = () => {
 									type="email"
 									placeholder="Entrez votre email"
 									value={email}
-									onChange={(e) => setEmail(e.target.value)}
+									onChange={(e) =>
+										setEmail(e.target.value.trim())
+									}
 								/>
 							</InputGroup>
 						</Form.Group>
@@ -113,6 +123,12 @@ const LoginPage: React.FC = () => {
 								/>
 							</InputGroup>
 						</Form.Group>
+						<p
+							className="d-flex justify-content-center"
+							style={{ color: "red" }}
+						>
+							{error}
+						</p>
 						<div className="d-flex justify-content-center">
 							<Button
 								style={{

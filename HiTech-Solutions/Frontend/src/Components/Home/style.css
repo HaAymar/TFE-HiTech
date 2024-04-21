@@ -76,22 +76,13 @@
 	border-radius: 60%;
 }
 
-.btn-primary {
-	background-color: #007bff;
-	border: none;
-}
-
-.btn-outline-primary {
-	border-color: #007bff;
-	color: #007bff;
-}
-.service-box {
+/* .service-box {
 	border: 1px solid #ddd;
 	padding: 2px;
 	border-radius: 10px;
 	border: none;
 	background-color: rgb(67, 217, 236);
-}
+} */
 /* Style pour les navigateurs basés sur WebKit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
 	width: 7px;

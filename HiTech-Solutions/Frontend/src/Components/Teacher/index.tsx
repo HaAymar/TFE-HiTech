@@ -12,7 +12,6 @@ import {
 } from "react-bootstrap";
 import { useRecoilValue } from "recoil";
 
-import { Course, Formation, TeacherCourse, User } from "../../types";
 import { teacherCoursesState } from "../Stores/coursesState";
 
 //------ Id formation----//
@@ -30,21 +29,10 @@ interface ITest {
 	courseId: number;
 }
 
-interface FormationWithCourses extends Formation {
-	coursesT: Course[];
-}
 // Composant principal
 const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
 	idFormation,
 }) => {
-	// Données simulées pour les cours
-	const courses = [
-		{ id: 1, title: "Dév Web" },
-		{ id: 2, title: "DNS Configuration" },
-		{ id: 3, title: "Virtualisation" },
-		{ id: 4, title: "Networking" },
-	];
-
 	// États
 	const [editingTestId, setEditingTestId] = useState<null | number>(null);
 
@@ -285,7 +273,11 @@ const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
 				</Row>
 			)}
 
-			<Modal show={showListModal} onHide={handleCloseListModal} size="lg">
+			<Modal
+				show={showListModal}
+				onHide={handleCloseListModal}
+				dialogClassName="custom-modal-md"
+			>
 				<Modal.Header closeButton>
 					<Modal.Title>Liste des Tests</Modal.Title>
 				</Modal.Header>
@@ -397,6 +389,7 @@ const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
 													style={{
 														backgroundColor:
 															"#40b9af",
+														border: "none",
 													}}
 													size="sm"
 													onClick={() =>
@@ -426,9 +419,9 @@ const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
 				</Modal.Body>
 
 				<Modal.Footer>
-					<Button variant="secondary" onClick={handleCloseListModal}>
+					{/* <Button variant="secondary" onClick={handleCloseListModal}>
 						Fermer
-					</Button>
+					</Button> */}
 				</Modal.Footer>
 			</Modal>
 
@@ -491,6 +484,7 @@ const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
 						onClick={ajouterOuModifierTest}
 						style={{
 							backgroundColor: "#40b9af",
+							border: "none",
 						}}
 					>
 						{currentTestId ? "Modifier" : "Ajouter"}

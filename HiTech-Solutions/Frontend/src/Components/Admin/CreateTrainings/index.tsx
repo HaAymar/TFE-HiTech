@@ -2,9 +2,20 @@ import "./style.css";
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, Container, Form, Modal, Table } from "react-bootstrap";
+import {
+	Button,
+	Container,
+	Form,
+	Modal,
+	OverlayTrigger,
+	Table,
+	Tooltip,
+} from "react-bootstrap";
+import { FaRegEdit } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
+import { IoSaveOutline } from "react-icons/io5";
 import { RiImageAddFill } from "react-icons/ri";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { useRecoilValue } from "recoil";
 
 import { findByFormationName } from "../../Stores/formationCourses";
@@ -49,8 +60,8 @@ const CreationFormations: React.FC = () => {
 	const [editedName, setEditedName] = useState<string>("");
 	const [editedDescription, setEditedDescription] = useState<string>("");
 
-	const [editingCourseId, setEditingCourseId] = useState<number | null>(null);
-	const [editedCourseName, setEditedCourseName] = useState<string>("");
+	const [, setEditingCourseId] = useState<number | null>(null);
+	const [, setEditedCourseName] = useState<string>("");
 
 	const currentFormations = useRecoilValue(fetchFormations);
 	const [formations, setFormations] =
@@ -307,7 +318,7 @@ const CreationFormations: React.FC = () => {
 	return (
 		<Container
 			className="containerTable"
-			style={{ width: "78%", backgroundColor: "#dadde0" }}
+			style={{ width: "80%", backgroundColor: "#dadde0" }}
 		>
 			<div className="headerDashboard">
 				<div>
@@ -328,9 +339,11 @@ const CreationFormations: React.FC = () => {
 						<option value="option2">a</option>
 					</select>
 				</div>
-				<div className="descripText">
-					Creation d'une nouvelle formation
-				</div>
+				<p className="descripText">
+					Pour pouvoir ajouter une nouvelle formation ou un cours,
+					cliquez sur les boutons qui se trouvent sur votre droite
+					selon votre choix.{" "}
+				</p>
 
 				<div className="addButton">
 					<Button
@@ -460,47 +473,97 @@ const CreationFormations: React.FC = () => {
 										<div className="buttons">
 											{editingFormationId ===
 											formation.id ? (
-												<Button
-													style={{
-														color: "white",
-														backgroundColor:
-															"#40b9af",
-														border: "none",
-													}}
-													onClick={() =>
-														handleSave(formation.id)
+												<OverlayTrigger
+													placement="top"
+													overlay={
+														<Tooltip
+															id={`tooltip-save`}
+														>
+															Sauver
+														</Tooltip>
 													}
 												>
-													Sauver
-												</Button>
+													<Button
+														style={{
+															display: "flex",
+															justifyContent:
+																"center",
+															alignItems:
+																"center",
+															color: "white",
+															backgroundColor:
+																"#40b9af",
+															border: "none",
+														}}
+														onClick={() =>
+															handleSave(
+																formation.id
+															)
+														}
+													>
+														<IoSaveOutline />
+													</Button>
+												</OverlayTrigger>
 											) : (
+												<OverlayTrigger
+													placement="top"
+													overlay={
+														<Tooltip
+															id={`tooltip-save`}
+														>
+															Modifier
+														</Tooltip>
+													}
+												>
+													<Button
+														style={{
+															display: "flex",
+															justifyContent:
+																"center",
+															alignItems:
+																"center",
+															color: "white",
+															backgroundColor:
+																"#40b9af",
+															border: "none",
+														}}
+														onClick={() =>
+															handleEditClick(
+																formation
+															)
+														}
+													>
+														<FaRegEdit />
+													</Button>
+												</OverlayTrigger>
+											)}
+											<OverlayTrigger
+												placement="top"
+												overlay={
+													<Tooltip
+														id={`tooltip-save`}
+													>
+														Supprimer
+													</Tooltip>
+												}
+											>
 												<Button
 													style={{
-														color: "white",
-														backgroundColor:
-															"#40b9af",
-														border: "none",
+														display: "flex",
+														justifyContent:
+															"center",
+														alignItems: "center",
 													}}
+													variant="danger"
 													onClick={() =>
-														handleEditClick(
-															formation
+														handleDeleteFormation(
+															formation.id
 														)
 													}
 												>
-													Modifier
+													<RiDeleteBin6Line />
 												</Button>
-											)}
-
-											<Button
-												variant="danger"
-												onClick={() =>
-													handleDeleteFormation(
-														formation.id
-													)
-												}
-											>
-												Supprimer
-											</Button>
+											</OverlayTrigger>
 										</div>
 									</td>
 								</tr>

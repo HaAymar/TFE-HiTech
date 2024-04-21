@@ -1,6 +1,5 @@
 import { atom, RecoilState } from "recoil";
 
-// Définissez l'état userIdState pour stocker l'identifiant de l'utilisateur
 export const userIdState: RecoilState<number | null> = atom({
 	key: "userIdState",
 	default: (() => {
@@ -10,14 +9,13 @@ export const userIdState: RecoilState<number | null> = atom({
 	effects_UNSTABLE: [
 		({ onSet, setSelf }) => {
 			onSet((newValue) => {
-				console.log(`setUserId: ${newValue}`); // Affiche la nouvelle valeur dans la console
+				console.log(`setUserId: ${newValue}`);
 				if (newValue !== null) {
 					localStorage.setItem("userId", newValue.toString());
 				} else {
 					localStorage.removeItem("userId");
 				}
 			});
-			// Si nécessaire, vous pouvez utiliser setSelf ici pour initialiser ou réinitialiser l'état
 		},
 	],
 });

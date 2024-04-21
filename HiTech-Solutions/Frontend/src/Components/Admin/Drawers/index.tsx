@@ -26,11 +26,12 @@ interface DashboardSidebarProps {
 const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 	const defaultStyle: React.CSSProperties = {
 		backgroundColor: "#245b70e6",
-		paddingRight: "20px",
+		// paddingRight: "20px",
 		marginLeft: "auto",
 		borderBottomLeftRadius: "15px",
 		width: "100%",
-		maxWidth: "calc(100% - 17%)",
+		maxWidth: "calc(100% - 180pt)",
+		position: "fixed",
 	};
 	const [isMembersOpen, setIsMembersOpen] = useState(false);
 	const [isServicesOpen, setIsServicesOpen] = useState(false);
