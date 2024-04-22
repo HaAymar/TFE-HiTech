@@ -41,7 +41,7 @@ const Home = () => {
 								style={{
 									fontSize: "1.6rem",
 									fontWeight: "normal",
-									color: "#333",
+									color: "#333333",
 									lineHeight: "1.6",
 								}}
 							>
@@ -56,7 +56,7 @@ const Home = () => {
 								className="mt-3"
 								style={{
 									padding: "15px",
-									backgroundColor: "#0bb6e0",
+									backgroundColor: "#0bb5e09e",
 									border: "none",
 									width: "220px",
 									fontSize: "1.2rem",

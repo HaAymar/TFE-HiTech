@@ -1,8 +1,12 @@
 import * as cors from 'cors';
+import * as dotenv from 'dotenv';
 
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
+import { AllExceptionsFilter } from './common/index';
+
+dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,6 +19,7 @@ async function bootstrap() {
   // };
 
   app.use(cors());
+  app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(3001);
 }
 bootstrap();

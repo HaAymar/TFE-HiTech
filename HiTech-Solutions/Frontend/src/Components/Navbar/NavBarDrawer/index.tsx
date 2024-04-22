@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Button, Nav } from "react-bootstrap";
+import React from "react";
+import { Button, Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
+import { IoLogOut } from "react-icons/io5";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Logo from "../../../Assets/ll1.png"; // Assurez-vous que le chemin est correct
 
@@ -14,6 +16,17 @@ const NavBarDrawer: React.FC<NavbarProps> = ({ customStyle = {} }) => {
 		backgroundColor: "#245b70e6",
 	};
 	const combinedStyle = { ...defaultStyle, ...customStyle };
+	const navigate = useNavigate();
+	const location = useLocation();
+	const searchParams = new URLSearchParams(location.search);
+	const initials = searchParams.get("initials") || "";
+	console.log("initials", initials);
+	const handleLogout = () => {
+		// Mettez ici votre logique de déconnexion
+		console.log("Déconnexion utilisateur");
+		navigate("/login"); // Rediriger vers la page de connexion
+	};
+
 	return (
 		<Navbar expand="lg" fixed="top" style={combinedStyle}>
 			<Container fluid>
@@ -42,15 +55,34 @@ const NavBarDrawer: React.FC<NavbarProps> = ({ customStyle = {} }) => {
 				</Nav>
 
 				<Nav>
-					<Nav.Link href="/">
+					<Nav.Link>
 						<Button
 							style={{
 								backgroundColor: "#50b2d8",
 								border: "none",
 							}}
 						>
-							Déconnexion
+							{initials}{" "}
 						</Button>
+						<OverlayTrigger
+							placement="bottom"
+							overlay={
+								<Tooltip>Cliquez pour vous déconnecter</Tooltip>
+							}
+						>
+							<span
+								onClick={handleLogout}
+								style={{ cursor: "pointer" }}
+							>
+								<IoLogOut
+									size={20}
+									style={{
+										marginLeft: "10px",
+										color: "white",
+									}}
+								/>
+							</span>
+						</OverlayTrigger>
 					</Nav.Link>
 				</Nav>
 			</Container>

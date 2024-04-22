@@ -33,18 +33,21 @@ const Footer: React.FC = () => {
 						<Col>
 							<a
 								href="https://facebook.com"
+								aria-label="Facebook"
 								style={{ color: "white" }}
 							>
 								<FaFacebook />
 							</a>
 							<a
 								href="https://instagram.com"
+								aria-label="Instagram"
 								style={{ margin: "0 10px", color: "white" }}
 							>
 								<FaInstagram />
 							</a>
 							<a
 								href="https://twitter.com"
+								aria-label="Twitter"
 								style={{ color: "white" }}
 							>
 								<RiTwitterXLine />

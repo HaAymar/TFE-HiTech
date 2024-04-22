@@ -4,6 +4,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Admin from "./Components/Admin/CreateTrainings/index";
+import ChatBox from "./Components/chats/index";
 import Contact from "./Components/Contact/Contact";
 import Home from "./Components/Home/index";
 import OurServices from "./Components/Home/index";
@@ -37,6 +38,7 @@ function App() {
 				<Route path="/contact" element={<Contact />} />
 				<Route path="/student" element={<StudentPage />} />
 				<Route path="/login" element={<Login />} />
+				<Route path="/chatBox" element={<ChatBox />} />
 			</Routes>
 		</Router>
 	);

@@ -1,15 +1,15 @@
 import "./style.css";
 
 import React from "react";
-import { Accordion, Button, Card, Form } from "react-bootstrap";
-import { Col, Container, ProgressBar, Row } from "react-bootstrap";
+import { Accordion, Form } from "react-bootstrap";
+import { Container, ProgressBar } from "react-bootstrap";
 
 import NavBar from "../Navbar/NavBarDrawer/index";
 
-type CourseProgress = {
-	courseName: string;
-	percentage: number;
-};
+// type CourseProgress = {
+// 	courseName: string;
+// 	percentage: number;
+// };
 interface Interrogation {
 	id: number;
 	titre: string;

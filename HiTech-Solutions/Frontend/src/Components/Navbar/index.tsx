@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { FaGlobe, FaSearch } from "react-icons/fa";
+import { RiLoginCircleFill } from "react-icons/ri";
 
 import Français from "../../Assets/Flags/fr.png";
 import Nederlands from "../../Assets/Flags/nl.png";
@@ -26,12 +27,16 @@ const countryIcons: { [key: string]: any } = {
 };
 
 const NavBar: React.FC = () => {
+	const [selectedLanguage, setSelectedLanguage] = useState<string>("FR");
 	const [countries] = useState<Country[]>([
 		{ code: "FR", title: "Français" },
 		{ code: "EN", title: "English" },
 		{ code: "NL", title: "Nederlands" },
 	]);
 
+	const handleLanguageSelect = (country: Country) => {
+		setSelectedLanguage(country.code);
+	};
 	return (
 		<Navbar
 			expand="lg"
@@ -145,14 +150,28 @@ const NavBar: React.FC = () => {
 						/>
 					</Form>
 					<NavDropdown
-						title={<FaGlobe />}
+						title={
+							<>
+								<FaGlobe />
+								{selectedLanguage && (
+									<span style={{ marginLeft: "5px" }}>
+										({selectedLanguage})
+									</span>
+								)}
+							</>
+						}
 						id="navbarScrollingDropdown"
-						style={{ fontSize: "20px", padding: "5px" }}
+						style={{
+							fontSize: "20px",
+							padding: "5px",
+							color: "white",
+						}}
 					>
 						{countries.map((country) => (
 							<NavDropdown.Item
 								href={`#${country.code}`}
 								key={country.code}
+								onClick={() => handleLanguageSelect(country)}
 							>
 								<img
 									src={countryIcons[country.code]}
@@ -166,6 +185,7 @@ const NavBar: React.FC = () => {
 							</NavDropdown.Item>
 						))}
 					</NavDropdown>
+
 					<Nav className="mx-3">
 						<Nav.Link href="/login">
 							<Button
@@ -175,6 +195,11 @@ const NavBar: React.FC = () => {
 								}}
 							>
 								Connexion
+								<RiLoginCircleFill
+									style={{
+										paddingLeft: "2px",
+									}}
+								/>
 							</Button>
 						</Nav.Link>
 					</Nav>

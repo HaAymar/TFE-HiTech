@@ -63,7 +63,7 @@
 
 .tableScroll {
 	overflow-y: auto;
-	max-height: 450px;
+	max-height: 60vh;
 }
 
 .sticky-header {
@@ -83,6 +83,11 @@
 .descripText {
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
 		sans-serif;
+
+	text-align: center;
+	max-width: 25%;
+	margin: auto;
+
 	color: #6f7077;
 }
 .addButton {
@@ -95,4 +100,13 @@
 .descripEdit {
 	border: none;
 	border-radius: 5px;
+}
+
+.buttonModiSave {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	background-color: #40b9af;
+	border: none;
 }

@@ -22,18 +22,12 @@ export class AuthController {
   @Post('login')
   @UseGuards(LocalGuard)
   login(@Req() req: Request) {
-    // login(@Body() authPayload: AuthPayloadDto)
-    // const user = this.authService.validateUser(authPayload);
-    if (!req.user) throw new HttpException('Invalid Credentials', 401);
-
     return req.user;
   }
 
   @Get('status')
   @UseGuards(JwtAuthGuard)
   status(@Req() req: Request) {
-    console.log('Inside AuthController status method');
-    console.log(req.user);
     return req.user;
   }
 }
