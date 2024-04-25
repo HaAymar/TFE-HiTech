@@ -7,5 +7,5 @@ L'ASBL HiTech-Solutions, qui est un centre de formation pour les demandeurs d'em
 
 ## Exigences préalables :warning:
 
-- NodeJS & npm
+- NodeJS v.20 et (npm or yarn)
 - Docker
