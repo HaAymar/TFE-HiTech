@@ -57,6 +57,7 @@ const CreationFormations: React.FC = () => {
 	const [editingFormationId, setEditingFormationId] = useState<number | null>(
 		null
 	);
+	const [, setIsLoading] = useState(false);
 	const [editedName, setEditedName] = useState<string>("");
 	const [editedDescription, setEditedDescription] = useState<string>("");
 
@@ -79,7 +80,7 @@ const CreationFormations: React.FC = () => {
 
 	const [nameCourse, setNameCourse] = useState<string>("");
 
-	const [refreshCourses, setRefreshCourses] = useState<boolean>(false);
+	const [refreshCourses] = useState<boolean>(false);
 	const [selectedFormationId, setSelectedFormationId] = useState<string>("");
 
 	const handleEditClick = (
@@ -138,6 +139,7 @@ const CreationFormations: React.FC = () => {
 		const newCourse: CreateCourse = {
 			name: nameCourse,
 		};
+
 		try {
 			const response = await axios.post(
 				`http://localhost:3001/courses/${selectedFormationId}`,
@@ -150,25 +152,28 @@ const CreationFormations: React.FC = () => {
 			);
 
 			console.log(
-				"New course has been added successfully :",
+				"New course has been added successfully:",
 				response.data
 			);
+
 			if (selectedFormationName) {
-				setCoursesByFormation((prevState) => ({
-					...prevState,
+				setCoursesByFormation((prev) => ({
+					...prev,
 					[selectedFormationName]: [
-						...(prevState[selectedFormationName] || []),
+						...(prev[selectedFormationName] || []),
 						response.data,
 					],
 				}));
 			}
-			setRefreshCourses(!refreshCourses);
 		} catch (error) {
-			console.error("Error while adding a new course :", error);
+			console.error("Error while adding a new course:", error);
+		} finally {
+			setIsLoading(false);
+			handleCloseModal();
 		}
-		console.log("Je suis le selected", newCourse);
-		setSelectedFormationId("");
+
 		setNameCourse("");
+		setSelectedFormationId("");
 	};
 
 	// ------------- End creating course ---------------- //
@@ -208,6 +213,7 @@ const CreationFormations: React.FC = () => {
 
 		setEditingFormationId(null);
 	};
+
 	//-- save --//
 
 	//----------- Create Formations--------------//
@@ -233,14 +239,18 @@ const CreationFormations: React.FC = () => {
 				}
 			);
 
-			console.log("The data was inserted correctly", response.data);
-			const newFormationAdded = response.data;
-			setFormations((formations) => [...formations, newFormationAdded]);
+			if (response.status === 201) {
+				setFormations((prev) => [...prev, response.data]);
+			}
 		} catch (error) {
 			console.error("Error adding training", error);
+		} finally {
+			setIsLoading(false);
+			handleCloseModal();
 		}
 	};
-	//---------- End create formation ---- //
+
+	//---------- End create formation --------------- //
 
 	const handleDeleteFormation = async (id: number) => {
 		console.log(id);
@@ -270,6 +280,32 @@ const CreationFormations: React.FC = () => {
 		}
 	};
 
+	const handleDeleteCourse = async (id: number) => {
+		console.log(id);
+		try {
+			await axios.delete(`http://localhost:3001/courses/${id}`, {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			console.log(`Course with id ${id} was deleted successfully.`);
+
+			setCoursesByFormation((prevCourses) => {
+				const updatedCourses = { ...prevCourses };
+				Object.keys(updatedCourses).forEach((key) => {
+					updatedCourses[key] = updatedCourses[key].filter(
+						(course) => course.id !== id
+					);
+				});
+				return updatedCourses;
+			});
+			handleCloseModal();
+		} catch (error) {
+			console.error("Error while deleting coourse", error);
+		}
+	};
+
 	const handleCloseModal = () => {
 		setSelectedFormation(null);
 		setTitre("");
@@ -287,6 +323,7 @@ const CreationFormations: React.FC = () => {
 			};
 
 			try {
+				console.log("Selection de la formation", selectedFormation);
 				await axios.put(
 					`http://localhost:3001/formations/${selectedFormation.id}`,
 					updatedFormation,
@@ -463,8 +500,31 @@ const CreationFormations: React.FC = () => {
 											{coursesByFormation[
 												formation.name
 											]?.map((course, index) => (
-												<li key={index}>
+												<li
+													key={index}
+													style={{
+														display: "flex",
+														justifyContent:
+															"space-between",
+														alignItems: "center",
+													}}
+												>
 													{course.name}
+													<button
+														style={{
+															border: "none",
+															background: "none",
+															cursor: "pointer",
+															color: "gray",
+														}}
+														onClick={() =>
+															handleDeleteCourse(
+																course.id
+															)
+														}
+													>
+														&#x2715;{" "}
+													</button>
 												</li>
 											))}
 										</ol>
@@ -479,7 +539,7 @@ const CreationFormations: React.FC = () => {
 														<Tooltip
 															id={`tooltip-save`}
 														>
-															Sauver
+															Enregistrer
 														</Tooltip>
 													}
 												>
@@ -573,11 +633,12 @@ const CreationFormations: React.FC = () => {
 				</div>
 			</div>
 			<Modal show={showModalForm} onHide={handleCloseModal}>
-				<Modal.Header closeButton>
+				<Modal.Header
+					closeButton
+					style={{ backgroundColor: "#2ea1befa" }}
+				>
 					<Modal.Title style={{ textAlign: "center" }}>
-						{selectedFormation
-							? "Modifier la formation"
-							: "Ajouter une nouvelle formation"}
+						<h4>Ajouter une nouvelle formation</h4>
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -662,11 +723,12 @@ const CreationFormations: React.FC = () => {
 				</Modal.Footer>
 			</Modal>
 			<Modal show={showModalCours} onHide={handleCloseModal}>
-				<Modal.Header closeButton>
+				<Modal.Header
+					closeButton
+					style={{ backgroundColor: "#2ea1befa" }}
+				>
 					<Modal.Title style={{ textAlign: "center" }}>
-						{selectedFormation
-							? "Modifier les cours"
-							: "Ajouter un nouveau cours"}
+						Ajouter un nouveau cours
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>

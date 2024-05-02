@@ -8,3 +8,12 @@
 .drawerFooter {
 	font-family: "Times New Roman", Times, serif;
 }
+/*-----------Default ---------- */
+.contentDefault {
+	border-radius: 10px;
+	background-color: gray;
+}
+.servicesProf {
+	overflow: auto;
+	max-height: 200px;
+}

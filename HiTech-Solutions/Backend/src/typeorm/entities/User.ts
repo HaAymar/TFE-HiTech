@@ -24,7 +24,6 @@ export class User {
   @Column({ nullable: true })
   tel: string;
 
-  // Define relationships
   @OneToMany(() => Admin, (admin) => admin.user)
   admins: Admin[];
 

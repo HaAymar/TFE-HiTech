@@ -7,9 +7,10 @@ import { Button, Container, Form, InputGroup } from "react-bootstrap";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import Logo from "../../Assets/pp.svg";
+import { userNameState } from "../Stores/nameUser";
 import { userIdState } from "../Stores/userIdState";
 
 interface CustomJwtPayload {
@@ -25,7 +26,7 @@ const LoginPage: React.FC = () => {
 	const [error, setError] = useState<string>("");
 	const setUserId = useSetRecoilState(userIdState);
 	const navigate = useNavigate();
-
+	const [, setUserName] = useRecoilState(userNameState);
 	const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault(); // Empêche le rechargement de la page
 		console.log(email);
@@ -45,8 +46,9 @@ const LoginPage: React.FC = () => {
 				localStorage.setItem("token", token);
 
 				const initials = user.Name.charAt(0) + user.Surname.charAt(0);
+				const fullName = `${user.Name} ${user.Surname}`;
 				console.log("User login", initials);
-
+				setUserName(fullName);
 				// navigate(`/student?initials=${initials}`);
 
 				setUserId(user.UserId);

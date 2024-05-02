@@ -44,6 +44,13 @@ export class CoursesController {
   async deleteCoursesByFormationId(
     @Param('formationId', ParseIntPipe) formationId: number,
   ): Promise<void> {
-    await this.coursesService.deleteCoursesByFormationId(formationId);
+    await this.coursesService.deleteFormationById(formationId);
+  }
+
+  @Delete(':courseId')
+  async deleteCoursesById(
+    @Param('courseId', ParseIntPipe) courseId: number,
+  ): Promise<void> {
+    await this.coursesService.deleteCoursesById(courseId);
   }
 }

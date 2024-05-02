@@ -13,9 +13,16 @@ const Services: React.FC = () => {
 	const formations = useRecoilValue(fetchFormations);
 
 	return (
-		<>
+		<div className="scrollBar">
 			<NavBar />
-			<Container style={{ width: "90%" }}>
+			<Container
+				style={{
+					width: "100%",
+					padding: "10px",
+					overflow: "hidden",
+				}}
+				className="contentService"
+			>
 				<div
 					style={{
 						display: "flex",
@@ -24,9 +31,13 @@ const Services: React.FC = () => {
 						justifyContent: "center",
 					}}
 				>
-					<h2>Découvrez nos formations</h2>
+					<div>
+						<h3>
+							<strong>Découvrez nos formations</strong>{" "}
+						</h3>
+					</div>
 				</div>
-				<Row className="d-flex align-items-center">
+				<div className="infoService">
 					{formations.map((formation) => (
 						<Col
 							className="mb-3"
@@ -38,14 +49,13 @@ const Services: React.FC = () => {
 								justifyContent: "center",
 							}}
 						>
-							<Card
-								className="h-100"
-								style={{ width: "18rem", height: "10px" }}
-							>
+							<Card className="card" style={{ width: "100%" }}>
 								<Card.Img variant="top" src={admin} />
 								<Card.Body>
-									<Card.Title>{formation.name}</Card.Title>
-									<Card.Text>
+									<Card.Title className="card-title">
+										{formation.name}
+									</Card.Title>
+									<Card.Text className="card-description">
 										{formation.description}
 									</Card.Text>
 									<br />
@@ -61,9 +71,9 @@ const Services: React.FC = () => {
 							</Card>
 						</Col>
 					))}
-				</Row>
+				</div>
 			</Container>
-		</>
+		</div>
 	);
 };
 

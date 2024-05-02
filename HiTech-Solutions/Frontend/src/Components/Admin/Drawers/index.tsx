@@ -8,39 +8,48 @@ import {
 	CDBSidebarMenu,
 	CDBSidebarMenuItem,
 } from "cdbreact";
-import React, { startTransition, useEffect, useState } from "react";
+import React, { startTransition, Suspense, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
-import { useRecoilValue } from "recoil";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import NavBarDrawer from "../../Navbar/NavBarDrawer/index";
+import { collectTestState } from "../../Stores/collecTestId";
 import { fetchFormations } from "../../Stores/formationsState";
-import FormulaireTest from "../../Teacher/index";
-import Admin from "../CreateTrainings/index";
-import CreatingTroubleshooting from "../CreateTroubleshootings";
 
 interface DashboardSidebarProps {
 	role: "admin" | "teacher";
 }
 
 const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
+	const navigate = useNavigate();
+	const location = useLocation();
+	const queryParams = new URLSearchParams(location.search);
+	const initials = queryParams.get("initials");
+
+	const navigateWithQuery = (path: string) => {
+		startTransition(() => {
+			navigate(`${path}?initials=${initials}`);
+		});
+	};
 	const defaultStyle: React.CSSProperties = {
 		backgroundColor: "#245b70e6",
-		// paddingRight: "20px",
+
 		marginLeft: "auto",
 		borderBottomLeftRadius: "15px",
 		width: "100%",
 		maxWidth: "calc(100% - 180pt)",
 		position: "fixed",
 	};
-	const [isMembersOpen, setIsMembersOpen] = useState(false);
+
 	const [isServicesOpen, setIsServicesOpen] = useState(false);
 	const [isManTestOpen, setIsManTestOpen] = useState(false);
 	const [displayFormation, setDisplayFormation] = useState(false);
-	const [displayTest, setDisplayTest] = useState(false);
-	const [displayTroubleshooting, setDisplayTroubleshooting] = useState(false);
+	const [, setDisplayTest] = useState(false);
+	const [, setDisplayTroubleshooting] = useState(false);
 
-	const [collectId, setCollectId] = useState<number>(0);
+	const setCollectId = useSetRecoilState(collectTestState);
 
 	const formations = useRecoilValue(fetchFormations);
 
@@ -50,15 +59,17 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 			setDisplayFormation(true);
 			setDisplayTroubleshooting(false);
 			setDisplayTest(false);
+			navigateWithQuery("/drawer/formations");
 		});
 	};
 	const toogleTest = (id: number) => {
 		setCollectId(id);
-
+		console.log("collectId", id);
 		startTransition(() => {
 			setDisplayFormation(false);
 			setDisplayTroubleshooting(false);
 			setDisplayTest(true);
+			navigateWithQuery("/drawer/teacher");
 		});
 	};
 
@@ -68,24 +79,19 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 			setDisplayFormation(false);
 			setDisplayTroubleshooting(true);
 			setDisplayTest(false);
+			navigateWithQuery("/drawer/members");
 		});
 	};
 
-	const toggleMembers = () => {
-		setIsMembersOpen(!isMembersOpen);
-	};
-
 	const toggleServices = () => {
-		setIsServicesOpen(!isServicesOpen);
+		startTransition(() => {
+			setIsServicesOpen(!isServicesOpen);
+		});
 	};
 
 	const toggleManTest = () => {
 		setIsManTestOpen(!isManTestOpen);
 	};
-
-	useEffect(() => {
-		console.log("HEY", collectId);
-	}, [collectId]);
 
 	return (
 		<div style={{ overflow: "hidden" }}>
@@ -132,42 +138,20 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 											<>
 												<div className="members">
 													<div
-														onClick={toggleMembers}
+														onClick={
+															toogleTroubleshooting
+														}
 													>
+														{" "}
 														<CDBSidebarMenuItem
 															icon="user"
 															className="hoverColor"
 														>
-															Members{" "}
-															<span className="arrow">
-																{isMembersOpen ? (
-																	<RiArrowDropDownLine />
-																) : (
-																	<RiArrowDropUpLine />
-																)}
-															</span>
+															<Link to="/drawer/members">
+																Members
+															</Link>
 														</CDBSidebarMenuItem>
 													</div>
-
-													{isMembersOpen && (
-														<div
-															className="sub-menu"
-															style={{
-																display: "flex",
-																flexDirection:
-																	"column",
-																paddingLeft:
-																	"30px",
-															}}
-														>
-															<CDBSidebarMenuItem className="hoverColor1">
-																Professeurs
-															</CDBSidebarMenuItem>
-															<CDBSidebarMenuItem className="hoverColor1">
-																Etudiants
-															</CDBSidebarMenuItem>
-														</div>
-													)}
 												</div>
 												<div className="services">
 													<div
@@ -205,14 +189,17 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 																}
 															>
 																<CDBSidebarMenuItem className="hoverColor1">
-																	Formations
+																	<Link
+																		style={{
+																			color: "rgb(158, 156, 156)",
+																		}}
+																		to="/drawer/formations"
+																	>
+																		Formations
+																	</Link>
 																</CDBSidebarMenuItem>
 															</div>
-															<div
-																onClick={
-																	toogleTroubleshooting
-																}
-															>
+															<div>
 																<CDBSidebarMenuItem className="hoverColor1">
 																	Dépannages
 																</CDBSidebarMenuItem>
@@ -220,13 +207,21 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 														</div>
 													)}
 												</div>
-
-												<CDBSidebarMenuItem
-													icon="envelope"
-													className="hoverColor"
+												<div
+													onClick={() =>
+														window.open(
+															"https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=150&ct=1713986804&rver=7.0.6738.0&wp=MBI_SSL&wreply=https%3a%2f%2foutlook.live.com%2fowa%2f%3fcobrandid%3dab0455a0-8d03-46b9-b18b-df2f57b9e44c%26nlp%3d1%26deeplink%3dowa%252f%26RpsCsrfState%3d9d65f425-e27f-310f-6a3d-c80ebe86c2aa&id=292841&aadredir=1&CBCXT=out&lw=1&fl=dob%2cflname%2cwld&cobrandid=ab0455a0-8d03-46b9-b18b-df2f57b9e44c",
+															"_blank"
+														)
+													}
 												>
-													Messages
-												</CDBSidebarMenuItem>
+													<CDBSidebarMenuItem
+														icon="envelope"
+														className="hoverColor"
+													>
+														Emails
+													</CDBSidebarMenuItem>
+												</div>
 											</>
 										)}
 									</div>
@@ -250,7 +245,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 														</CDBSidebarMenuItem>
 													</div>
 												</div>
-												<div className="services">
+												<div>
 													<div
 														onClick={toggleManTest}
 													>
@@ -271,7 +266,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 
 													{isManTestOpen && (
 														<div
-															className="sub-menu"
+															className="sub-menu servicesProf"
 															style={{
 																display: "flex",
 																flexDirection:
@@ -290,21 +285,37 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 																		}
 																	>
 																		<CDBSidebarMenuItem className="hoverColor1">
-																			{
-																				formation.name
-																			}
+																			<Link
+																				to={`/drawer/teacher`}
+																				style={{
+																					color: "rgb(158, 156, 156)",
+																				}}
+																			>
+																				{
+																					formation.name
+																				}
+																			</Link>
 																		</CDBSidebarMenuItem>
 																	</div>
 																)
 															)}
 														</div>
 													)}
-													<CDBSidebarMenuItem
-														icon="envelope"
-														className="hoverColor"
+													<div
+														onClick={() =>
+															window.open(
+																"https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=150&ct=1713986804&rver=7.0.6738.0&wp=MBI_SSL&wreply=https%3a%2f%2foutlook.live.com%2fowa%2f%3fcobrandid%3dab0455a0-8d03-46b9-b18b-df2f57b9e44c%26nlp%3d1%26deeplink%3dowa%252f%26RpsCsrfState%3d9d65f425-e27f-310f-6a3d-c80ebe86c2aa&id=292841&aadredir=1&CBCXT=out&lw=1&fl=dob%2cflname%2cwld&cobrandid=ab0455a0-8d03-46b9-b18b-df2f57b9e44c",
+																"_blank"
+															)
+														}
 													>
-														Emails
-													</CDBSidebarMenuItem>
+														<CDBSidebarMenuItem
+															icon="envelope"
+															className="hoverColor"
+														>
+															Emails
+														</CDBSidebarMenuItem>
+													</div>
 												</div>
 											</>
 										)}
@@ -324,9 +335,10 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 						</CDBSidebar>
 					</div>
 				</Col>
-				{displayFormation && <Admin />}
-				{displayTest && <FormulaireTest idFormation={collectId} />}
-				{displayTroubleshooting && <CreatingTroubleshooting />}
+
+				<Suspense fallback={<div>Loading...</div>}>
+					<Outlet />
+				</Suspense>
 			</Row>
 		</div>
 	);

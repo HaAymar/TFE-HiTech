@@ -1,10 +1,13 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
+  Param,
   Post,
+  Put,
 } from '@nestjs/common';
 
 import { CreateUserDto } from '../dtos/CreateUser.dto';
@@ -28,40 +31,31 @@ export class UsersController {
       );
     }
   }
-
-  @Post()
-  async createUser(@Body() createUserDto: CreateUserDto) {
+  @Get('infos')
+  async getUsersInfos() {
     try {
-      const newUser = await this.userService.createUser(createUserDto);
-      return { data: newUser, message: 'User created successfully' };
+      const users = await this.userService.findAllUsersWithDetails();
+      return users;
     } catch (error) {
-      throw new HttpException('Failed to create user', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Failed to retrieve users',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
-  // Uncomment and use when DTOs and methods are defined and available
-  /*
+  @Post()
+  async createUser(@Body() userData: CreateUserDto) {
+    return this.userService.createUser(userData);
+  }
+
   @Put(':id')
-  async updateUserById(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
-    try {
-      const updatedUser = await this.userService.updateUser(id, updateUserDto);
-      return { data: updatedUser, message: 'User updated successfully' };
-    } catch (error) {
-      throw new HttpException('Failed to update user', HttpStatus.NOT_FOUND);
-    }
+  async updateUser(@Param('id') id: number, @Body() userData: any) {
+    return this.userService.updateUser(id, userData);
   }
 
   @Delete(':id')
-  async deleteUserById(@Param('id', ParseIntPipe) id: number) {
-    try {
-      await this.userService.deleteUser(id);
-      return { message: 'User deleted successfully' };
-    } catch (error) {
-      throw new HttpException('Failed to delete user', HttpStatus.NOT_FOUND);
-    }
+  async deleteUser(@Param('id') id: number) {
+    return this.userService.deleteUser(id);
   }
-  */
 }

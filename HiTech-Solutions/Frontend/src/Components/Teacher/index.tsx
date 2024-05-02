@@ -12,12 +12,8 @@ import {
 } from "react-bootstrap";
 import { useRecoilValue } from "recoil";
 
+import { collectTestState } from "../Stores/collecTestId";
 import { teacherCoursesState } from "../Stores/coursesState";
-
-//------ Id formation----//
-interface CoursesDisplayComponentProps {
-	idFormation: number | null; // Ajout de la prop idFormation
-}
 
 // Interface pour définir la structure d'un test
 interface ITest {
@@ -30,10 +26,9 @@ interface ITest {
 }
 
 // Composant principal
-const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
-	idFormation,
-}) => {
+const FormulaireTest: React.FC = () => {
 	// États
+	const idFormation = useRecoilValue(collectTestState);
 	const [editingTestId, setEditingTestId] = useState<null | number>(null);
 
 	const [editedDescription, setEditedDescription] = useState("");
@@ -163,31 +158,16 @@ const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
 
 	const coursesT = useRecoilValue(teacherCoursesState);
 	console.log("courses", coursesT);
-	// const simplifiedFormations: FormationWithCourses[] = coursesT.reduce(
-	// 	(acc: FormationWithCourses[], course: Course) => {
-	// 		let formation = acc.find((f) => f.id === course.formation.id);
-
-	// 		if (!formation) {
-	// 			formation = { ...course.formation, coursesT: [] };
-	// 			acc.push(formation);
-	// 		}
-
-	// 		formation.coursesT.push(course);
-
-	// 		return acc;
-	// 	},
-	// 	[]
-	// );
-
-	// console.log("Yes", simplifiedFormations);
-	// const selectedFormationCourses =
-	// 	simplifiedFormations.find((formation) => formation.id === idFormation)
-	// ?.coursesT || [];
 
 	const selectedFormationCourses = coursesT.filter(
 		(course: any) => course.formationId === idFormation
 	);
-	const nameFormation = selectedFormationCourses[0].formationName;
+	let nameFormation;
+	if (selectedFormationCourses && selectedFormationCourses.length > 0) {
+		nameFormation = selectedFormationCourses[0].formationName;
+	} else {
+		console.log("No data available for formations.");
+	}
 	console.log("Hey hey", nameFormation);
 	return (
 		<Container
@@ -195,10 +175,10 @@ const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
 			style={{ width: "80%", backgroundColor: "#dadde0" }}
 		>
 			<div className="titleHeader">
-				<h3 style={{ fontWeight: "700" }}>
-					Liste des cours en {nameFormation}
+				<h3 style={{ fontWeight: "2.3rem" }}>
+					Liste des cours {nameFormation}
 				</h3>
-				<p className="text-container">
+				<p className="textContainer">
 					Afin de pouvoir créer un test de ce cours, vous pouvez
 					cliquer sur le bouton « Créer un Test » après la création
 					cliquer sur « Liste des Tests où vous allez trouver tous les
@@ -225,7 +205,11 @@ const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
 						(course: any, index: number) => (
 							<Col key={index} xs={12} md={6} lg={4}>
 								<Card
-									style={{ width: "18rem", margin: "1rem" }}
+									style={{
+										width: "20rem",
+										margin: "1rem",
+										borderRadius: "10px",
+									}}
 								>
 									<Card.Body>
 										<Card.Title
@@ -262,7 +246,7 @@ const FormulaireTest: React.FC<CoursesDisplayComponentProps> = ({
 													)
 												}
 											>
-												Liste des Tests
+												Tests existant
 											</Button>
 										</div>
 									</Card.Body>

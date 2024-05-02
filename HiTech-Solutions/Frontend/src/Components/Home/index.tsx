@@ -16,35 +16,11 @@ const Home = () => {
 			<Container fluid className="main-banner">
 				<Row>
 					<Col>
-						<div
-							style={{
-								borderLeft: "5px solid #0bb6e0",
-								paddingLeft: "20px",
-								marginBottom: "20px",
-								display: "flex",
-								flexDirection: "column",
-								justifyContent: "center",
-								alignItems: "center",
-							}}
-						>
-							<h1
-								style={{
-									color: "#0bb6e0",
-									fontFamily: "Georgia, serif",
-									fontSize: "2.8rem",
-									marginBottom: "0.5em",
-								}}
-							>
+						<div className="homeHeader">
+							<h1 className="titleHeaderHome">
 								Bienvenue sur HiTech-Solutions
 							</h1>
-							<h4
-								style={{
-									fontSize: "1.6rem",
-									fontWeight: "normal",
-									color: "#333333",
-									lineHeight: "1.6",
-								}}
-							>
+							<h4 className="descripHeader">
 								<strong>
 									Découvrez nos services de formation en
 									informatique pour les demandeurs d'emplois
@@ -59,7 +35,7 @@ const Home = () => {
 									backgroundColor: "#0bb5e09e",
 									border: "none",
 									width: "220px",
-									fontSize: "1.2rem",
+									fontSize: "1.4rem",
 								}}
 							>
 								En savoir plus{" "}
