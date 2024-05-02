@@ -19,7 +19,7 @@ export class AuthService {
     }
     const usersInfo = await this.userService.findAllUsersWithRoles();
     const findUser = usersInfo.find((user) => user.Email === email);
-
+    console.log(findUser.Password);
     if (!findUser) {
       throw new UnauthorizedException(
         'Aucun utilisateur trouvé avec cet email.',

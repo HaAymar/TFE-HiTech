@@ -1,15 +1,14 @@
-import { Repository } from 'typeorm';
+import { Connection, DataSource, Repository } from 'typeorm';
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Course } from '../../typeorm/entities/Courses';
+import { CreationTest } from '../../typeorm/entities/CreationTest';
 import { Formation } from '../../typeorm/entities/Formations';
+import { StudentsFormation } from '../../typeorm/entities/StudentFormation';
 import { TeachersCourse } from '../../typeorm/entities/TeachCourses';
-import { Teacher } from '../../typeorm/entities/Teacher';
 import { User } from '../../typeorm/entities/User';
-
-// import { DeleteCourseDto } from '../dtos/deleteCourses';
 
 @Injectable()
 export class CoursesService {
@@ -24,6 +23,8 @@ export class CoursesService {
     private usersRepository: Repository<User>,
     @InjectRepository(TeachersCourse)
     private teacherCoursesRepository: Repository<TeachersCourse>,
+    private connection: Connection,
+    private readonly dataSource: DataSource,
   ) {}
 
   findCourses() {
@@ -111,7 +112,6 @@ export class CoursesService {
       .where('user.id = :userId', { userId })
       .getMany();
 
-    // Transformation des données extraites pour former la structure de sortie désirée
     return usersWithCourses.flatMap((user) =>
       user.teachers.flatMap((teacher) =>
         teacher.teachersCourses.map((tc) => ({
@@ -119,20 +119,87 @@ export class CoursesService {
           courseName: tc.course.name,
           formationId: tc.course.formation.id,
           formationName: tc.course.formation.name,
-          teacherName: user.name, // Assumant que 'name' est une propriété de 'User'
+          teacherName: user.name,
         })),
       ),
     );
   }
 
-  async deleteCoursesByFormationId(formationId: number): Promise<void> {
-    await this.courseRepository
-      .createQueryBuilder()
-      .delete()
-      .from(Course)
-      .where('id_formation= :formationId', { formationId })
-      .execute();
+  async deleteFormationById(formationId: number): Promise<void> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      await queryRunner.manager
+        .createQueryBuilder()
+        .delete()
+        .from(StudentsFormation)
+        .where('id_formation = :formationId', { formationId })
+        .execute();
 
-    await this.formationRepository.delete(formationId);
+      await queryRunner.manager
+        .createQueryBuilder()
+        .delete()
+        .from(Course)
+        .where('id_formation = :formationId', { formationId })
+        .execute();
+
+      await queryRunner.manager
+        .createQueryBuilder()
+        .delete()
+        .from(Formation)
+        .where('id = :formationId', { formationId })
+        .execute();
+
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async deleteCoursesById(courseId: number): Promise<void> {
+    try {
+      await this.connection.transaction(async (manager) => {
+        const creationTests = await manager
+          .getRepository(CreationTest)
+          .createQueryBuilder('ct')
+          .where('ct.id_course = :courseId', { courseId })
+          .getMany();
+
+        for (const ct of creationTests) {
+          await manager
+            .getRepository('test')
+            .createQueryBuilder()
+            .delete()
+            .from('test')
+            .where('id_creatTest = :id', { id: ct.id })
+            .execute();
+        }
+
+        await manager
+          .getRepository(CreationTest)
+          .createQueryBuilder()
+          .delete()
+          .from(CreationTest)
+          .where('id_course = :courseId', { courseId })
+          .execute();
+
+        await manager
+          .getRepository(TeachersCourse)
+          .createQueryBuilder()
+          .delete()
+          .from(TeachersCourse)
+          .where('id_course = :courseId', { courseId })
+          .execute();
+
+        await manager.getRepository(Course).delete(courseId);
+      });
+    } catch (error) {
+      console.error('Failed to delete course:', error);
+      throw new InternalServerErrorException('Failed to delete course');
+    }
   }
 }

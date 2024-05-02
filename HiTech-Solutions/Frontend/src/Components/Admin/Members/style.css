@@ -1,0 +1,126 @@
+.body {
+	background-color: white;
+}
+
+.containerTable {
+	display: flex;
+	gap: 20px;
+	border: none;
+	border-radius: 15px;
+	padding-top: 30px;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 30px;
+	overflow: auto;
+}
+
+.buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+}
+.tableHeader {
+	display: flex;
+	flex-direction: column;
+}
+
+.upload-btn {
+	display: inline-block;
+	position: relative;
+	padding-top: 15px;
+}
+
+.custom-file-upload {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #66717c;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.custom-file-upload:hover {
+	background-color: #0b0f13;
+}
+
+.icon {
+	vertical-align: middle;
+	margin-right: 5px;
+}
+#file-upload {
+	display: none;
+}
+.custom-file-label {
+	display: none;
+}
+
+.tableScroll {
+	overflow-y: auto;
+	max-height: 60vh;
+}
+
+.sticky-header th {
+	position: sticky;
+	top: 0;
+	z-index: 10; /* Lower than the dropdown */
+	background: white; /* Ensure the header is not transparent */
+}
+
+.headerMembers {
+	display: flex;
+	flex-direction: row;
+	gap: 6%;
+	justify-content: center;
+	align-items: center;
+}
+
+.small-dropdown {
+	max-width: 150px; /* Adjust this value as needed */
+}
+
+.small-dropdown .dropdown-item {
+	white-space: nowrap; /* Prevents text from wrapping */
+	overflow: hidden; /* Keeps the text within the button's bounds */
+	text-overflow: ellipsis; /* Adds an ellipsis if the text is too long */
+}
+.small-dropdown .dropdown-menu {
+	right: 0; /* Aligns the dropdown menu to the right of the button */
+}
+
+.descripText {
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+		sans-serif;
+
+	text-align: center;
+	max-width: 25%;
+	margin: auto;
+
+	color: #6f7077;
+}
+.addButton {
+	display: flex;
+	gap: 20px;
+}
+
+/* ---------------- Editing radious ---------------*/
+
+.descripEdit {
+	border: none;
+	border-radius: 5px;
+}
+
+.buttonModiSave {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	background-color: #40b9af;
+	border: none;
+}

@@ -30,20 +30,28 @@ const OurServices = () => {
 				</h4>
 				<Row style={{ gap: "50px" }}>
 					<Col className="service-box">
-						<h2 style={{ fontWeight: "600", color: "#0bb6e0" }}>
-							Formation en Informatique
-						</h2>
-						<p>
-							Vous souhaitez vous former ou perfectionner vos
-							compétences en informatique pour décrocher le
-							travail de vos rêves ? Notre programme de formation
-							en technologie est conçu pour vous équiper des
-							compétences nécessaires dans un monde numérique en
-							constante évolution.
-						</p>
+						<div>
+							<h2 style={{ fontWeight: "600", color: "#0bb6e0" }}>
+								Formation en Informatique
+							</h2>
+						</div>
+						<div>
+							<p>
+								Vous souhaitez vous former ou perfectionner vos
+								compétences en informatique pour décrocher le
+								travail de vos rêves ? Notre programme de
+								formation en technologie est conçu pour vous
+								équiper des compétences nécessaires dans un
+								monde numérique en constante évolution.
+							</p>
+						</div>
+
 						<Button
 							variant="info"
-							style={{ marginTop: "10px", color: "white" }}
+							style={{
+								marginTop: "10px",
+								color: "white",
+							}}
 						>
 							Lancez-vous
 						</Button>

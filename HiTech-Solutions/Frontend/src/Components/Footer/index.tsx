@@ -20,16 +20,20 @@ const Footer: React.FC = () => {
 			>
 				<Row style={{ marginBottom: "20px" }}>
 					<Col>
-						<h5 style={{ fontWeight: "600" }}>Localisation</h5>
+						<h5 style={{ fontWeight: "600", color: "white" }}>
+							Localisation
+						</h5>
 						<p>Rue des Glands 43 </p>
 						<p>1190 Forest</p>
 						<p>Bruxelles, Belgique</p>
-						<h5 style={{ fontWeight: "600" }}>
+						<h5 style={{ fontWeight: "600", color: "white" }}>
 							Numéro de téléphone
 						</h5>
 						<p>+32 456 7890</p>
 
-						<h5 style={{ fontWeight: "600" }}>Suivez nous</h5>
+						<h5 style={{ fontWeight: "600", color: "white" }}>
+							Suivez nous
+						</h5>
 						<Col>
 							<a
 								href="https://facebook.com"
@@ -55,14 +59,20 @@ const Footer: React.FC = () => {
 						</Col>
 					</Col>
 					<Col>
-						<h5 style={{ fontWeight: "600" }}>Contact</h5>
+						<h5 style={{ fontWeight: "600", color: "white" }}>
+							Contact
+						</h5>
 						<p>Email: admin@hitchsolutions.be</p>
-						<h5 style={{ fontWeight: "600" }}>Services</h5>
+						<h5 style={{ fontWeight: "600", color: "white" }}>
+							Services
+						</h5>
 						<p>Centre de formation pour les demandeurs d'emplois</p>
 						<p>Service de dépannage</p>
 					</Col>
 					<Col>
-						<h5 style={{ fontWeight: "600" }}>Restons connectés</h5>
+						<h5 style={{ fontWeight: "600", color: "white" }}>
+							Restons connectés
+						</h5>
 						<p>
 							Pour plus d'informations, vous pouvez nous envoyer
 							votre mail afin de vous enregistrer

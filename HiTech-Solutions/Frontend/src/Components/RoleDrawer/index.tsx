@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import Drawer from "../Admin/Drawers/index";
+import Student from "../Student/index";
 
 interface DecodedToken {
 	RoleName: string;
@@ -24,6 +25,8 @@ const RoleDrawer: React.FC = () => {
 			return <Drawer role="teacher" />;
 		case "Admin":
 			return <Drawer role="admin" />;
+		case "Student":
+			return <Student />;
 		default:
 			navigate("/");
 			return null;

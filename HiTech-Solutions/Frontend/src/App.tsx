@@ -4,6 +4,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Admin from "./Components/Admin/CreateTrainings/index";
+import MembersFilter from "./Components/Admin/Members/index";
 import ChatBox from "./Components/chats/index";
 import Contact from "./Components/Contact/Contact";
 import Home from "./Components/Home/index";
@@ -14,8 +15,6 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import RoleDrawer from "./Components/RoleDrawer/index";
 import Services from "./Components/Services/index";
 import StudentPage from "./Components/Student/index";
-
-// import FormulaireTest from "./Components/Teacher/index";
 
 function App() {
 	return (
@@ -34,11 +33,13 @@ function App() {
 						/>
 					}
 				/>
+
 				<Route path="/formation" element={<Services />} />
 				<Route path="/contact" element={<Contact />} />
 				<Route path="/student" element={<StudentPage />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/chatBox" element={<ChatBox />} />
+				<Route path="/members" element={<MembersFilter />} />
 			</Routes>
 		</Router>
 	);

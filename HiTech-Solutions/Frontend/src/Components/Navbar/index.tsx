@@ -9,6 +9,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { FaGlobe, FaSearch } from "react-icons/fa";
 import { RiLoginCircleFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 import Français from "../../Assets/Flags/fr.png";
 import Nederlands from "../../Assets/Flags/nl.png";
@@ -58,7 +59,7 @@ const NavBar: React.FC = () => {
 					<img src={Logo} alt="Logo HiTech-Solutions" />
 					<h6
 						style={{
-							color: "#33364D",
+							color: "#272a3e",
 							fontWeight: "bold",
 							fontFamily: "cursive",
 						}}
@@ -187,7 +188,7 @@ const NavBar: React.FC = () => {
 					</NavDropdown>
 
 					<Nav className="mx-3">
-						<Nav.Link href="/login">
+						<Link to="/login">
 							<Button
 								style={{
 									backgroundColor: "#50b2d8",
@@ -201,7 +202,7 @@ const NavBar: React.FC = () => {
 									}}
 								/>
 							</Button>
-						</Nav.Link>
+						</Link>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
