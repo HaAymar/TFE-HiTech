@@ -37,7 +37,7 @@ export class UsersService {
     private studentsFormationRepository: Repository<StudentsFormation>,
     @InjectEntityManager() private entityManager: EntityManager,
   ) {}
-  findUsers() {
+  async findUsers() {
     return this.userRepository.find();
   }
   //------------------ In INSCRIPTION /!\ There is an error idRole and idSection do not accept the registration /!\ ------------------//
@@ -141,8 +141,6 @@ export class UsersService {
           'teachers.teachersCourses',
         ],
       });
-
-      console.log(user.teachers);
 
       if (!user) {
         throw new NotFoundException(`User with ID ${userId} not found.`);
