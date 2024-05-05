@@ -1,5 +1,8 @@
+import { join } from 'path';
+
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
@@ -7,6 +10,7 @@ import { AppService } from './app.service';
 import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { CoursesModule } from './courses/courses.module';
+import { CreationTestModule } from './createTest/createTest.module';
 import { FormationsModule } from './formations/formations.module';
 import { Admin } from './typeorm/entities/Admin';
 import { Course } from './typeorm/entities/Courses';
@@ -50,13 +54,17 @@ import { UsersModule } from './users/users.module';
           Course,
         ],
         synchronize: false,
-        // synchronize: true, // ! SET TO FALSE IN PRODUCTION
       }),
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', './public/uploads'),
+      serveRoot: '/uploads',
     }),
     UsersModule,
     FormationsModule,
     CoursesModule,
     AuthModule,
+    CreationTestModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService],

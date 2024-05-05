@@ -1,7 +1,7 @@
 import "./style.css";
 
 import React from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
@@ -50,7 +50,15 @@ const Services: React.FC = () => {
 							}}
 						>
 							<Card className="card" style={{ width: "100%" }}>
-								<Card.Img variant="top" src={admin} />
+								<Card.Img
+									variant="top"
+									src={`http://localhost:3001/${formation.photo}`}
+									style={{
+										width: "100%",
+										height: "150px",
+										objectFit: "cover",
+									}}
+								/>
 								<Card.Body>
 									<Card.Title className="card-title">
 										{formation.name}

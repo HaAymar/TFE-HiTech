@@ -1,5 +1,7 @@
 import * as cors from 'cors';
 import * as dotenv from 'dotenv';
+import { existsSync, mkdirSync } from 'fs';
+import { join } from 'path';
 
 import { NestFactory } from '@nestjs/core';
 
@@ -17,7 +19,10 @@ async function bootstrap() {
   //   allowedHeaders: ['Content-Type', 'Authorization'],
   //   credentials: true,
   // };
-
+  const uploadDir = join(__dirname, '..', 'public', 'uploads');
+  if (!existsSync(uploadDir)) {
+    mkdirSync(uploadDir, { recursive: true });
+  }
   app.use(cors());
   app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(3001);

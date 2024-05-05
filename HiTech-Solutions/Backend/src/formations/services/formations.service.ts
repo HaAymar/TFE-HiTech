@@ -18,10 +18,16 @@ export class FormationsService {
     return this.formationsRepository.find();
   }
 
-  createFormation(formationDetails: CreateFormationDto) {
-    const newFormation = this.formationsRepository.create(formationDetails);
+  async createFormation(
+    formationDetails: CreateFormationDto,
+    photoPath: string,
+  ): Promise<Formation> {
+    const newFormation = this.formationsRepository.create({
+      ...formationDetails,
+      photo: photoPath,
+    });
     console.log('Before save:', newFormation);
-    const savedFormation = this.formationsRepository.save(newFormation);
+    const savedFormation = await this.formationsRepository.save(newFormation);
     console.log('After save:', savedFormation);
     return savedFormation;
   }

@@ -26,7 +26,7 @@ interface Formation {
 	id: number;
 	name: string;
 	description: string;
-	photo: File | null;
+	photo: File | string | null;
 }
 
 //------------ Create Formation --------------//
@@ -76,8 +76,8 @@ const CreationFormations: React.FC = () => {
 
 	const [titre, setTitre] = useState<string>("");
 	const [description, setDescription] = useState<string>("");
-	const [photo] = useState<File | null>(null);
-
+	const [photo, setPhoto] = useState<File | null | string>(null);
+	const [imageURL, setImageURL] = useState<string>("");
 	const [nameCourse, setNameCourse] = useState<string>("");
 
 	const [refreshCourses] = useState<boolean>(false);
@@ -219,22 +219,28 @@ const CreationFormations: React.FC = () => {
 	//----------- Create Formations--------------//
 
 	const handleCreateFormation = async () => {
-		const newFormation: CreateFormation = {
-			name: titre,
-			description: description,
-			photo: "my photo",
-		};
+		if (!photo) {
+			alert("Please select a file.");
+			return;
+		}
+		const formData = new FormData();
+		formData.append("name", titre);
+		formData.append("description", description);
 
-		console.log(newFormation);
+		if (photo) {
+			formData.append("photo", photo);
+		}
+
+		console.log("photo", photo);
 		handleCloseModal();
 
 		try {
 			const response = await axios.post(
 				"http://localhost:3001/formations",
-				newFormation,
+				formData,
 				{
 					headers: {
-						"Content-Type": "application/json",
+						"Content-Type": "multipart/form-data",
 					},
 				}
 			);
@@ -674,15 +680,24 @@ const CreationFormations: React.FC = () => {
 								<input
 									id="file-upload"
 									type="file"
-									// onChange={(e) => {
-									// 	if (
-									// 		e.target.files &&
-									// 		e.target.files[0]
-									// 	) {
-									// 		setphoto(e.target.files[0]);
-									// 	}
-									// }}
+									onChange={(e) => {
+										if (
+											e.target.files &&
+											e.target.files.length > 0
+										) {
+											setPhoto(e.target.files[0]);
+										}
+									}}
 								/>
+
+								<div>
+									<p>
+										URL de l'image:{" "}
+										{photo
+											? photo.toString()
+											: "Pas d'image"}
+									</p>
+								</div>
 							</div>
 						</Form.Group>
 					</Form>

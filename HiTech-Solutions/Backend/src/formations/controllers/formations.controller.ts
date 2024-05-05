@@ -1,3 +1,6 @@
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+
 import {
   Body,
   Controller,
@@ -7,7 +10,10 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 import { CreateFormationDto } from '../dtos/createFormation';
 import { DeleteFormationDto } from '../dtos/deleteFormation';
@@ -23,9 +29,26 @@ export class FormationsController {
   }
 
   @Post()
-  async createFormation(@Body() createFormationDto: CreateFormationDto) {
-    // console.log(createFormationDto);
-    return this.formationService.createFormation(createFormationDto);
+  @UseInterceptors(
+    FileInterceptor('photo', {
+      storage: diskStorage({
+        destination: 'public/uploads',
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+    }),
+  )
+  async createFormation(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() createFormationDto: CreateFormationDto,
+  ): Promise<any> {
+    const photoPath = file ? `uploads/${file.filename}` : null;
+    return this.formationService.createFormation(createFormationDto, photoPath);
   }
 
   @Delete(':id')
