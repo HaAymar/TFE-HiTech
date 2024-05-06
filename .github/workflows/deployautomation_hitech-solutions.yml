@@ -14,19 +14,30 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
 
-      - name: npm install, build, and test
+      - name: Check current directory and list files
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
-      
+          pwd
+          ls -la
+
+      - name: Install dependencies, build, and test
+        run: |
+          if [ -f package.json ]; then
+            npm install
+            npm run build --if-present
+            npm run test --if-present
+          else
+            echo "Error: package.json not found in the repository."
+            exit 1
+          fi
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
@@ -40,14 +51,14 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
           name: node-app
-      
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
@@ -55,11 +66,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C92C8C9EBF5346D5A82E4C86A72DFE39 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_17BA94BAEA184088A15DFDA42CBD1720 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'hitech-solutions'
           slot-name: 'Production'
           package: .
-          
