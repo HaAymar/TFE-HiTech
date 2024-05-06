@@ -19,7 +19,7 @@ async function bootstrap() {
   //   allowedHeaders: ['Content-Type', 'Authorization'],
   //   credentials: true,
   // };
-  const uploadDir = join(__dirname, '..', 'public', 'uploads');
+  const uploadDir = join(__dirname, 'public', 'uploads');
   if (!existsSync(uploadDir)) {
     mkdirSync(uploadDir, { recursive: true });
   }
