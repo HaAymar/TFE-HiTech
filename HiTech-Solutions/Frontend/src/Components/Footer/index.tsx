@@ -15,26 +15,20 @@ const Footer: React.FC = () => {
 					color: "white",
 					marginTop: "0px",
 					paddingTop: "30px",
-					width: "800px",
+					maxWidth: "100%",
 				}}
 			>
 				<Row style={{ marginBottom: "20px" }}>
-					<Col>
-						<h5 style={{ fontWeight: "600", color: "white" }}>
-							Localisation
-						</h5>
+					<Col xs={12} md={4}>
+						<h5 className="contentTitle">Localisation</h5>
 						<p>Rue des Glands 43 </p>
 						<p>1190 Forest</p>
 						<p>Bruxelles, Belgique</p>
-						<h5 style={{ fontWeight: "600", color: "white" }}>
-							Numéro de téléphone
-						</h5>
+						<h5 className="contentTitle">Numéro de téléphone</h5>
 						<p>+32 456 7890</p>
 
-						<h5 style={{ fontWeight: "600", color: "white" }}>
-							Suivez nous
-						</h5>
-						<Col>
+						<h5 className="contentTitle">Suivez nous</h5>
+						<Col xs={12} md={4}>
 							<a
 								href="https://facebook.com"
 								aria-label="Facebook"
@@ -58,7 +52,7 @@ const Footer: React.FC = () => {
 							</a>
 						</Col>
 					</Col>
-					<Col>
+					<Col xs={12} md={4}>
 						<h5 style={{ fontWeight: "600", color: "white" }}>
 							Contact
 						</h5>
@@ -69,7 +63,7 @@ const Footer: React.FC = () => {
 						<p>Centre de formation pour les demandeurs d'emplois</p>
 						<p>Service de dépannage</p>
 					</Col>
-					<Col>
+					<Col xs={12} md={4}>
 						<h5 style={{ fontWeight: "600", color: "white" }}>
 							Restons connectés
 						</h5>

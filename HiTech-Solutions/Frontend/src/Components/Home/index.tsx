@@ -13,7 +13,7 @@ const Home = () => {
 	return (
 		<>
 			<NavBar />
-			<Container fluid className="main-banner">
+			<Container fluid className="main-banner home-container">
 				<Row>
 					<Col xs={12} md={8}>
 						<div className="homeHeader">
@@ -50,12 +50,12 @@ const Home = () => {
 					</Col>
 				</Row>
 			</Container>
-
 			<OurServices />
+
 			<div className="bodyAbout">
 				<Container
 					className="about-section"
-					style={{ maxWidth: "800px", margin: "auto" }}
+					style={{ maxWidth: "100%", margin: "auto" }}
 				>
 					<Row>
 						<Col

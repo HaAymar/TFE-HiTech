@@ -1,3 +1,7 @@
+.home-container {
+	overflow-x: hidden;
+}
+
 .main-banner {
 	background-image: url("../../Assets/Home/BB.png");
 	background-size: cover;
@@ -7,6 +11,7 @@
 	height: 100vh;
 	text-align: center;
 	display: flex;
+
 	align-items: center;
 	color: white;
 }
@@ -23,29 +28,6 @@
 	padding: 20px;
 }
 
-@media (min-width: 768px) {
-	.homeHeader {
-		text-align: left;
-		padding: 50px;
-	}
-	.titleHeaderHome,
-	.descripHeader {
-		font-size: 14px;
-		line-height: 1.4;
-	}
-}
-
-@media (max-width: 768px) {
-	.titleHeaderHome,
-	.descripHeader {
-		font-size: 5px;
-		line-height: 1.4;
-	}
-	.homeHeader {
-		padding: 10px;
-	}
-}
-
 .titleHeaderHome {
 	color: #0bb6e0;
 	font-family: "Georgia, serif";
@@ -59,6 +41,23 @@
 	text-align: left;
 	line-height: 1.6;
 }
+
+@media (max-width: 768px) {
+	.titleHeaderHome {
+		font-size: 6vw;
+	}
+	.descripHeader {
+		font-size: 4vw;
+		font-weight: normal;
+		width: 400px;
+		text-align: left;
+		line-height: 1.6;
+	}
+	.homeHeader {
+		padding: 10px;
+	}
+}
+
 .bodyAbout {
 	background-color: #ebe8e8e7;
 	padding-top: 10px;
@@ -112,14 +111,6 @@
 	border-radius: 60%;
 }
 
-/* .service-box {
-	border: 1px solid #ddd;
-	padding: 2px;
-	border-radius: 10px;
-	border: none;
-	background-color: rgb(67, 217, 236);
-} */
-/* Style pour les navigateurs basés sur WebKit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
 	width: 7px;
 }
@@ -132,4 +123,25 @@
 ::-webkit-scrollbar-thumb {
 	background: #51afd4;
 	border-radius: 10px;
+}
+@media (max-width: 768px) {
+	.about-section {
+		max-width: 100%;
+		padding: 10px;
+	}
+
+	.about-text,
+	.about-image {
+		flex-basis: 100%;
+		padding: 10px;
+	}
+
+	.about-text {
+		order: 2;
+	}
+
+	.about-image img {
+		width: 100%;
+		max-width: 100%;
+	}
 }

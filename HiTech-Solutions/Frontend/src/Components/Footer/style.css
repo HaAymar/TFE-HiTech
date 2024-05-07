@@ -10,10 +10,19 @@
 	justify-content: center;
 	align-items: center;
 }
-
-/* .footerContent {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-} */
+.contentTitle {
+	font-weight: 600;
+	color: white;
+}
+@media (max-width: 768px) {
+	.footer h5 {
+		font-size: 3vw;
+	}
+	.footer p {
+		font-size: 2vw;
+	}
+	.footer a {
+		display: block;
+		margin: 10px auto;
+	}
+}

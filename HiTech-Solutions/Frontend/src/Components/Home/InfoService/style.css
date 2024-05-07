@@ -14,3 +14,29 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.service-section h1 {
+	padding-bottom: 30px;
+	font-weight: 600;
+}
+
+.service-section h4 {
+	font-weight: 500;
+	color: #33364d;
+	margin-bottom: 30px;
+	font-family: "Georgia, serif";
+}
+@media (max-width: 768px) {
+	.service-section h1,
+	.service-section h4 {
+		font-size: smaller;
+	}
+	.service-box {
+		padding: 10px;
+		flex-basis: 100%;
+	}
+	.service-box Button {
+		width: 100%;
+		padding: 10px 0;
+	}
+}

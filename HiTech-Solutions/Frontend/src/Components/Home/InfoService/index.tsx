@@ -11,7 +11,8 @@ const OurServices = () => {
 				className="service-section"
 				style={{
 					marginTop: "40px",
-					width: "900px",
+					maxWidth: "900px",
+					width: "100%",
 				}}
 			>
 				<h1 style={{ paddingBottom: "30px", fontWeight: "600" }}>
