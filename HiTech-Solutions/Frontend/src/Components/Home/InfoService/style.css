@@ -33,10 +33,10 @@
 	}
 	.service-box {
 		padding: 10px;
-		flex-basis: 100%;
+		flex-basis: 90%;
 	}
 	.service-box Button {
-		width: 100%;
+		width: 40%;
 		padding: 10px 0;
 	}
 }
