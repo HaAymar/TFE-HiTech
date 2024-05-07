@@ -4,7 +4,7 @@ import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { BsArrowRight } from "react-icons/bs";
 
-import Bg from "../../Assets/Home/pro.webp";
+import Bg from "../../Assets/Home/mission.png";
 import Footer from "../Footer/index";
 import NavBar from "../Navbar/index";
 import OurServices from "./InfoService/index";
@@ -15,27 +15,27 @@ const Home = () => {
 			<NavBar />
 			<Container fluid className="main-banner">
 				<Row>
-					<Col>
+					<Col xs={12} md={8}>
 						<div className="homeHeader">
-							<h1 className="titleHeaderHome">
+							<p className="titleHeaderHome">
 								Bienvenue sur HiTech-Solutions
-							</h1>
-							<h4 className="descripHeader">
+							</p>
+							<p className="descripHeader">
 								<strong>
 									Découvrez nos services de formation en
 									informatique pour les demandeurs d'emplois
 									et nos solutions de dépannage IT.
 								</strong>
-							</h4>
+							</p>
 							<Button
 								variant="primary"
 								className="mt-3"
 								style={{
-									padding: "15px",
+									padding: "12px 24px",
 									backgroundColor: "#0bb5e09e",
 									border: "none",
 									width: "220px",
-									fontSize: "1.4rem",
+									fontSize: "1rem",
 								}}
 							>
 								En savoir plus{" "}
@@ -59,6 +59,7 @@ const Home = () => {
 				>
 					<Row>
 						<Col
+							xs={12}
 							md={6}
 							className="about-text"
 							style={{
@@ -100,6 +101,7 @@ const Home = () => {
 							</ul>
 						</Col>
 						<Col
+							xs={12}
 							md={6}
 							className="about-image"
 							style={{
@@ -117,7 +119,7 @@ const Home = () => {
 								style={{
 									width: "100%",
 									height: "auto",
-									maxWidth: "500px",
+									maxWidth: "100%",
 								}}
 							/>
 						</Col>

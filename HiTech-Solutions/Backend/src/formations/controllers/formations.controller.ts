@@ -48,6 +48,7 @@ export class FormationsController {
     @Body() createFormationDto: CreateFormationDto,
   ): Promise<any> {
     const photoPath = file ? `uploads/${file.filename}` : null;
+    console.log(photoPath);
     return this.formationService.createFormation(createFormationDto, photoPath);
   }
 

@@ -224,3 +224,9 @@ h5 {
 .alert {
 	margin-top: 10px;
 }
+.moduleStudent {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+}

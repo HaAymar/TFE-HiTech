@@ -11,14 +11,18 @@ const DefaultDrawer: React.FC = () => {
 			className="contentDefault"
 			style={{
 				width: "80%",
-				height: "80vh",
+				height: "85vh",
 				backgroundColor: "#dadde0",
 			}}
 		>
 			<Row className="justify-content-center">
-				<Col md={9}>
+				<Col md={12}>
 					<Card className="text-center">
-						<Card.Body>
+						<Card.Body
+							style={{
+								width: "100%",
+							}}
+						>
 							<Card.Title>
 								<strong>Accueil</strong>
 							</Card.Title>

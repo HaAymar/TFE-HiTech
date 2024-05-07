@@ -19,6 +19,31 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
+	text-align: center;
+	padding: 20px;
+}
+
+@media (min-width: 768px) {
+	.homeHeader {
+		text-align: left;
+		padding: 50px;
+	}
+	.titleHeaderHome,
+	.descripHeader {
+		font-size: 14px;
+		line-height: 1.4;
+	}
+}
+
+@media (max-width: 768px) {
+	.titleHeaderHome,
+	.descripHeader {
+		font-size: 5px;
+		line-height: 1.4;
+	}
+	.homeHeader {
+		padding: 10px;
+	}
 }
 
 .titleHeaderHome {

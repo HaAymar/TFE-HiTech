@@ -57,7 +57,7 @@ import { UsersModule } from './users/users.module';
       }),
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, './public/uploads'),
+      rootPath: join(__dirname, '..', 'public'),
       serveRoot: '/uploads',
     }),
     UsersModule,
