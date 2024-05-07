@@ -29,13 +29,6 @@ interface Formation {
 	photo: File | string | null;
 }
 
-//------------ Create Formation --------------//
-interface CreateFormation {
-	name: string;
-	description: string;
-	photo: string;
-}
-
 //------------ Create Course --------------//
 interface CreateCourse {
 	name: string;
@@ -77,7 +70,7 @@ const CreationFormations: React.FC = () => {
 	const [titre, setTitre] = useState<string>("");
 	const [description, setDescription] = useState<string>("");
 	const [photo, setPhoto] = useState<File | null | string>(null);
-	const [imageURL, setImageURL] = useState<string>("");
+
 	const [nameCourse, setNameCourse] = useState<string>("");
 
 	const [refreshCourses] = useState<boolean>(false);

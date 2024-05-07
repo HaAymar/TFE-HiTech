@@ -1,7 +1,7 @@
 import "./style.css";
 
 import React from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
