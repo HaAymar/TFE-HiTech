@@ -15,10 +15,12 @@ import {
 } from "react-bootstrap";
 import Calendar from "react-calendar";
 import { AiOutlineSchedule } from "react-icons/ai";
+import { BsXCircleFill } from "react-icons/bs";
 import { CgLoadbar } from "react-icons/cg";
 import { FaCheck } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { FaBookOpen } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
 import { PiCertificateFill } from "react-icons/pi";
@@ -231,7 +233,9 @@ const StudentPage: React.FC = () => {
 		const passedTests = interrogations.filter((test) => test.passe).length;
 		return totalTests > 0 ? (passedTests / totalTests) * 100 : 0;
 	};
-
+	const cancelSelectedCourse = () => {
+		setSelectedCourse(null);
+	};
 	const getProgressBarColor = (
 		passedTests: number,
 		totalTests: number
@@ -415,15 +419,36 @@ const StudentPage: React.FC = () => {
 							<Calendar className="calendar" />
 						</Col>
 						<Col md={4} className="mb-3">
-							{selectedCourse && (
+							{selectedCourse ? (
 								<div className="contentCours">
 									<div className="calendar-header">
-										<div>
-											<h4>
-												<strong>
-													{selectedCourse.titre}
-												</strong>
-											</h4>
+										<div
+											style={{
+												display: "flex",
+												alignItems: "center",
+												justifyContent: "center",
+												gap: "50px",
+											}}
+										>
+											<div
+												style={{
+													display: "flex",
+												}}
+											>
+												<h4>
+													<strong>
+														{selectedCourse.titre}
+													</strong>
+												</h4>
+											</div>
+
+											<BsXCircleFill
+												style={{
+													paddingBottom: "1px",
+													color: "#a84334",
+												}}
+												onClick={cancelSelectedCourse}
+											/>
 										</div>
 									</div>
 									<div className="d-flex align-items-center mt-3">
@@ -505,6 +530,46 @@ const StudentPage: React.FC = () => {
 											)
 										)}
 									</div>
+								</div>
+							) : (
+								<div
+									className="moduleStudent"
+									style={{
+										backgroundColor: "#f7f7f7",
+										padding: "20px",
+										borderRadius: "10px",
+										boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+									}}
+								>
+									<div>
+										<p>
+											Vous souhaitez voir votre
+											progression dans vos cours ? Vous
+											pouvez sélectionner le cours pour
+											obtenir tous les détails concernant
+											votre progression professionnelle.
+										</p>
+										<p>
+											Consultez les modules dans le
+											référentiel de l'établissement.
+										</p>
+									</div>
+
+									<Button
+										style={{
+											border: "none",
+											display: "flex",
+											alignItems: "center",
+											justifyContent: "center",
+											gap: "3px",
+											width: "150px",
+											backgroundColor: "#40b9af",
+											color: "white",
+										}}
+									>
+										<FaGithub />
+										<div>Modules</div>
+									</Button>
 								</div>
 							)}
 						</Col>

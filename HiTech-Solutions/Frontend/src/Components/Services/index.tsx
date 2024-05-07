@@ -1,16 +1,35 @@
 import "./style.css";
 
 import React from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 import admin from "../../Assets/Services/admin.jpeg";
+import defaultImage from "../../Assets/Services/default.png";
+import dev from "../../Assets/Services/dev.jpeg";
+import elec from "../../Assets/Services/elec.jpg";
+import telecom from "../../Assets/Services/telecom.jpg";
 import NavBar from "../Navbar/index";
 import { fetchFormations } from "../Stores/formationsState";
 
 const Services: React.FC = () => {
 	const formations = useRecoilValue(fetchFormations);
+
+	const selectImage = (formationName: string) => {
+		switch (formationName) {
+			case "Admin réseaux":
+				return admin;
+			case "Dev web":
+				return dev;
+			case "Eléctronique":
+				return elec;
+			case "Télécom":
+				return telecom;
+			default:
+				return defaultImage;
+		}
+	};
 
 	return (
 		<div className="scrollBar">
@@ -50,7 +69,15 @@ const Services: React.FC = () => {
 							}}
 						>
 							<Card className="card" style={{ width: "100%" }}>
-								<Card.Img variant="top" src={admin} />
+								<Card.Img
+									variant="top"
+									src={selectImage(formation.name)}
+									style={{
+										width: "100%",
+										height: "150px",
+										objectFit: "cover",
+									}}
+								/>
 								<Card.Body>
 									<Card.Title className="card-title">
 										{formation.name}

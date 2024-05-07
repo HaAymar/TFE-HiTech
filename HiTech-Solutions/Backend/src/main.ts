@@ -1,5 +1,7 @@
 import * as cors from 'cors';
 import * as dotenv from 'dotenv';
+import { existsSync, mkdirSync } from 'fs';
+import { join } from 'path';
 
 import { NestFactory } from '@nestjs/core';
 
@@ -11,15 +13,21 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // const corsOptions = {
-  //   origin: 'http://localhost:3000',
-  //   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT'],
-  //   allowedHeaders: ['Content-Type', 'Authorization'],
-  //   credentials: true,
-  // };
+  const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  };
 
-  app.use(cors());
+  const uploadDir = join(__dirname, '..', 'public', 'uploads');
+  if (!existsSync(uploadDir)) {
+    mkdirSync(uploadDir, { recursive: true });
+  }
+
+  app.use(cors(corsOptions));
   app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(3001);
 }
+
 bootstrap();

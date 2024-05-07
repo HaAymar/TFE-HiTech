@@ -11,21 +11,28 @@ const DefaultDrawer: React.FC = () => {
 			className="contentDefault"
 			style={{
 				width: "80%",
-				height: "500px",
+				height: "85vh",
 				backgroundColor: "#dadde0",
 			}}
 		>
-			<Row className="justify-content-center pt-5">
-				<Col md={6}>
+			<Row className="justify-content-center">
+				<Col md={12}>
 					<Card className="text-center">
-						<Card.Body>
+						<Card.Body
+							style={{
+								width: "100%",
+							}}
+						>
 							<Card.Title>
 								<strong>Accueil</strong>
 							</Card.Title>
 							<Card.Text>
 								Bonjour
-								{user ? ` ${user}` : " Guest"}, bienvenue sur
-								votre espace de travail personnalisé!
+								<strong style={{ color: "#3991b4" }}>
+									{user ? ` ${user}` : " Guest"}
+								</strong>
+								, bienvenue sur votre espace de travail
+								personnalisé!
 							</Card.Text>
 						</Card.Body>
 					</Card>

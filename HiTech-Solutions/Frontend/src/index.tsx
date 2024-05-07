@@ -12,12 +12,17 @@ import Home from "./Components/Home/index";
 import Login from "./Components/LoginSignup/index";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import RoleDrawer from "./Components/RoleDrawer/index";
+import FormationService from "./Components/Services/index";
 import FormulerTest from "./Components/Teacher/index";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <Home />,
+	},
+	{
+		path: "/formation",
+		element: <FormationService />,
 	},
 	{
 		path: "/login",
