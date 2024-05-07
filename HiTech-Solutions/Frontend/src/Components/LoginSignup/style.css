@@ -25,7 +25,7 @@
 	display: flex;
 	border: none;
 	border-radius: 15px;
-	width: 560px;
+	width: 40%;
 	padding: 4%;
 	margin-top: 10px;
 	background-color: #33364d;
@@ -34,4 +34,21 @@
 
 .inputForm {
 	width: 350px;
+}
+@media (max-width: 768px) {
+	.login-page .Form.Label {
+		font-size: 14px;
+	}
+	.login-page .Form.Control {
+		font-size: 14px;
+	}
+	.login-page .btn {
+		padding: 10px 0;
+	}
+	.ContLogin {
+		width: 90%;
+	}
+	.inputForm {
+		width: 100%;
+	}
 }

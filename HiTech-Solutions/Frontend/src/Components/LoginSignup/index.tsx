@@ -89,7 +89,7 @@ const LoginPage: React.FC = () => {
 				<h2 className="mb-4 text-center">Connexion</h2>
 				<div className="d-flex justify-content-center">
 					<Form onSubmit={handleLogin}>
-						<Form.Group controlId="formBasicEmail" className="mb-3">
+						<Form.Group className="mb-4">
 							<Form.Label>E-mail</Form.Label>
 							<InputGroup className="inputForm">
 								<InputGroup.Text>
@@ -106,10 +106,7 @@ const LoginPage: React.FC = () => {
 							</InputGroup>
 						</Form.Group>
 
-						<Form.Group
-							controlId="formBasicPassword"
-							className="mb-3"
-						>
+						<Form.Group className="mb-4">
 							<Form.Label>Mot de passe</Form.Label>
 							<InputGroup className="inputForm">
 								<InputGroup.Text>
@@ -133,12 +130,12 @@ const LoginPage: React.FC = () => {
 						</p>
 						<div className="d-flex justify-content-center">
 							<Button
+								type="submit"
+								className="w-50"
 								style={{
 									backgroundColor: "#5c9b9e",
 									border: "none",
 								}}
-								type="submit"
-								className="w-30"
 							>
 								Connexion
 							</Button>
