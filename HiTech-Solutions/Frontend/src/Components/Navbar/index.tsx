@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import Français from "../../Assets/Flags/fr.png";
 import Nederlands from "../../Assets/Flags/nl.png";
 import English from "../../Assets/Flags/uk.png";
-import Logo from "../../Assets/ll1.png";
+import Logo from "../../Assets/Home/logoo.svg";
 
 interface Country {
 	code: string;

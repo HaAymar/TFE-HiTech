@@ -10,7 +10,7 @@ import {
 import { IoLogOut } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import Logo from "../../../Assets/ll1.png"; // Assurez-vous que le chemin est correct
+import Logo from "../../../Assets/Home/logoo.svg"; // Assurez-vous que le chemin est correct
 
 interface NavbarProps {
 	customStyle?: React.CSSProperties;
