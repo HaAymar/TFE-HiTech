@@ -15,14 +15,18 @@
 	color: white;
 }
 @media (max-width: 768px) {
-	.footer h5 {
-		font-size: 3vw;
+	.footerSize {
+		font-size: 2.3vw;
 	}
-	.footer p {
-		font-size: 2vw;
-	}
-	.footer a {
+	.footerSize a {
 		display: block;
-		margin: 10px auto;
+	}
+	.contentTitle {
+		font-weight: 600;
+		color: white;
+		font-size: 4vw;
+	}
+	.footerContent {
+		font-size: 2.3vw;
 	}
 }

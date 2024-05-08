@@ -53,7 +53,7 @@ import { UsersModule } from './users/users.module';
           Formation,
           Course,
         ],
-        synchronize: false,
+        synchronize: false, // Est ce true
       }),
     }),
     ServeStaticModule.forRoot({

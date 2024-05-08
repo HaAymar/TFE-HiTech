@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css"; // Importing CSS Module
+import "./style.css";
 
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
@@ -21,11 +21,11 @@ const Footer: React.FC = () => {
 				<Row style={{ marginBottom: "20px" }}>
 					<Col xs={12} md={4}>
 						<h5 className="contentTitle">Localisation</h5>
-						<p>Rue des Glands 43 </p>
-						<p>1190 Forest</p>
-						<p>Bruxelles, Belgique</p>
+						<p className="footerSize">Rue des Glands 43 </p>
+						<p className="footerSize">1190 Forest</p>
+						<p className="footerSize">Bruxelles, Belgique</p>
 						<h5 className="contentTitle">Numéro de téléphone</h5>
-						<p>+32 456 7890</p>
+						<p className="footerSize">+32 456 7890</p>
 
 						<h5 className="contentTitle">Suivez nous</h5>
 						<Col xs={12} md={4}>
@@ -33,6 +33,7 @@ const Footer: React.FC = () => {
 								href="https://facebook.com"
 								aria-label="Facebook"
 								style={{ color: "white" }}
+								className="footerSize"
 							>
 								<FaFacebook />
 							</a>
@@ -40,6 +41,7 @@ const Footer: React.FC = () => {
 								href="https://instagram.com"
 								aria-label="Instagram"
 								style={{ margin: "0 10px", color: "white" }}
+								className="footerSize"
 							>
 								<FaInstagram />
 							</a>
@@ -47,27 +49,26 @@ const Footer: React.FC = () => {
 								href="https://twitter.com"
 								aria-label="Twitter"
 								style={{ color: "white" }}
+								className="footerSize"
 							>
 								<RiTwitterXLine />
 							</a>
 						</Col>
 					</Col>
 					<Col xs={12} md={4}>
-						<h5 style={{ fontWeight: "600", color: "white" }}>
-							Contact
-						</h5>
-						<p>Email: admin@hitchsolutions.be</p>
-						<h5 style={{ fontWeight: "600", color: "white" }}>
-							Services
-						</h5>
-						<p>Centre de formation pour les demandeurs d'emplois</p>
-						<p>Service de dépannage</p>
+						<h5 className="contentTitle">Contact</h5>
+						<p className="footerSize">
+							Email: admin@hitchsolutions.be
+						</p>
+						<h5 className="contentTitle">Services</h5>
+						<p className="footerSize">
+							Centre de formation pour les demandeurs d'emplois
+						</p>
+						<p className="footerSize">Service de dépannage</p>
 					</Col>
 					<Col xs={12} md={4}>
-						<h5 style={{ fontWeight: "600", color: "white" }}>
-							Restons connectés
-						</h5>
-						<p>
+						<h5 className="contentTitle">Restons connectés</h5>
+						<p className="footerSize">
 							Pour plus d'informations, vous pouvez nous envoyer
 							votre mail afin de vous enregistrer
 						</p>
