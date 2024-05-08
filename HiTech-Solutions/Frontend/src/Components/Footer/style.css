@@ -18,15 +18,16 @@
 	.footerSize {
 		font-size: 2.3vw;
 	}
-	.footerSize a {
-		display: block;
-	}
+
 	.contentTitle {
 		font-weight: 600;
 		color: white;
 		font-size: 4vw;
 	}
 	.footerContent {
-		font-size: 2.3vw;
+		font-size: 50%;
+	}
+	.footerIcon {
+		font-size: 3.5vw;
 	}
 }

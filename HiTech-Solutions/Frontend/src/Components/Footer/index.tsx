@@ -28,32 +28,30 @@ const Footer: React.FC = () => {
 						<p className="footerSize">+32 456 7890</p>
 
 						<h5 className="contentTitle">Suivez nous</h5>
-						<Col xs={12} md={4}>
-							<a
-								href="https://facebook.com"
-								aria-label="Facebook"
-								style={{ color: "white" }}
-								className="footerSize"
-							>
-								<FaFacebook />
-							</a>
-							<a
-								href="https://instagram.com"
-								aria-label="Instagram"
-								style={{ margin: "0 10px", color: "white" }}
-								className="footerSize"
-							>
-								<FaInstagram />
-							</a>
-							<a
-								href="https://twitter.com"
-								aria-label="Twitter"
-								style={{ color: "white" }}
-								className="footerSize"
-							>
-								<RiTwitterXLine />
-							</a>
-						</Col>
+						<a
+							href="https://facebook.com"
+							aria-label="Facebook"
+							style={{ color: "white" }}
+							className="footerIcon"
+						>
+							<FaFacebook />
+						</a>
+						<a
+							href="https://instagram.com"
+							aria-label="Instagram"
+							style={{ margin: "0 10px", color: "white" }}
+							className="footerIcon"
+						>
+							<FaInstagram />
+						</a>
+						<a
+							href="https://twitter.com"
+							aria-label="Twitter"
+							style={{ color: "white" }}
+							className="footerIcon"
+						>
+							<RiTwitterXLine />
+						</a>
 					</Col>
 					<Col xs={12} md={4}>
 						<h5 className="contentTitle">Contact</h5>
