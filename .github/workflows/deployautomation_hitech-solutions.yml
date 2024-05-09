@@ -115,5 +115,4 @@ jobs:
               with:
                   app-name: "hitech-solutions"
                   slot-name: "Production"
-                  package:
-                      ${{ github.workspace }}/HiTech-Solutions/Frontend/build
+                  package: .
