@@ -6,9 +6,9 @@ import {
 	Button,
 	Col,
 	Container,
-	Dropdown,
-	DropdownButton,
 	Form,
+	FormCheck,
+	FormGroup,
 	Modal,
 	OverlayTrigger,
 	Row,
@@ -21,21 +21,27 @@ import { IoSaveOutline } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useRecoilValue } from "recoil";
 
+import { fetchCourses } from "../../Stores/fetchCourses";
+import { fetchFormations } from "../../Stores/formationsState";
 import { fetchUsers } from "../../Stores/usersState";
 
 interface Formation {
 	formationId: number;
 	formationName: string;
 }
-
 interface Course {
+	id: number;
+	name: string;
+}
+
+interface CourseD {
 	courseId: number;
 	courseName: string;
 }
 
 interface UserDetail {
 	formations?: Formation[];
-	courses?: Course[];
+	courses?: CourseD[];
 }
 
 interface User {
@@ -57,6 +63,11 @@ interface CreateUser {
 }
 
 const MembersFilter: React.FC = () => {
+	const [selectedUser, setSelectedUser] = useState<number | "">("");
+
+	const [selectedFormation, setSelectedFormation] = useState<number | "">("");
+	const [selectedCourses, setSelectedCourses] = useState<Array<number>>([]);
+
 	const [editingUserId, setEditingUserId] = useState<number | null>(null);
 	const [editedName, setEditedName] = useState<string>("");
 	const [editedSurname, setEditedSurname] = useState<string>("");
@@ -67,14 +78,39 @@ const MembersFilter: React.FC = () => {
 	const [surname, setSurname] = useState<string>("");
 
 	const [email, setEmail] = useState<string>("");
+	const [emailError, setEmailError] = useState<string>("");
 	const [phoneNumber, setPhoneNumber] = useState<string>("");
 	const [selectedRole, setSelectedRole] = useState<string>("");
 	const allUsers = useRecoilValue<User[]>(fetchUsers);
+	const courses = useRecoilValue<Course[]>(fetchCourses);
+	const formations = useRecoilValue<any[]>(fetchFormations);
+	const [role, setRole] = useState<string>("");
 
 	const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
 	const [showModalForm, setShowModalForm] = useState<boolean>(false);
+	const [showModalRole, setShowModalRole] = useState<boolean>(false);
+
+	console.log(courses);
+
+	const roles: any[] = [
+		{ id: 1, name: "Student" },
+		{ id: 2, name: "Teacher" },
+		{ id: 3, name: "Admin" },
+	];
+
+	const validateEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const email = e.target.value;
+		setEmail(email);
+		if (!/\S+@\S+\.\S+/.test(email)) {
+			setEmailError("Veuillez entrer une adresse email valide.");
+		} else {
+			setEmailError("");
+		}
+	};
 
 	console.log("All user", allUsers);
+	const usersNoRole = allUsers.filter((user) => user.role === "-");
+	console.log(usersNoRole);
 	const renderDetailsList = (
 		items: { formationName?: string; courseName?: string }[]
 	) => {
@@ -114,6 +150,7 @@ const MembersFilter: React.FC = () => {
 		setEmail(" ");
 		setPhoneNumber(" ");
 		setShowModalForm(false);
+		setShowModalRole(false);
 	};
 
 	//---------------- Create User -------------- //
@@ -215,6 +252,15 @@ const MembersFilter: React.FC = () => {
 		}
 	}, [allUsers, selectedRole]);
 
+	const handleCourseSelection = (courseId: number) => {
+		setSelectedCourses((prevSelectedCourses) => {
+			if (prevSelectedCourses.includes(courseId)) {
+				return prevSelectedCourses.filter((id) => id !== courseId);
+			} else {
+				return [...prevSelectedCourses, courseId];
+			}
+		});
+	};
 	return (
 		<Container
 			className="containerTable"
@@ -250,31 +296,13 @@ const MembersFilter: React.FC = () => {
 				</p>
 
 				<div className="addButton">
-					<DropdownButton
-						id="dropdown-basic-button"
-						title="Options"
-						variant="secondary"
-						className="small-dropdown"
+					<Button
+						style={{ backgroundColor: "#314353", border: "none" }}
+						onClick={() => setShowModalRole(true)}
 					>
-						<Dropdown.Item
-							href="#/action-1"
-							className="small-dropdown"
-						>
-							Ajouter rôle
-						</Dropdown.Item>
-						<Dropdown.Item
-							href="#/action-2"
-							className="small-dropdown"
-						>
-							Assign a Course to Teacher
-						</Dropdown.Item>
-						<Dropdown.Item
-							href="#/action-3"
-							className="small-dropdown"
-						>
-							Assign a Formation to Student
-						</Dropdown.Item>
-					</DropdownButton>
+						<IoIosAdd />
+						Ajouter rôle
+					</Button>
 					<Button
 						style={{ backgroundColor: "#314353", border: "none" }}
 						onClick={() => setShowModalForm(true)}
@@ -558,7 +586,9 @@ const MembersFilter: React.FC = () => {
 						<Row>
 							<Col md={6}>
 								<Form.Group controlId="formNom">
-									<Form.Label>Nom</Form.Label>
+									<Form.Label>
+										<strong>Nom</strong>
+									</Form.Label>
 									<Form.Control
 										type="text"
 										value={name}
@@ -568,20 +598,26 @@ const MembersFilter: React.FC = () => {
 									/>
 								</Form.Group>
 								<Form.Group controlId="formEmail">
-									<Form.Label>Email</Form.Label>
+									<Form.Label>
+										<strong>Email</strong>
+									</Form.Label>
 									<Form.Control
 										as="input"
 										type="email"
 										value={email}
-										onChange={(e) =>
-											setEmail(e.target.value)
-										}
+										onChange={validateEmail}
+										isInvalid={!!emailError}
 									/>
+									<Form.Control.Feedback type="invalid">
+										{emailError}
+									</Form.Control.Feedback>
 								</Form.Group>
 							</Col>
 							<Col md={6}>
 								<Form.Group controlId="formPrenom">
-									<Form.Label>Prénom</Form.Label>
+									<Form.Label>
+										<strong>Prénom</strong>
+									</Form.Label>
 									<Form.Control
 										as="input"
 										value={surname}
@@ -591,7 +627,9 @@ const MembersFilter: React.FC = () => {
 									/>
 								</Form.Group>
 								<Form.Group controlId="formTelephone">
-									<Form.Label>Téléphone</Form.Label>
+									<Form.Label>
+										<strong>Téléphone</strong>
+									</Form.Label>
 									<Form.Control
 										as="input"
 										value={phoneNumber}
@@ -600,6 +638,150 @@ const MembersFilter: React.FC = () => {
 										}
 									/>
 								</Form.Group>
+							</Col>
+						</Row>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer
+					style={{
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+					}}
+				>
+					<Button
+						variant="danger"
+						onClick={handleCloseModal}
+						style={{ border: "none" }}
+					>
+						Annuler
+					</Button>
+					<Button
+						variant="primary"
+						onClick={handleCreateUser}
+						style={{ backgroundColor: "#5c9b9e", border: "none" }}
+					>
+						Ajouter
+					</Button>
+				</Modal.Footer>
+			</Modal>
+			<Modal show={showModalRole} onHide={handleCloseModal}>
+				<Modal.Header closeButton>
+					<Modal.Title style={{ textAlign: "center" }}>
+						Ajout du rôle
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Row>
+							<Col md={6}>
+								<Form.Group controlId="formUser">
+									<Form.Label>
+										<strong>Utilisateurs</strong>
+									</Form.Label>
+									<Form.Control
+										as="select"
+										value={selectedUser}
+										onChange={(e) =>
+											setSelectedUser(
+												parseInt(e.target.value)
+											)
+										}
+									>
+										<option value="" hidden>
+											Choisie un utilisateurs
+										</option>
+										{usersNoRole.map((user) => (
+											<option
+												key={user.id}
+												value={user.id}
+											>
+												{user.name}
+											</option>
+										))}
+									</Form.Control>
+								</Form.Group>
+
+								<Form.Group controlId="formRole">
+									<Form.Label>
+										<strong>Rôle</strong>
+									</Form.Label>
+									<Form.Control
+										as="select"
+										value={role}
+										onChange={(e) =>
+											setRole(e.target.value)
+										}
+									>
+										<option value="" hidden>
+											Choisie un rôle
+										</option>
+										{roles.map((role) => (
+											<option
+												key={role.id}
+												value={role.name}
+											>
+												{role.name}
+											</option>
+										))}
+									</Form.Control>
+								</Form.Group>
+							</Col>
+							<Col md={6}>
+								{role === "Student" && (
+									<Form.Group controlId="formFormation">
+										<Form.Label>
+											<strong>Formation</strong>
+										</Form.Label>
+										<Form.Control
+											as="select"
+											value={selectedFormation}
+											onChange={(e) =>
+												setSelectedFormation(
+													parseInt(e.target.value)
+												)
+											}
+										>
+											<option value="" hidden>
+												Choisie une formation
+											</option>
+											{formations.map((formation) => (
+												<option
+													key={formation.id}
+													value={formation.id}
+												>
+													{formation.name}
+												</option>
+											))}
+										</Form.Control>
+									</Form.Group>
+								)}
+
+								{role === "Teacher" && (
+									<FormGroup controlId="formCourses">
+										<Form.Label>
+											<strong>Courses</strong>{" "}
+										</Form.Label>
+										<div className="checkbox-padding">
+											{courses.map((course) => (
+												<FormCheck
+													key={course.id}
+													type="checkbox"
+													label={course.name}
+													value={course.id}
+													checked={selectedCourses.includes(
+														course.id
+													)}
+													onChange={() =>
+														handleCourseSelection(
+															course.id
+														)
+													}
+												/>
+											))}
+										</div>
+									</FormGroup>
+								)}
 							</Col>
 						</Row>
 					</Form>

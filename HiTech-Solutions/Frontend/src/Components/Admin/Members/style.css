@@ -124,3 +124,9 @@
 	background-color: #40b9af;
 	border: none;
 }
+.checkbox-padding {
+	display: flex;
+	flex-direction: column;
+	max-height: 100px;
+	overflow: auto;
+}

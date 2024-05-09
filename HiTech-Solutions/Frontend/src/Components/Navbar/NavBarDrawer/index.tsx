@@ -34,66 +34,63 @@ const NavBarDrawer: React.FC<NavbarProps> = ({ customStyle = {} }) => {
 	return (
 		<Navbar expand="lg" fixed="top" style={combinedStyle}>
 			<Container fluid>
+				<Navbar.Brand
+					href="#"
+					style={{ display: "flex", alignItems: "center" }}
+				>
+					<img
+						src={Logo}
+						alt="Logo HiTech-Solutions"
+						style={{ width: "40px", height: "40px" }}
+					/>
+					<span
+						style={{
+							color: "#272a3e",
+							fontWeight: "bold",
+							fontFamily: "cursive",
+							marginLeft: "10px",
+							fontSize: "15px",
+						}}
+					>
+						HiTech-Solutions
+					</span>
+				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="navbarScroll" />
 				<Navbar.Collapse id="navbarScroll">
-					<Nav className="me-auto">
-						<div
+					<Nav className="me-auto"></Nav>
+					<Nav>
+						{" "}
+						<Button
 							style={{
-								display: "flex",
-								alignItems: "center",
-								justifyContent: "center",
-								gap: "10px",
+								backgroundColor: "#50b2d8",
+								border: "none",
 							}}
 						>
-							<img
-								src={Logo}
-								alt="Logo HiTech-Solutions"
-								style={{ width: "40px", height: "40px" }}
-							/>
-							<h6
-								style={{
-									color: "#272a3e",
-									fontWeight: "bold",
-									fontFamily: "cursive",
-									fontSize: "17px",
-								}}
-							>
-								HiTech-Solutions
-							</h6>
-						</div>
-					</Nav>
-					<Nav>
-						<Nav.Link>
+							{initials}{" "}
+						</Button>
+						<OverlayTrigger
+							placement="bottom"
+							overlay={
+								<Tooltip id="logout-tooltip">
+									Cliquez pour vous déconnecter
+								</Tooltip>
+							}
+						>
 							<Button
+								variant="link"
+								onClick={handleLogout}
 								style={{
-									backgroundColor: "#50b2d8",
-									border: "none",
+									color: "white",
+									display: "flex",
+									alignItems: "center",
 								}}
 							>
-								{initials}{" "}
+								<IoLogOut
+									size={20}
+									style={{ marginRight: "5px" }}
+								/>
 							</Button>
-							<OverlayTrigger
-								placement="bottom"
-								overlay={
-									<Tooltip>
-										Cliquez pour vous déconnecter
-									</Tooltip>
-								}
-							>
-								<span
-									onClick={handleLogout}
-									style={{ cursor: "pointer" }}
-								>
-									<IoLogOut
-										size={20}
-										style={{
-											marginLeft: "10px",
-											color: "white",
-										}}
-									/>
-								</span>
-							</OverlayTrigger>
-						</Nav.Link>
+						</OverlayTrigger>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

@@ -37,7 +37,8 @@
 	overflow-y: auto;
 }
 .student-page-container {
-	height: 100vh;
+	height: 100%;
+	width: 100%;
 	overflow: hidden;
 }
 .student-page-container .custom-accordion-body {
@@ -49,7 +50,6 @@
 }
 .student-page-container {
 	display: flex;
-
 	align-items: flex-start;
 }
 
@@ -85,27 +85,17 @@
 	align-items: center;
 }
 .calendar {
+	width: 100%;
 	border-radius: 5px;
 	border: none;
+	margin-top: 10px;
+	font-size: 1.1vw;
 }
 .progressBar {
 	height: "20px";
 }
 
 /* Responsive design adjustments */
-@media (max-width: 768px) {
-	.studentContent {
-		padding: 10px;
-	}
-
-	.calendar {
-		font-size: 14px;
-	}
-}
-
-.small-progress-bar .progress-bar {
-	transition: width 0.6s ease;
-}
 
 h3,
 h5 {
@@ -135,9 +125,6 @@ h5 {
 	gap: 5%;
 }
 
-.calendar {
-	margin-top: 10px;
-}
 .contentCours .d-flex {
 	display: flex;
 	flex-direction: column;
@@ -193,14 +180,15 @@ h5 {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: 20px;
+	padding-bottom: 4%;
+	padding-top: 3%;
 	background-color: #f4f4f4;
 	border-radius: 10px;
 }
 
 .profile-header {
+	width: 100%;
 	text-align: center;
-	margin-bottom: 20px;
 }
 
 .certificate-section {
@@ -229,4 +217,27 @@ h5 {
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
+}
+@media (max-width: 768px) {
+	.studentContent {
+		display: flex;
+		align-items: center;
+	}
+
+	.calendar {
+		font-size: 4vw;
+	}
+}
+
+.small-progress-bar .progress-bar {
+	transition: width 0.6s ease;
+}
+.listCourse .listGroupItem {
+	cursor: pointer; /* Makes it clear the item is clickable */
+	transition: background-color 0.3s, color 0.3s; /* Smooth transition for a better UX */
+}
+
+.listCourse .listGroupItem.selected {
+	background-color: #3991b47c;
+	color: white;
 }
