@@ -1,38 +1,38 @@
 name: Build and deploy Node.js app to Azure Web App - hitech-backend
 
 on:
-  push:
-    branches:
-      - deployAutomation
-  workflow_dispatch:
+    push:
+        branches:
+            - deployAutomation
+    workflow_dispatch:
 
 permissions:
-  contents: read  # Required for actions/checkout@v4 to access the repo content
-  id-token: write  # This allows the workflow to request an ID token
+    contents: read
+    id-token: write
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+    build-and-deploy:
+        runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Set up Node.js version
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'  # Ensure this version matches your development environment
+            - name: Set up Node.js version
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "18.x" # Ensure this version matches your development environment
 
-      - name: Install dependencies and run tests
-        working-directory: ./HiTech-Solutions/Backend
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+            - name: Install dependencies and run tests
+              working-directory: ./HiTech-Solutions/Backend
+              run: |
+                  npm install
+                  npm run build --if-present
+                  npm run test --if-present
 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'hitech-backend'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZURE_APP_BACKEND }}
-          package: .
+            - name: Deploy to Azure Web App
+              uses: azure/webapps-deploy@v2
+              with:
+                  app-name: "hitech-backend"
+                  slot-name: "Production"
+                  publish-profile: ${{ secrets.AZURE_APP_BACKEND }}
+                  package: ./HiTech-Solutions/Backend/dist
