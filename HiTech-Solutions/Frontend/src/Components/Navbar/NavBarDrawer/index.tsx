@@ -1,16 +1,9 @@
-import React from "react";
-import {
-	Button,
-	Container,
-	Nav,
-	Navbar,
-	OverlayTrigger,
-	Tooltip,
-} from "react-bootstrap";
-import { IoLogOut } from "react-icons/io5";
-import { useLocation, useNavigate } from "react-router-dom";
+import React from 'react';
+import { Button, Container, Nav, Navbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { IoLogOut } from 'react-icons/io5';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import Logo from "../../../Assets/Home/logoo.svg"; // Assurez-vous que le chemin est correct
+import Logo from '../../../Assets/Home/logoo.svg';
 
 interface NavbarProps {
 	customStyle?: React.CSSProperties;
