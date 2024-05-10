@@ -19,6 +19,49 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+     name: Build and deploy Node.js app to Azure Web App - hitech-backend
+
+on:
+  push:
+    branches:
+      - deployAutomation
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Working directory
+        run: cd HiTech-Solutions/Backend
+
+      - name: Install dependencies and run tests
+        run: |
+          npm install
+          npm run build --if-present
+          npm run test --if-present
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A48D44BB3E0E499FA6E14CC55022C22F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2F0731DFE30046F6863C2102F66BFA60 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_98D46565A1EB426AB3D6B0C164803825 }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'hitech-backend'
+          slot-name: 'Production'
+          package: .
+
 
       - name: npm install, build, and test
         run: |
