@@ -27,13 +27,17 @@ jobs:
         run: npm run build --if-present
         working-directory: ./HiTech-Solutions/Backend
 
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A48D44BB3E0E499FA6E14CC55022C22F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2F0731DFE30046F6863C2102F66BFA60 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_98D46565A1EB426AB3D6B0C164803825 }}
+           
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'hitech-backend'
           slot-name: 'Production'
           package: ./HiTech-Solutions/Backend/dist
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A48D44BB3E0E499FA6E14CC55022C22F }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2F0731DFE30046F6863C2102F66BFA60 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_98D46565A1EB426AB3D6B0C164803825 }}
-
