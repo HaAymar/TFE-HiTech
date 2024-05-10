@@ -5,14 +5,13 @@ on:
     branches:
       - deployAutomation
   workflow_dispatch:
-
-permissions:
-  id-token: write  # This allows the workflow to request an ID token
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    
+    permissions:
+      id-token: write  # This allows the workflow to request an ID token
+      
     steps:
       - uses: actions/checkout@v4
 
@@ -34,7 +33,6 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A48D44BB3E0E499FA6E14CC55022C22F }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2F0731DFE30046F6863C2102F66BFA60 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_98D46565A1EB426AB3D6B0C164803825 }}
-          auth-type: 'github_oidc'
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
