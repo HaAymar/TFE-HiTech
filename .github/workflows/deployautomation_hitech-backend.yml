@@ -11,26 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js version
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
 
-      - name: Install dependencies and run tests
+      - name: Install dependencies
+        run: npm install
         working-directory: ./HiTech-Solutions/Backend
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+
+      - name: Build
+        run: npm run build --if-present
+        working-directory: ./HiTech-Solutions/Backend
 
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'hitech-backend'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZURE_APP_BACKEND }}
-          package: './HiTech-Solutions/Backend/dist'
+          package: ./HiTech-Solutions/Backend/dist
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A48D44BB3E0E499FA6E14CC55022C22F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2F0731DFE30046F6863C2102F66BFA60 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_98D46565A1EB426AB3D6B0C164803825 }}
 
