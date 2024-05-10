@@ -18,10 +18,8 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: Working directory
-        run: cd HiTech-Solutions/Backend
-
       - name: Install dependencies and run tests
+        working-directory: ./HiTech-Solutions/Backend
         run: |
           npm install
           npm run build --if-present
