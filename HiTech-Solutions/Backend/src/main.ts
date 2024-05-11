@@ -13,6 +13,8 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.setGlobalPrefix('api');
+
   const corsOptions = {
     origin: [process.env.SITE_URL, 'http://localhost:3000'],
     methods: ['GET', 'POST', 'DELETE', 'PUT'],
@@ -27,7 +29,7 @@ async function bootstrap() {
 
   app.use(cors(corsOptions));
   app.useGlobalFilters(new AllExceptionsFilter());
-  await app.listen(3001);
+  await app.listen(process.env.PORT || 3001);
 }
 
 bootstrap();
