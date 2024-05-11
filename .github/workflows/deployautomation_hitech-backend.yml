@@ -36,16 +36,20 @@ jobs:
         needs: build
         environment:
             name: "Production"
-            url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
         steps:
-            - name: "Deploy to Azure Web App"
+            - name: Download artifact from build job
+              uses: actions/download-artifact@v3
+              with:
+                  name: node-app
+                  path: dist
+
+            - name: Deploy to Azure Web App
               uses: azure/webapps-deploy@v2
-              id: deploy-to-webapp
               with:
                   app-name: "hitech-backend"
                   slot-name: "Production"
-                  package: "./HiTech-Solutions/Backend/dist"
+                  package: ./dist
                   publish-profile:
                       ${{
                       secrets.AZUREAPPSERVICE_PUBLISHPROFILE_112CE37252BA4624A16A2CF55653B573
