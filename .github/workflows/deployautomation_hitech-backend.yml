@@ -28,11 +28,11 @@ jobs:
                   npm run test --if-present
               working-directory: ./HiTech-Solutions/Backend
 
-            - name: Upload artifact for deployment job
-              uses: actions/upload-artifact@v3
-              with:
-                  name: node-app
-                  path: .
+            # - name: Upload artifact for deployment job
+            #   uses: actions/upload-artifact@v3
+            #   with:
+            #     name: node-app
+            #     path: ./HiTech-Solutions/Backend/dist
 
     deploy:
         runs-on: ubuntu-latest
@@ -42,10 +42,10 @@ jobs:
             url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
         steps:
-            - name: Download artifact from build job
-              uses: actions/download-artifact@v3
-              with:
-                  name: node-app
+            # - name: Download artifact from build job
+            #   uses: actions/download-artifact@v3
+            #   with:
+            #     name: node-app
 
             - name: "Deploy to Azure Web App"
               uses: azure/webapps-deploy@v2
