@@ -25,8 +25,14 @@ jobs:
               run: |
                   npm install
                   npm run build  
-                  npm run test
+                  npm run test --if-present
               working-directory: ./HiTech-Solutions/Backend
+
+            - name: Upload artifact for deployment job
+              uses: actions/upload-artifact@v3
+              with:
+                  name: node-app
+                  path: ./HiTech-Solutions/Backend/dist
 
     deploy:
         runs-on: ubuntu-latest
