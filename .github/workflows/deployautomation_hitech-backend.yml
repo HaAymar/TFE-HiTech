@@ -45,7 +45,7 @@ jobs:
               with:
                   app-name: "hitech-backend"
                   slot-name: "Production"
-                  package: .
+                  package: "./HiTech-Solutions/Backend/dist"
                   publish-profile:
                       ${{
                       secrets.AZUREAPPSERVICE_PUBLISHPROFILE_112CE37252BA4624A16A2CF55653B573
