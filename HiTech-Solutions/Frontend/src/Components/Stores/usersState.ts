@@ -1,6 +1,8 @@
 import axios from "axios";
 import { atom, selector } from "recoil";
 
+import { BE_URL } from "../../config";
+
 interface Course {
 	courseId: number;
 	courseName: string;
@@ -32,9 +34,7 @@ export const fetchUsers = selector({
 	key: "fetchUsers",
 	get: async ({ get }) => {
 		try {
-			const response = await axios.get<any>(
-				"http://localhost:3001/users/infos"
-			);
+			const response = await axios.get<any>(`${BE_URL}users/infos`);
 			return response.data;
 		} catch (error) {
 			throw error;

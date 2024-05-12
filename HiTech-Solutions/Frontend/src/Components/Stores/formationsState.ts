@@ -1,6 +1,8 @@
 import axios from "axios";
 import { atom, selector } from "recoil";
 
+import { BE_URL } from "../../config";
+
 export interface Formation {
 	id: number;
 	name: string;
@@ -24,7 +26,7 @@ export const fetchFormations = selector({
 	get: async () => {
 		try {
 			const response = await axios.get<Formation[]>(
-				"http://localhost:3001/formations"
+				`${BE_URL}Formations`
 			);
 			return response.data;
 		} catch (error) {

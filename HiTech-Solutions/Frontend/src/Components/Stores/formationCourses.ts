@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001/courses";
+const BASE_URL = `${BE_URL}courses`;
 
 export const findByFormationName = async (name: string) => {
 	try {

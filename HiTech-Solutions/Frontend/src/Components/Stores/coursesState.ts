@@ -1,5 +1,6 @@
 import { selector } from "recoil";
 
+import { BE_URL } from "../../config";
 import { userIdState } from "./userIdState";
 
 export const teacherCoursesState = selector({
@@ -12,7 +13,7 @@ export const teacherCoursesState = selector({
 			return [];
 		}
 
-		const API_URL = `http://localhost:3001/courses/teacher/${teacherId}`;
+		const API_URL = `${BE_URL}courses/teacher/${teacherId}`;
 
 		try {
 			const response = await fetch(API_URL);
