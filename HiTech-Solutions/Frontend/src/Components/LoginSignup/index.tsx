@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 import Logo from "../../Assets/pp.svg";
+import { BE_URL } from "../../config";
 import { userNameState } from "../Stores/nameUser";
 import { userIdState } from "../Stores/userIdState";
 
@@ -27,12 +28,13 @@ const LoginPage: React.FC = () => {
 	const setUserId = useSetRecoilState(userIdState);
 	const navigate = useNavigate();
 	const [, setUserName] = useRecoilState(userNameState);
+	console.log(BE_URL);
 	const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault(); // Empêche le rechargement de la page
 		console.log(email);
 		try {
 			const response = await axios.post(
-				"http://localhost:3001/auth/login",
+				`${BE_URL}auth/login`,
 				{ email, password },
 				{ headers: { "Content-Type": "application/json" } }
 			);

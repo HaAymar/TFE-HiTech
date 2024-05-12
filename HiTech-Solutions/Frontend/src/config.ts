@@ -1,4 +1,4 @@
 export const BE_URL =
-	process.env.NODE_ENV === "Production"
-		? "https://hitech-solutions.com:3001/"
-		: "http://localhost:3001/";
+	process.env.NODE_ENV === "production"
+		? "https://hitech-solutions.com:3001/api/"
+		: "http://localhost:3001/api/";

@@ -18,6 +18,7 @@ import { RiImageAddFill } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useRecoilValue } from "recoil";
 
+import { BE_URL } from "../../../config";
 import { findByFormationName } from "../../Stores/formationCourses";
 import { fetchFormations } from "../../Stores/formationsState";
 
@@ -135,7 +136,7 @@ const CreationFormations: React.FC = () => {
 
 		try {
 			const response = await axios.post(
-				`http://localhost:3001/courses/${selectedFormationId}`,
+				`${BE_URL}courses/${selectedFormationId}`,
 				newCourse,
 				{
 					headers: {
@@ -180,7 +181,7 @@ const CreationFormations: React.FC = () => {
 
 		try {
 			const response = await axios.put(
-				`http://localhost:3001/formations/${id}`,
+				`${BE_URL}formations/${id}`,
 				updatedFormation,
 				{
 					headers: {
@@ -229,7 +230,7 @@ const CreationFormations: React.FC = () => {
 
 		try {
 			const response = await axios.post(
-				"http://localhost:3001/formations",
+				`${BE_URL}/formations`,
 				formData,
 				{
 					headers: {
@@ -254,14 +255,11 @@ const CreationFormations: React.FC = () => {
 	const handleDeleteFormation = async (id: number) => {
 		console.log(id);
 		try {
-			await axios.delete(
-				`http://localhost:3001/courses/formation/${id}`,
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
+			await axios.delete(`${BE_URL}courses/formation/${id}`, {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 
 			const updatedFormations = formations.filter(
 				(formation) => formation.id !== id
@@ -282,7 +280,7 @@ const CreationFormations: React.FC = () => {
 	const handleDeleteCourse = async (id: number) => {
 		console.log(id);
 		try {
-			await axios.delete(`http://localhost:3001/courses/${id}`, {
+			await axios.delete(`${BE_URL}courses/${id}`, {
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -324,7 +322,7 @@ const CreationFormations: React.FC = () => {
 			try {
 				console.log("Selection de la formation", selectedFormation);
 				await axios.put(
-					`http://localhost:3001/formations/${selectedFormation.id}`,
+					`${BE_URL}formations/${selectedFormation.id}`,
 					updatedFormation,
 					{
 						headers: {

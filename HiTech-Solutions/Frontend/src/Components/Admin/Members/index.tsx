@@ -21,6 +21,7 @@ import { IoSaveOutline } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useRecoilValue } from "recoil";
 
+import { BE_URL } from "../../../config";
 import { fetchCourses } from "../../Stores/fetchCourses";
 import { fetchFormations } from "../../Stores/formationsState";
 import { fetchUsers } from "../../Stores/usersState";
@@ -174,15 +175,11 @@ const MembersFilter: React.FC = () => {
 		console.log(newUser);
 		handleCloseModal();
 		try {
-			const response = await axios.post(
-				"http://localhost:3001/users",
-				newUser,
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
+			const response = await axios.post(`${BE_URL}users`, newUser, {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 			console.log("The data was inserted correctly", response.data);
 
 			setFilteredUsers((prevUsers) => [...prevUsers, response.data]);
@@ -201,7 +198,7 @@ const MembersFilter: React.FC = () => {
 
 	const handleDeleteUser = async (userId: number) => {
 		try {
-			await axios.delete(`http://localhost:3001/users/${userId}`, {
+			await axios.delete(`${BE_URL}users/${userId}`, {
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -227,10 +224,7 @@ const MembersFilter: React.FC = () => {
 				email: editedEmail,
 				tel: editedTel,
 			};
-			await axios.put(
-				`http://localhost:3001/users/${userId}`,
-				updatedUser
-			);
+			await axios.put(`${BE_URL}users/${userId}`, updatedUser);
 			setFilteredUsers((prev) =>
 				prev.map((user) =>
 					user.id === userId ? { ...user, ...updatedUser } : user
