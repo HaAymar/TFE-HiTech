@@ -22,7 +22,8 @@ jobs:
               run: |
                   npm install
                   npm run build  
-                  npm run test --if-present
+                  npm run test 
+                  npm run start:prod
               working-directory: ./HiTech-Solutions/Backend
 
             - name: Deploy to Azure Web App
