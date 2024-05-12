@@ -29,7 +29,7 @@ async function bootstrap() {
 
   app.use(cors(corsOptions));
   app.useGlobalFilters(new AllExceptionsFilter());
-  await app.listen(process.env.PORT, 3000);
+  await app.listen(process.env.PORT || 3000);
 }
 
 bootstrap();
