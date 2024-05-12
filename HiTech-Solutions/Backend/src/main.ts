@@ -30,7 +30,7 @@ async function bootstrap() {
 
   app.use(cors(corsOptions));
   app.useGlobalFilters(new AllExceptionsFilter());
-  await app.listen(process.env.PORT, '0.0.0.0');
+  await app.listen(process.env.PORT, 3000);
 }
 
 bootstrap();
