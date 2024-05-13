@@ -29,9 +29,11 @@ jobs:
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
+        context: ./HiTech-Solutions/Backend
+        file: ./HiTech-Solutions/Backend/Dockerfile
         push: true
         tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_32a86141c6614950b0de51fae3b60ed2 }}/app:${{ github.sha }}
-        file: ./Dockerfile
+        
 
   deploy:
     runs-on: ubuntu-latest
