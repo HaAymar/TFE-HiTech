@@ -16,7 +16,8 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   const corsOptions = {
-    origin: [process.env.SITE_URL, 'http://localhost:3000'],
+    // origin: [process.env.SITE_URL, 'http://localhost:3000'],
+    origin: true,
     methods: ['GET', 'POST', 'DELETE', 'PUT'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -30,6 +31,7 @@ async function bootstrap() {
   app.use(cors(corsOptions));
   app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(process.env.PORT || 3000);
+  console.log(corsOptions);
 }
 
 bootstrap();
