@@ -17,7 +17,7 @@ FROM node:18.18.0
 WORKDIR /app
 
 
-COPY --from=build /app/package*.json ./
+COPY --from=build  package*.json ./
 RUN npm install --only=production
 
 
