@@ -1,13 +1,27 @@
-FROM node:18.18.0 as build
+
+FROM node:18.18.0 AS build
 WORKDIR /app
-COPY package*.json .
+
+
+COPY package*.json ./
 RUN npm install
+
+
 COPY . .
+
+
 RUN npm run build
 
-FROM node:18.18.0 
+
+FROM node:18.18.0
 WORKDIR /app
-COPY package.json .
+
+
+COPY --from=build /app/package*.json ./
 RUN npm install --only=production
+
+
 COPY --from=build /app/dist ./dist
-CMD npm run start:prod
+
+
+CMD ["npm", "run", "start:prod"]
