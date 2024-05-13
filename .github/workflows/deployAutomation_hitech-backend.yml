@@ -31,7 +31,7 @@ jobs:
       with:
         push: true
         tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_23e8436e355e4a0b9fbcd1302098b859 }}/app:${{ github.sha }}
-        file: ./Dockerfile
+        file: ./HiTech-Solutions/Backend/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
