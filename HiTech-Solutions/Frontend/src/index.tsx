@@ -10,6 +10,7 @@ import DefaultDrawer from "./Components/Admin/Drawers/default";
 import Members from "./Components/Admin/Members/index";
 import Home from "./Components/Home/index";
 import Login from "./Components/LoginSignup/index";
+import Page404 from "./Components/Page 404/index";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import RoleDrawer from "./Components/RoleDrawer/index";
 import FormationService from "./Components/Services/index";
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
 				element: <FormulerTest />,
 			},
 		],
+	},
+	{
+		path: "*",
+		element: <Page404 />,
 	},
 ]);
 const root = ReactDOM.createRoot(

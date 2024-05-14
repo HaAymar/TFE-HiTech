@@ -1,6 +1,6 @@
 import "react-calendar/dist/Calendar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css"; // Assurez-vous que le style .small-progress-bar est défini ici
+import "./style.css";
 
 import React, { useState } from "react";
 import {

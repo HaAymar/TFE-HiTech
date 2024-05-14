@@ -1,9 +1,16 @@
-import React from 'react';
-import { Button, Container, Nav, Navbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { IoLogOut } from 'react-icons/io5';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React from "react";
+import {
+	Button,
+	Container,
+	Nav,
+	Navbar,
+	OverlayTrigger,
+	Tooltip,
+} from "react-bootstrap";
+import { IoLogOut } from "react-icons/io5";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import Logo from '../../../Assets/Home/logoo.svg';
+import Logo from "../../../Assets/Home/logoo.svg";
 
 interface NavbarProps {
 	customStyle?: React.CSSProperties;
@@ -52,38 +59,41 @@ const NavBarDrawer: React.FC<NavbarProps> = ({ customStyle = {} }) => {
 				<Navbar.Collapse id="navbarScroll">
 					<Nav className="me-auto"></Nav>
 					<Nav>
-						{" "}
-						<Button
-							style={{
-								backgroundColor: "#50b2d8",
-								border: "none",
-							}}
-						>
-							{initials}{" "}
-						</Button>
-						<OverlayTrigger
-							placement="bottom"
-							overlay={
-								<Tooltip id="logout-tooltip">
-									Cliquez pour vous déconnecter
-								</Tooltip>
-							}
-						>
-							<Button
-								variant="link"
-								onClick={handleLogout}
-								style={{
-									color: "white",
-									display: "flex",
-									alignItems: "center",
-								}}
-							>
-								<IoLogOut
-									size={20}
-									style={{ marginRight: "5px" }}
-								/>
-							</Button>
-						</OverlayTrigger>
+						{initials ? (
+							<>
+								<Button
+									style={{
+										backgroundColor: "#50b2d8",
+										border: "none",
+									}}
+								>
+									{initials}{" "}
+								</Button>
+								<OverlayTrigger
+									placement="bottom"
+									overlay={
+										<Tooltip id="logout-tooltip">
+											Cliquez pour vous déconnecter
+										</Tooltip>
+									}
+								>
+									<Button
+										variant="link"
+										onClick={handleLogout}
+										style={{
+											color: "white",
+											display: "flex",
+											alignItems: "center",
+										}}
+									>
+										<IoLogOut
+											size={20}
+											style={{ marginRight: "5px" }}
+										/>
+									</Button>
+								</OverlayTrigger>
+							</>
+						) : null}
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

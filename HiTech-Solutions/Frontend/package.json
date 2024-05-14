@@ -39,7 +39,7 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build && mv web.config ./build",
+		"build": "react-scripts build && cp web.config ./build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"test:unit": "echo \"No unit tests specified\" && exit 0"
