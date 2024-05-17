@@ -97,6 +97,16 @@ import { Test } from './typeorm/entities/Test';
 import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
 
+// JWT_SECRET=000000000HiTech
+// SECRET=HiTech-Solutions
+// DB_TYPE=mysql
+// DB_HOST=hitech-server.mysql.database.azure.com
+// DB_PORT=3306
+// DB_USERNAME=usoqlsrufi
+// DB_PASSWORD=Hitechsolutions2
+// SITE_URL=https://hitech-solutions.be
+// DB_NAME=hitech-database
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -104,11 +114,11 @@ import { UsersModule } from './users/users.module';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      host: 'hitech-server.mysql.database.azure.com',
+      port: 3306,
+      username: 'usoqlsrufi',
+      password: 'Hitechsolutions2',
+      database: 'hitech-database',
       entities: [
         User,
         Role,
