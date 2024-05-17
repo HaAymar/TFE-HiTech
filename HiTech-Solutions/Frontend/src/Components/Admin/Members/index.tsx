@@ -1,6 +1,7 @@
 import "./style.css";
 
 import axios from "axios";
+import { isValidPhoneNumber } from "libphonenumber-js";
 import React, { useEffect, useState } from "react";
 import {
 	Button,
@@ -80,6 +81,7 @@ const MembersFilter: React.FC = () => {
 
 	const [email, setEmail] = useState<string>("");
 	const [emailError, setEmailError] = useState<string>("");
+	const [phoneError, setPhoneError] = useState<string>("");
 	const [phoneNumber, setPhoneNumber] = useState<string>("");
 	const [selectedRole, setSelectedRole] = useState<string>("");
 	const allUsers = useRecoilValue<User[]>(fetchUsers);
@@ -106,6 +108,21 @@ const MembersFilter: React.FC = () => {
 			setEmailError("Veuillez entrer une adresse email valide.");
 		} else {
 			setEmailError("");
+		}
+	};
+
+	const validatePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const phoneNumber = e.target.value;
+		setPhoneNumber(phoneNumber);
+
+		try {
+			if (phoneNumber && isValidPhoneNumber(phoneNumber)) {
+				setPhoneError("");
+			} else {
+				setPhoneError("Entrer un numéro valide");
+			}
+		} catch (error) {
+			setPhoneError("Entrer un numéro de téléphone valide!");
 		}
 	};
 
@@ -236,16 +253,6 @@ const MembersFilter: React.FC = () => {
 		}
 	};
 
-	useEffect(() => {
-		if (selectedRole === "") {
-			setFilteredUsers(allUsers);
-		} else {
-			setFilteredUsers(
-				allUsers.filter((user) => user.role === selectedRole)
-			);
-		}
-	}, [allUsers, selectedRole]);
-
 	const handleCourseSelection = (courseId: number) => {
 		setSelectedCourses((prevSelectedCourses) => {
 			if (prevSelectedCourses.includes(courseId)) {
@@ -255,6 +262,16 @@ const MembersFilter: React.FC = () => {
 			}
 		});
 	};
+
+	useEffect(() => {
+		if (selectedRole === "") {
+			setFilteredUsers(allUsers);
+		} else {
+			setFilteredUsers(
+				allUsers.filter((user) => user.role === selectedRole)
+			);
+		}
+	}, [allUsers, selectedRole]);
 	return (
 		<Container
 			className="containerTable"
@@ -596,6 +613,7 @@ const MembersFilter: React.FC = () => {
 										<strong>Email</strong>
 									</Form.Label>
 									<Form.Control
+										placeholder="ex: exemple@mail.com"
 										as="input"
 										type="email"
 										value={email}
@@ -625,12 +643,15 @@ const MembersFilter: React.FC = () => {
 										<strong>Téléphone</strong>
 									</Form.Label>
 									<Form.Control
+										placeholder="ex: +32"
 										as="input"
 										value={phoneNumber}
-										onChange={(e) =>
-											setPhoneNumber(e.target.value)
-										}
+										onChange={validatePhone}
+										isInvalid={!!phoneError}
 									/>
+									<Form.Control.Feedback type="invalid">
+										{phoneError}
+									</Form.Control.Feedback>
 								</Form.Group>
 							</Col>
 						</Row>

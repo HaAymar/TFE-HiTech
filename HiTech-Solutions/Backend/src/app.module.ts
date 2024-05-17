@@ -104,11 +104,11 @@ import { UsersModule } from './users/users.module';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'hitech-server.mysql.database.azure.com',
-      port: 3306,
-      username: 'usoqlsrufi',
-      password: 'Hitechsolutions2',
-      database: 'hitech-database',
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       entities: [
         User,
         Role,
@@ -138,3 +138,9 @@ import { UsersModule } from './users/users.module';
   providers: [AppService],
 })
 export class AppModule {}
+// type: 'mysql',
+// host: 'hitech-server.mysql.database.azure.com',
+// port: 3306,
+// username: 'usoqlsrufi',
+// password: 'Hitechsolutions2',
+// database: 'hitech-database',

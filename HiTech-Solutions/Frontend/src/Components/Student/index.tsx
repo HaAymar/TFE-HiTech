@@ -20,7 +20,7 @@ import { CgLoadbar } from "react-icons/cg";
 import { FaCheck } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
+import { FaDiscord } from "react-icons/fa";
 import { FaBookOpen } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
 import { PiCertificateFill } from "react-icons/pi";
@@ -567,7 +567,7 @@ const StudentPage: React.FC = () => {
 											color: "white",
 										}}
 									>
-										<FaGithub />
+										<FaDiscord />
 										<div>Modules</div>
 									</Button>
 								</div>
