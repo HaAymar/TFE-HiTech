@@ -15,5 +15,5 @@ export class UpdateFormationDto {
   readonly description: string;
 
   @IsString()
-  readonly image: string;
+  readonly image?: string;
 }

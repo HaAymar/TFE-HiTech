@@ -2,7 +2,7 @@ import React from "react";
 
 import { render, screen } from "@testing-library/react";
 
-import Footer from "../../Footer/index"; // Update the import path as necessary
+import Footer from "../../Footer/index";
 
 describe("Footer Component", () => {
 	it("should render contact information correctly", () => {

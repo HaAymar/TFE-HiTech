@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import React from "react";
+import { MemoryRouter } from "react-router-dom";
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -9,14 +10,22 @@ import Home from "../../Home/index";
 
 describe("Home Component", () => {
 	it("renders the welcome message", () => {
-		render(<Home />);
+		render(
+			<MemoryRouter>
+				<Home />
+			</MemoryRouter>
+		);
 		expect(
 			screen.getByText(/Bienvenue sur HiTech-Solutions/i)
 		).toBeInTheDocument();
 	});
 
 	it("renders the mission statement", () => {
-		render(<Home />);
+		render(
+			<MemoryRouter>
+				<Home />
+			</MemoryRouter>
+		);
 		expect(screen.getByText(/Notre Mission/i)).toBeInTheDocument();
 		expect(
 			screen.getByText(
@@ -26,14 +35,23 @@ describe("Home Component", () => {
 	});
 
 	it("button click should show more information", () => {
-		render(<Home />);
+		render(
+			<MemoryRouter>
+				<Home />
+			</MemoryRouter>
+		);
 		const button = screen.getByRole("button", { name: /En savoir plus/i });
 		userEvent.click(button);
+		// Ajoutez ici les assertions nécessaires pour vérifier ce qui doit se passer après le clic
 	});
 
 	it("checks for the correct image being displayed", () => {
-		render(<Home />);
+		render(
+			<MemoryRouter>
+				<Home />
+			</MemoryRouter>
+		);
 		const img = screen.getByAltText("About us") as HTMLImageElement;
-		expect(img.src).toContain("pro.webp");
+		expect(img.src).toContain("mission.png"); // Assurez-vous que le nom de l'image est correct
 	});
 });

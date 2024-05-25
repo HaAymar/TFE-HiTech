@@ -65,7 +65,7 @@ const formations: Formation[] = [
 						id: 1001,
 						titre: "Test 1",
 						description: "Intro à la programmation",
-						date: "2023-04-01",
+						date: "2024-04-01",
 						cotation: 20,
 						passe: false,
 					},
@@ -73,7 +73,7 @@ const formations: Formation[] = [
 						id: 1002,
 						titre: "Test 2",
 						description: "Structures de données",
-						date: "2023-04-15",
+						date: "2024-04-15",
 						cotation: 20,
 						passe: false,
 					},
@@ -81,7 +81,7 @@ const formations: Formation[] = [
 						id: 1003,
 						titre: "Test 3",
 						description: "Algorithmes avancés",
-						date: "2023-04-29",
+						date: "2024-04-29",
 						cotation: 20,
 						passe: false,
 					},
@@ -89,7 +89,7 @@ const formations: Formation[] = [
 						id: 1004,
 						titre: "Test 4",
 						description: "Test Final",
-						date: "2023-04-29",
+						date: "2024-04-29",
 						cotation: 20,
 						passe: false,
 					},
@@ -103,7 +103,7 @@ const formations: Formation[] = [
 						id: 2001,
 						titre: "Test 1",
 						description: "Fondamentaux des réseaux",
-						date: "2023-05-01",
+						date: "2024-05-01",
 						cotation: 20,
 						passe: true,
 					},
@@ -111,7 +111,7 @@ const formations: Formation[] = [
 						id: 2002,
 						titre: "Test 2",
 						description: "Protocoles de communication",
-						date: "2023-05-15",
+						date: "2024-05-15",
 						cotation: 20,
 						passe: true,
 					},
@@ -119,7 +119,7 @@ const formations: Formation[] = [
 						id: 2003,
 						titre: "Test 3",
 						description: "Sécurité des réseaux",
-						date: "2023-05-29",
+						date: "2024-05-29",
 						cotation: 20,
 						passe: false,
 					},
@@ -133,7 +133,7 @@ const formations: Formation[] = [
 						id: 2001,
 						titre: "Test 1",
 						description: "Fondamentaux des réseaux",
-						date: "2023-05-01",
+						date: "2024-05-01",
 						cotation: 20,
 						passe: true,
 					},
@@ -141,7 +141,7 @@ const formations: Formation[] = [
 						id: 2002,
 						titre: "Test 2",
 						description: "Protocoles de communication",
-						date: "2023-05-15",
+						date: "2024-05-15",
 						cotation: 20,
 						passe: true,
 					},
@@ -149,7 +149,7 @@ const formations: Formation[] = [
 						id: 2003,
 						titre: "Test 3",
 						description: "Sécurité des réseaux",
-						date: "2023-05-29",
+						date: "2024-05-29",
 						cotation: 20,
 						passe: true,
 					},
@@ -163,7 +163,7 @@ const formations: Formation[] = [
 						id: 2001,
 						titre: "Test 1",
 						description: "Fondamentaux des réseaux",
-						date: "2023-05-01",
+						date: "2024-05-01",
 						cotation: 20,
 						passe: true,
 					},
@@ -171,7 +171,7 @@ const formations: Formation[] = [
 						id: 2002,
 						titre: "Test 2",
 						description: "Protocoles de communication",
-						date: "2023-05-15",
+						date: "2024-05-15",
 						cotation: 20,
 						passe: false,
 					},
@@ -179,7 +179,7 @@ const formations: Formation[] = [
 						id: 2003,
 						titre: "Test 3",
 						description: "Sécurité des réseaux",
-						date: "2023-05-29",
+						date: "2024-05-29",
 						cotation: 20,
 						passe: false,
 					},
@@ -193,7 +193,7 @@ const formations: Formation[] = [
 						id: 2001,
 						titre: "Test 1",
 						description: "Fondamentaux des réseaux",
-						date: "2023-05-01",
+						date: "2024-05-01",
 						cotation: 20,
 						passe: true,
 					},
@@ -201,7 +201,7 @@ const formations: Formation[] = [
 						id: 2002,
 						titre: "Test 2",
 						description: "Protocoles de communication",
-						date: "2023-05-15",
+						date: "2024-05-15",
 						cotation: 20,
 						passe: false,
 					},
@@ -209,7 +209,7 @@ const formations: Formation[] = [
 						id: 2003,
 						titre: "Test 3",
 						description: "Sécurité des réseaux",
-						date: "2023-05-29",
+						date: "2024-05-29",
 						cotation: 20,
 						passe: true,
 					},
@@ -221,7 +221,12 @@ const formations: Formation[] = [
 
 const StudentPage: React.FC = () => {
 	const user = useRecoilValue(userNameState);
-
+	// const [value, onChange] = useState(new Date());
+	const [showDetails, setShowDetails] = useState(false);
+	const [selectedTest, setSelectedTest] = useState<Interrogation | null>(
+		null
+	);
+	const [date, setDate] = useState<Date | Date[]>(new Date());
 	const [selectedCourse, setSelectedCourse] = useState<Cours | null>(null);
 	const isFormationComplete = false;
 	const handleCourseClick = (course: Cours) => {
@@ -254,6 +259,39 @@ const StudentPage: React.FC = () => {
 	};
 	const handleDownloadCertificate = () => {
 		console.log("Téléchargement du certificat...");
+	};
+
+	const onChange = (
+		value: Date | Date[],
+		event?:
+			| React.ChangeEvent<HTMLInputElement>
+			| React.MouseEvent<Element, MouseEvent>
+	) => {
+		if (Array.isArray(value)) {
+			console.log("Multiple dates selected:", value);
+		} else {
+			console.log("Date selected:", value);
+		}
+	};
+
+	const handleDayClick = (value: Date) => {
+		const dateString = value.toISOString().slice(0, 10);
+		const test = findTestByDate(dateString);
+		if (test) {
+			setSelectedTest(test);
+			setShowDetails(true);
+		}
+	};
+	const findTestByDate = (date: string): Interrogation | undefined => {
+		for (let formation of formations) {
+			for (let cours of formation.cours) {
+				for (let test of cours.interrogations) {
+					if (test.date === date) {
+						return test;
+					}
+				}
+			}
+		}
 	};
 
 	return (
