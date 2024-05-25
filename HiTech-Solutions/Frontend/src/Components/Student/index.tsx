@@ -1,8 +1,13 @@
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./style.css";
+import "moment/locale/fr";
 import "react-calendar/dist/Calendar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 
+import moment from "moment";
 import React, { useState } from "react";
+import { Calendar, Event, momentLocalizer, Views } from "react-big-calendar";
 import {
 	Alert,
 	Button,
@@ -13,10 +18,10 @@ import {
 	ProgressBar,
 	Row,
 } from "react-bootstrap";
-import Calendar from "react-calendar";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { BsXCircleFill } from "react-icons/bs";
 import { CgLoadbar } from "react-icons/cg";
+import { FaBook } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -30,7 +35,9 @@ import Fof from "../../Assets/Student/myPhoto.png";
 import NavBar from "../Navbar/NavBarDrawer/index";
 import { userNameState } from "../Stores/nameUser";
 
-// Interfaces pour les données structurées
+moment.locale("fr"); // Définissez la locale à utiliser pour moment
+const localizer = momentLocalizer(moment);
+
 interface Interrogation {
 	id: number;
 	titre: string;
@@ -43,6 +50,7 @@ interface Interrogation {
 interface Cours {
 	id: number;
 	titre: string;
+	color: string;
 	interrogations: Interrogation[];
 }
 
@@ -50,6 +58,13 @@ interface Formation {
 	id: number;
 	nom: string;
 	cours: Cours[];
+}
+
+interface CourseEvent extends Event {
+	title: string;
+	start: Date;
+	end: Date;
+	color: string;
 }
 
 const formations: Formation[] = [
@@ -60,6 +75,7 @@ const formations: Formation[] = [
 			{
 				id: 101,
 				titre: "DNS",
+				color: "#ff7f7f",
 				interrogations: [
 					{
 						id: 1001,
@@ -89,7 +105,7 @@ const formations: Formation[] = [
 						id: 1004,
 						titre: "Test 4",
 						description: "Test Final",
-						date: "2024-04-29",
+						date: "2024-04-28",
 						cotation: 20,
 						passe: false,
 					},
@@ -98,6 +114,7 @@ const formations: Formation[] = [
 			{
 				id: 102,
 				titre: "  Web",
+				color: "#7f7fff",
 				interrogations: [
 					{
 						id: 2001,
@@ -128,12 +145,13 @@ const formations: Formation[] = [
 			{
 				id: 103,
 				titre: "Réseaux",
+				color: "#7fff7f",
 				interrogations: [
 					{
 						id: 2001,
 						titre: "Test 1",
 						description: "Fondamentaux des réseaux",
-						date: "2024-05-01",
+						date: "2024-05-02",
 						cotation: 20,
 						passe: true,
 					},
@@ -141,7 +159,7 @@ const formations: Formation[] = [
 						id: 2002,
 						titre: "Test 2",
 						description: "Protocoles de communication",
-						date: "2024-05-15",
+						date: "2024-05-14",
 						cotation: 20,
 						passe: true,
 					},
@@ -149,7 +167,7 @@ const formations: Formation[] = [
 						id: 2003,
 						titre: "Test 3",
 						description: "Sécurité des réseaux",
-						date: "2024-05-29",
+						date: "2024-05-9",
 						cotation: 20,
 						passe: true,
 					},
@@ -158,12 +176,13 @@ const formations: Formation[] = [
 			{
 				id: 104,
 				titre: "Linux",
+				color: "#ffbf00",
 				interrogations: [
 					{
 						id: 2001,
 						titre: "Test 1",
 						description: "Fondamentaux des réseaux",
-						date: "2024-05-01",
+						date: "2024-05-10",
 						cotation: 20,
 						passe: true,
 					},
@@ -171,7 +190,7 @@ const formations: Formation[] = [
 						id: 2002,
 						titre: "Test 2",
 						description: "Protocoles de communication",
-						date: "2024-05-15",
+						date: "2024-05-17",
 						cotation: 20,
 						passe: false,
 					},
@@ -179,7 +198,7 @@ const formations: Formation[] = [
 						id: 2003,
 						titre: "Test 3",
 						description: "Sécurité des réseaux",
-						date: "2024-05-29",
+						date: "2024-05-20",
 						cotation: 20,
 						passe: false,
 					},
@@ -188,12 +207,13 @@ const formations: Formation[] = [
 			{
 				id: 105,
 				titre: "Docker",
+				color: "#00bfff",
 				interrogations: [
 					{
 						id: 2001,
 						titre: "Test 1",
 						description: "Fondamentaux des réseaux",
-						date: "2024-05-01",
+						date: "2024-05-11",
 						cotation: 20,
 						passe: true,
 					},
@@ -201,7 +221,7 @@ const formations: Formation[] = [
 						id: 2002,
 						titre: "Test 2",
 						description: "Protocoles de communication",
-						date: "2024-05-15",
+						date: "2024-05-13",
 						cotation: 20,
 						passe: false,
 					},
@@ -209,7 +229,7 @@ const formations: Formation[] = [
 						id: 2003,
 						titre: "Test 3",
 						description: "Sécurité des réseaux",
-						date: "2024-05-29",
+						date: "2024-05-24",
 						cotation: 20,
 						passe: true,
 					},
@@ -219,7 +239,63 @@ const formations: Formation[] = [
 	},
 ];
 
-const StudentPage: React.FC = () => {
+const messages = {
+	allDay: "Journée",
+	previous: "Précédent",
+	next: "Suivant",
+	today: "Jour",
+	month: "Mois",
+	week: "Semaine",
+	day: "Jour",
+	agenda: "Agenda",
+	date: "Date",
+	time: "Heure",
+	event: "Événement",
+	noEventsInRange: "Aucun événement dans cette période.",
+	showMore: (total: any) => `+ ${total} événement(s) supplémentaire(s)`,
+};
+
+const transformInterrogationsToEvents = (
+	formations: Formation[]
+): CourseEvent[] => {
+	const events: CourseEvent[] = [];
+	formations.forEach((formation) => {
+		formation.cours.forEach((cours) => {
+			cours.interrogations.forEach((interrogation) => {
+				events.push({
+					title: `${cours.titre}: ${interrogation.titre}`,
+					start: new Date(interrogation.date),
+					end: new Date(interrogation.date),
+					color: cours.color,
+				});
+			});
+		});
+	});
+	return events;
+};
+
+const myEventsList = transformInterrogationsToEvents(formations);
+
+const Student: React.FC = () => {
+	const eventStyleGetter = (
+		event: CourseEvent,
+		start: Date,
+		end: Date,
+		isSelected: boolean
+	) => {
+		const backgroundColor = event.color;
+		const style = {
+			backgroundColor,
+			borderRadius: "5px",
+			opacity: 0.8,
+			color: "white",
+			border: "0px",
+			display: "block",
+		};
+		return {
+			style: style,
+		};
+	};
 	const user = useRecoilValue(userNameState);
 
 	const [selectedCourse, setSelectedCourse] = useState<Cours | null>(null);
@@ -405,18 +481,54 @@ const StudentPage: React.FC = () => {
 										</ListGroup.Item>
 									))}
 							</ListGroup>
-
 							<div className="calendar-header">
-								<FaCalendarAlt />
+								<FaBook />
 								<div>
-									<h5>
-										<strong>
-											Calendrier pour les tests{" "}
-										</strong>
-									</h5>{" "}
+									<h4>
+										<strong>Les modules</strong>{" "}
+									</h4>{" "}
 								</div>
 							</div>
-							<Calendar className="calendar" />
+
+							<div
+								className="moduleStudent"
+								style={{
+									backgroundColor: "#f7f7f7",
+									padding: "20px",
+									borderRadius: "10px",
+									boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+								}}
+							>
+								<div>
+									<p>
+										Vous souhaitez voir votre progression
+										dans vos cours ? Vous pouvez
+										sélectionner le cours pour obtenir tous
+										les détails concernant votre progression
+										professionnelle.
+									</p>
+									<p>
+										Consultez les modules dans le
+										référentiel de l'établissement.
+									</p>
+								</div>
+
+								<Button
+									style={{
+										border: "none",
+										display: "flex",
+										alignItems: "center",
+										justifyContent: "center",
+										gap: "3px",
+										width: "150px",
+										backgroundColor: "#40b9af",
+										color: "white",
+									}}
+								>
+									<FaDiscord />
+									<div>Modules</div>
+								</Button>
+							</div>
 						</Col>
 						<Col md={4} className="mb-3">
 							{selectedCourse ? (
@@ -532,45 +644,41 @@ const StudentPage: React.FC = () => {
 									</div>
 								</div>
 							) : (
-								<div
-									className="moduleStudent"
-									style={{
-										backgroundColor: "#f7f7f7",
-										padding: "20px",
-										borderRadius: "10px",
-										boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-									}}
-								>
-									<div>
-										<p>
-											Vous souhaitez voir votre
-											progression dans vos cours ? Vous
-											pouvez sélectionner le cours pour
-											obtenir tous les détails concernant
-											votre progression professionnelle.
-										</p>
-										<p>
-											Consultez les modules dans le
-											référentiel de l'établissement.
-										</p>
+								<>
+									<div style={{ paddingBottom: "18%" }}>
+										<div className="calendar-header">
+											<FaCalendarAlt />
+											<div>
+												<h5>
+													<strong>
+														Calendrier pour les
+														tests{" "}
+													</strong>
+												</h5>{" "}
+											</div>
+										</div>
+										<div className="custom-calendar">
+											<Calendar
+												localizer={localizer}
+												events={myEventsList}
+												startAccessor="start"
+												endAccessor="end"
+												style={{
+													height: 400,
+													backgroundColor: "white",
+													borderRadius: "15px",
+													padding: "10px",
+												}}
+												eventPropGetter={
+													eventStyleGetter
+												}
+												views={[Views.MONTH]}
+												defaultView={Views.MONTH}
+												messages={messages}
+											/>
+										</div>
 									</div>
-
-									<Button
-										style={{
-											border: "none",
-											display: "flex",
-											alignItems: "center",
-											justifyContent: "center",
-											gap: "3px",
-											width: "150px",
-											backgroundColor: "#40b9af",
-											color: "white",
-										}}
-									>
-										<FaDiscord />
-										<div>Modules</div>
-									</Button>
-								</div>
+								</>
 							)}
 						</Col>
 					</Row>
@@ -580,4 +688,4 @@ const StudentPage: React.FC = () => {
 	);
 };
 
-export default StudentPage;
+export default Student;

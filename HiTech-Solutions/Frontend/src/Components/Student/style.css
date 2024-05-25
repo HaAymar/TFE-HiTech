@@ -241,3 +241,31 @@ h5 {
 	background-color: #3991b47c;
 	color: white;
 }
+/* calendar.css */
+.custom-calendar {
+	border: none;
+	border-radius: 10px;
+	background-color: #dadde0;
+	max-width: 500px;
+	margin: auto;
+}
+
+.rbc-toolbar {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.rbc-toolbar-label {
+	font-size: 1.25rem;
+	margin-bottom: 0.5rem;
+}
+
+.rbc-btn-group {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.rbc-btn-group button {
+	margin: 0.25rem;
+}
