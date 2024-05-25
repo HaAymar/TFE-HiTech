@@ -26,7 +26,7 @@ jobs:
               working-directory: ./HiTech-Solutions/Backend
 
             - name: Run tests
-              run: npm run test:unit
+              run: npm run test
               working-directory: ./HiTech-Solutions/Backend
 
     backend-build:
