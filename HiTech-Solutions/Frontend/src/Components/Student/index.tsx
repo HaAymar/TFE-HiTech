@@ -1,9 +1,8 @@
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./style.css";
 import "moment/locale/fr";
-import "react-calendar/dist/Calendar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css";
+import "./styCalendar.css";
 
 import moment from "moment";
 import React, { useState } from "react";
@@ -19,7 +18,6 @@ import {
 	Row,
 } from "react-bootstrap";
 import { AiOutlineSchedule } from "react-icons/ai";
-import { BsXCircleFill } from "react-icons/bs";
 import { CgLoadbar } from "react-icons/cg";
 import { FaBook } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
@@ -27,15 +25,16 @@ import { FaDownload } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
 import { FaBookOpen } from "react-icons/fa6";
+import { ImCancelCircle } from "react-icons/im";
 import { IoIosMail } from "react-icons/io";
 import { PiCertificateFill } from "react-icons/pi";
 import { useRecoilValue } from "recoil";
 
-import Fof from "../../Assets/Student/myPhoto.png";
+import Fof from "../../Assets/Student/profile.jpg";
 import NavBar from "../Navbar/NavBarDrawer/index";
 import { userNameState } from "../Stores/nameUser";
 
-moment.locale("fr"); // Définissez la locale à utiliser pour moment
+moment.locale("fr");
 const localizer = momentLocalizer(moment);
 
 interface Interrogation {
@@ -198,7 +197,7 @@ const formations: Formation[] = [
 						id: 2003,
 						titre: "Test 3",
 						description: "Sécurité des réseaux",
-						date: "2024-05-20",
+						date: "2024-06-1",
 						cotation: 20,
 						passe: false,
 					},
@@ -221,7 +220,7 @@ const formations: Formation[] = [
 						id: 2002,
 						titre: "Test 2",
 						description: "Protocoles de communication",
-						date: "2024-05-13",
+						date: "2024-06-02",
 						cotation: 20,
 						passe: false,
 					},
@@ -336,7 +335,7 @@ const Student: React.FC = () => {
 		<div className="scrollPage">
 			<NavBar customStyle={styleStudent} />
 			<Container fluid className="student">
-				<Container className="studentContent" style={{ width: "100%" }}>
+				<Container className="studentContent" style={{ width: "90%" }}>
 					<div></div>
 					<Row
 						style={{
@@ -346,17 +345,35 @@ const Student: React.FC = () => {
 							justifyContent: "center",
 						}}
 					>
-						<Col md={3} className="mb-2 profile-column">
+						<Col md={3} className=" mb-3 profile-column">
 							<div className="profile-header">
 								<Image
 									src={Fof}
 									roundedCircle
-									style={{ width: "150px", height: "100px" }}
+									style={{
+										width: "100px",
+										height: "100px",
+										paddingBottom: "5px",
+									}}
 								/>
-								<h4>
+								<h5
+									style={{
+										color: "navy",
+										fontFamily: "Arial, sans-serif",
+										textAlign: "center",
+									}}
+								>
 									<strong>Bonjour, {user}</strong>
-								</h4>
-								<p>Formation en Administration Système</p>
+								</h5>
+								<p
+									style={{
+										fontSize: "16px",
+										fontStyle: "italic",
+										textAlign: "center",
+									}}
+								>
+									Formation en Administration Système
+								</p>
 								<div className="certificate-section">
 									<PiCertificateFill className="certificate-icon" />
 									<strong>Certificat de fréquentation</strong>
@@ -444,7 +461,7 @@ const Student: React.FC = () => {
 								</div>
 							</div>
 						</Col>
-						<Col md={3} className="mb-3 ">
+						<Col md={3} className="mb-3">
 							<div className="calendar-header">
 								<FaBookOpen />
 								<div>
@@ -545,6 +562,7 @@ const Student: React.FC = () => {
 											<div
 												style={{
 													display: "flex",
+													paddingTop: "5px",
 												}}
 											>
 												<h4>
@@ -554,9 +572,8 @@ const Student: React.FC = () => {
 												</h4>
 											</div>
 
-											<BsXCircleFill
+											<ImCancelCircle
 												style={{
-													paddingBottom: "1px",
 													color: "#a84334",
 												}}
 												onClick={cancelSelectedCourse}
@@ -665,9 +682,10 @@ const Student: React.FC = () => {
 												endAccessor="end"
 												style={{
 													height: 400,
+													width: "100%",
 													backgroundColor: "white",
 													borderRadius: "15px",
-													padding: "10px",
+													padding: "2%",
 												}}
 												eventPropGetter={
 													eventStyleGetter

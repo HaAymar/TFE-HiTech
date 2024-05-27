@@ -1,0 +1,26 @@
+@import "react-big-calendar/lib/css/react-big-calendar.css";
+
+.custom-calendar {
+	padding: 10px;
+	border-radius: 15px;
+	background-color: white;
+}
+
+/* Styles pour ajuster le calendrier sur les petits écrans */
+@media (max-width: 768px) {
+	.rbc-calendar {
+		width: 90%;
+		height: auto;
+	}
+
+	.rbc-header,
+	.rbc-row-content {
+		min-width: 0;
+		flex: 1 1 90%;
+		display: block; /* Change la disposition des éléments */
+	}
+
+	.rbc-event {
+		font-size: 0.75em; /* Réduire la taille de la police pour les petits écrans */
+	}
+}
