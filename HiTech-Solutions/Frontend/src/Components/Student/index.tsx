@@ -69,11 +69,11 @@ interface CourseEvent extends Event {
 const formations: Formation[] = [
 	{
 		id: 1,
-		nom: "Administration systéme",
+		nom: "Tech PC et Réseaux",
 		cours: [
 			{
 				id: 101,
-				titre: "DNS",
+				titre: "Windows",
 				color: "#ff7f7f",
 				interrogations: [
 					{
@@ -112,7 +112,7 @@ const formations: Formation[] = [
 			},
 			{
 				id: 102,
-				titre: "  Web",
+				titre: "Routage Static",
 				color: "#7f7fff",
 				interrogations: [
 					{
@@ -143,7 +143,7 @@ const formations: Formation[] = [
 			},
 			{
 				id: 103,
-				titre: "Réseaux",
+				titre: "DHCP",
 				color: "#7fff7f",
 				interrogations: [
 					{

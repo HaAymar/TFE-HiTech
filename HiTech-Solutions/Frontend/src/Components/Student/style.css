@@ -271,5 +271,17 @@ h5 {
 		display: flex;
 		align-items: center;
 		overflow-x: hidden;
+		padding-top: 0;
+		padding-bottom: 0;
+		gap: 0;
+	}
+	.profile-column {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background-color: #f4f4f4;
+		border-radius: 10px;
+		margin-bottom: 2%;
 	}
 }
