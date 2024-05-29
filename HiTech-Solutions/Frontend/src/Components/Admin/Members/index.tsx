@@ -275,7 +275,11 @@ const MembersFilter: React.FC = () => {
 	return (
 		<Container
 			className="containerTable"
-			style={{ width: "80%", backgroundColor: "#dadde0" }}
+			style={{
+				width: "80%",
+				backgroundColor: "#dadde0",
+				marginLeft: "10px",
+			}}
 		>
 			<div className="headerMembers">
 				<div>

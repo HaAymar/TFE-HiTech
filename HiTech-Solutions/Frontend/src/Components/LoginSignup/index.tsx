@@ -12,6 +12,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import Logo from "../../Assets/pp.svg";
 import { BE_URL } from "../../config";
 import { userNameState } from "../Stores/nameUser";
+import { userRoleState } from "../Stores/roleUser";
 import { userIdState } from "../Stores/userIdState";
 
 interface CustomJwtPayload {
@@ -28,6 +29,7 @@ const LoginPage: React.FC = () => {
 	const setUserId = useSetRecoilState(userIdState);
 	const navigate = useNavigate();
 	const [, setUserName] = useRecoilState(userNameState);
+	const [, setUserRole] = useRecoilState(userRoleState);
 	console.log(BE_URL);
 	const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -51,6 +53,7 @@ const LoginPage: React.FC = () => {
 				const fullName = `${user.Name} ${user.Surname}`;
 				console.log("User login", initials);
 				setUserName(fullName);
+				setUserRole(user.RoleName);
 				// navigate(`/student?initials=${initials}`);
 
 				setUserId(user.UserId);

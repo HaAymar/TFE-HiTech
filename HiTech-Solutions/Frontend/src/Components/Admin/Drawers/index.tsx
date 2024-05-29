@@ -14,9 +14,12 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
+import profile from "../../../Assets/Student/profile.jpg";
 import NavBarDrawer from "../../Navbar/NavBarDrawer/index";
 import { collectTestState } from "../../Stores/collecTestId";
 import { fetchFormations } from "../../Stores/formationsState";
+import { userNameState } from "../../Stores/nameUser";
+import { userRoleState } from "../../Stores/roleUser";
 
 interface DashboardSidebarProps {
 	role: "admin" | "teacher";
@@ -50,9 +53,10 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 	const [, setDisplayTroubleshooting] = useState(false);
 
 	const setCollectId = useSetRecoilState(collectTestState);
-
+	const name = useRecoilValue(userNameState);
+	const roleUser = useRecoilValue(userRoleState);
 	const formations = useRecoilValue(fetchFormations);
-
+	console.log(roleUser);
 	const toogleFormation = () => {
 		console.log("Salut", displayFormation);
 		startTransition(() => {
@@ -127,6 +131,46 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 							</div>
 
 							<CDBSidebarContent className="sidebar-content">
+								<CDBSidebarMenuItem>
+									<div
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											alignItems: "center",
+											margin: "2%",
+										}}
+									>
+										<img
+											src={profile}
+											alt="Image Profil"
+											style={{
+												width: "50px",
+												height: "40px",
+												borderRadius: "50%",
+												flexDirection: "column",
+											}}
+										/>
+										<div
+											style={{
+												marginLeft: "10px",
+												display: "flex",
+												alignItems: "center",
+												flexDirection: "column",
+												color: "#292828e7",
+											}}
+										>
+											<strong>{name}</strong>
+											<div
+												style={{
+													fontSize: "smaller",
+													color: "#40b9af",
+												}}
+											>
+												<strong>{roleUser}</strong>
+											</div>
+										</div>
+									</div>
+								</CDBSidebarMenuItem>
 								<CDBSidebarMenu>
 									<div
 										style={{
