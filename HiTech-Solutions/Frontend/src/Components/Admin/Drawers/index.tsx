@@ -142,7 +142,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 									>
 										<img
 											src={profile}
-											alt="Image Profil"
+											alt="User profile"
 											style={{
 												width: "50px",
 												height: "40px",
