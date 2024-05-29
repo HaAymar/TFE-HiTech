@@ -73,12 +73,12 @@ const formations: Formation[] = [
 		cours: [
 			{
 				id: 101,
-				titre: "Windows",
+				titre: "A/D_PC",
 				color: "#ff7f7f",
 				interrogations: [
 					{
 						id: 1001,
-						titre: "Test 1",
+						titre: "Chapitre 1",
 						description: "Intro à la programmation",
 						date: "2024-04-01",
 						cotation: 20,
@@ -86,7 +86,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 1002,
-						titre: "Test 2",
+						titre: "Chapitre 2",
 						description: "Structures de données",
 						date: "2024-04-15",
 						cotation: 20,
@@ -94,7 +94,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 1003,
-						titre: "Test 3",
+						titre: "Chapitre 4",
 						description: "Algorithmes avancés",
 						date: "2024-04-29",
 						cotation: 20,
@@ -102,7 +102,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 1004,
-						titre: "Test 4",
+						titre: "Examen Final",
 						description: "Test Final",
 						date: "2024-04-28",
 						cotation: 20,
@@ -112,12 +112,12 @@ const formations: Formation[] = [
 			},
 			{
 				id: 102,
-				titre: "Routage Static",
+				titre: "RL(LAN)",
 				color: "#7f7fff",
 				interrogations: [
 					{
 						id: 2001,
-						titre: "Test 1",
+						titre: "Chapitre 1",
 						description: "Fondamentaux des réseaux",
 						date: "2024-05-01",
 						cotation: 20,
@@ -125,7 +125,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 2002,
-						titre: "Test 2",
+						titre: "Chapitre 2",
 						description: "Protocoles de communication",
 						date: "2024-05-15",
 						cotation: 20,
@@ -133,7 +133,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 2003,
-						titre: "Test 3",
+						titre: "Chapitre 3",
 						description: "Sécurité des réseaux",
 						date: "2024-05-29",
 						cotation: 20,
@@ -143,12 +143,12 @@ const formations: Formation[] = [
 			},
 			{
 				id: 103,
-				titre: "DHCP",
+				titre: "CONFIG_AVANCE",
 				color: "#7fff7f",
 				interrogations: [
 					{
 						id: 2001,
-						titre: "Test 1",
+						titre: "Chapitre 1",
 						description: "Fondamentaux des réseaux",
 						date: "2024-05-02",
 						cotation: 20,
@@ -156,7 +156,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 2002,
-						titre: "Test 2",
+						titre: "Chapitre 2",
 						description: "Protocoles de communication",
 						date: "2024-05-14",
 						cotation: 20,
@@ -164,7 +164,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 2003,
-						titre: "Test 3",
+						titre: "Chapitre 3",
 						description: "Sécurité des réseaux",
 						date: "2024-05-9",
 						cotation: 20,
@@ -174,12 +174,12 @@ const formations: Formation[] = [
 			},
 			{
 				id: 104,
-				titre: "Linux",
+				titre: "MEO(IPv4)",
 				color: "#ffbf00",
 				interrogations: [
 					{
 						id: 2001,
-						titre: "Test 1",
+						titre: "Chapitre 1",
 						description: "Fondamentaux des réseaux",
 						date: "2024-05-10",
 						cotation: 20,
@@ -187,7 +187,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 2002,
-						titre: "Test 2",
+						titre: "Chapitre 2",
 						description: "Protocoles de communication",
 						date: "2024-05-17",
 						cotation: 20,
@@ -195,7 +195,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 2003,
-						titre: "Test 3",
+						titre: "Chapitre 3",
 						description: "Sécurité des réseaux",
 						date: "2024-06-1",
 						cotation: 20,
@@ -205,12 +205,12 @@ const formations: Formation[] = [
 			},
 			{
 				id: 105,
-				titre: "Docker",
+				titre: "MEO(DNS)",
 				color: "#00bfff",
 				interrogations: [
 					{
 						id: 2001,
-						titre: "Test 1",
+						titre: "Chapitre 1",
 						description: "Fondamentaux des réseaux",
 						date: "2024-05-11",
 						cotation: 20,
@@ -218,7 +218,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 2002,
-						titre: "Test 2",
+						titre: "Chapitre 2",
 						description: "Protocoles de communication",
 						date: "2024-06-02",
 						cotation: 20,
@@ -226,7 +226,7 @@ const formations: Formation[] = [
 					},
 					{
 						id: 2003,
-						titre: "Test 3",
+						titre: "Chapitre 3",
 						description: "Sécurité des réseaux",
 						date: "2024-05-24",
 						cotation: 20,

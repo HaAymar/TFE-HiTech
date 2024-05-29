@@ -1,3 +1,4 @@
+import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as dotenv from 'dotenv';
 import { existsSync, mkdirSync } from 'fs';
@@ -12,7 +13,7 @@ dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.use(cookieParser());
   app.setGlobalPrefix('api');
 
   const corsOptions = {

@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
 	const [, setUserName] = useRecoilState(userNameState);
 	console.log(BE_URL);
 	const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault(); // Empêche le rechargement de la page
+		event.preventDefault();
 		console.log(email);
 		try {
 			const response = await axios.post(
