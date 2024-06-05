@@ -669,7 +669,7 @@ const CreationFormations: React.FC = () => {
 								>
 									<div className="icon">
 										<RiImageAddFill />
-										Upload Photo
+										Ajoute Photo
 									</div>
 								</label>
 								<input

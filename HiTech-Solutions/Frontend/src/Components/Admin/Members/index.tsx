@@ -284,7 +284,7 @@ const MembersFilter: React.FC = () => {
 			<div className="headerMembers">
 				<div>
 					<h4>
-						<b>Administration des Membres</b>
+						<b>Gestionnaire des Membres</b>
 					</h4>
 					<h6>Filtrer par : </h6>{" "}
 					<select
@@ -385,7 +385,7 @@ const MembersFilter: React.FC = () => {
 								<th
 									style={{
 										textAlign: "center",
-										width: "200px",
+										width: "250px",
 									}}
 								>
 									Formation
@@ -593,7 +593,7 @@ const MembersFilter: React.FC = () => {
 			<Modal show={showModalForm} onHide={handleCloseModal}>
 				<Modal.Header closeButton>
 					<Modal.Title style={{ textAlign: "center" }}>
-						Ajouter un nouveau utilisateur
+						Ajouter un nouveau membre
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>

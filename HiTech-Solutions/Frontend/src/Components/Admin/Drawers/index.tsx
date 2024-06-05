@@ -131,46 +131,6 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 							</div>
 
 							<CDBSidebarContent className="sidebar-content">
-								<CDBSidebarMenuItem>
-									<div
-										style={{
-											display: "flex",
-											flexDirection: "column",
-											alignItems: "center",
-											margin: "2%",
-										}}
-									>
-										<img
-											src={profile}
-											alt="User profile"
-											style={{
-												width: "50px",
-												height: "40px",
-												borderRadius: "50%",
-												flexDirection: "column",
-											}}
-										/>
-										<div
-											style={{
-												marginLeft: "10px",
-												display: "flex",
-												alignItems: "center",
-												flexDirection: "column",
-												color: "#292828e7",
-											}}
-										>
-											<strong>{name}</strong>
-											<div
-												style={{
-													fontSize: "smaller",
-													color: "#40b9af",
-												}}
-											>
-												<strong>{roleUser}</strong>
-											</div>
-										</div>
-									</div>
-								</CDBSidebarMenuItem>
 								<CDBSidebarMenu>
 									<div
 										style={{
@@ -373,7 +333,45 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 								}}
 							>
 								<CDBSidebarFooter className="drawerFooter">
-									HiTech-Solutions
+									{/* HiTech-Solutions */}
+									<div
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											alignItems: "center",
+											margin: "2%",
+										}}
+									>
+										<img
+											src={profile}
+											alt="User profile"
+											style={{
+												width: "50px",
+												height: "40px",
+												borderRadius: "50%",
+												flexDirection: "column",
+											}}
+										/>
+										<div
+											style={{
+												marginLeft: "10px",
+												display: "flex",
+												alignItems: "center",
+												flexDirection: "column",
+												color: "#292828e7",
+											}}
+										>
+											<strong>{name}</strong>
+											<div
+												style={{
+													fontSize: "smaller",
+													color: "#40b9af",
+												}}
+											>
+												<strong>{roleUser}</strong>
+											</div>
+										</div>
+									</div>
 								</CDBSidebarFooter>
 							</div>
 						</CDBSidebar>

@@ -17,8 +17,8 @@ import {
 	ProgressBar,
 	Row,
 } from "react-bootstrap";
+import { AiOutlineClose } from "react-icons/ai";
 import { AiOutlineSchedule } from "react-icons/ai";
-import { CgLoadbar } from "react-icons/cg";
 import { FaBook } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
@@ -372,7 +372,7 @@ const Student: React.FC = () => {
 										textAlign: "center",
 									}}
 								>
-									Formation en Administration Système
+									Formation en Tech PC et Réseaux
 								</p>
 								<div className="certificate-section">
 									<PiCertificateFill className="certificate-icon" />
@@ -642,9 +642,9 @@ const Student: React.FC = () => {
 																}}
 															/>
 														) : (
-															<CgLoadbar
+															<AiOutlineClose
 																style={{
-																	color: "grey",
+																	color: "red",
 																}}
 															/>
 														)}
