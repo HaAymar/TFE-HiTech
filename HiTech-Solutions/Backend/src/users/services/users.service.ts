@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { EntityManager } from 'typeorm';
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 
 import { Admin } from '../../typeorm/entities/Admin';
@@ -13,9 +13,11 @@ import { StudentsFormation } from '../../typeorm/entities/StudentFormation';
 import { TeachersCourse } from '../../typeorm/entities/TeachCourses';
 import { Teacher } from '../../typeorm/entities/Teacher';
 import { User } from '../../typeorm/entities/User';
+import { AssignRoleDto } from '../dtos/AssignRole.dto';
 
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger(UsersService.name);
   constructor(
     @InjectRepository(Course)
     private courseRepository: Repository<Course>,
@@ -40,14 +42,7 @@ export class UsersService {
   async findUsers() {
     return this.userRepository.find();
   }
-  //------------------ In INSCRIPTION /!\ There is an error idRole and idSection do not accept the registration /!\ ------------------//
 
-  // async findOneByEmail(email: string): Promise<User | undefined> {
-  //   return this.userRepository.findOne({
-  //     where: { email },
-  //     relations: ['role'],
-  //   });
-  // }
   async findAllUsersWithRoles(): Promise<any> {
     const query = `
       SELECT
@@ -171,11 +166,143 @@ export class UsersService {
       await entityManager.remove(user);
     });
   }
-
+  // --------------------Create User ------------------//
   async createUser(userData: any): Promise<User[]> {
     const newUser = this.userRepository.create(userData);
     return this.userRepository.save(newUser);
   }
+  // ------------------AssignRoleUser --------------------//
+
+  async createAdmin(assignRoleDto: AssignRoleDto): Promise<Admin> {
+    const { id_user, id_role } = assignRoleDto;
+
+    const user = await this.userRepository.findOne({ where: { id: id_user } });
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const role = await this.roleRepository.findOne({ where: { id: id_role } });
+    if (!role) {
+      throw new Error('Role not found');
+    }
+
+    const admin = this.adminRepository.create({ user, role });
+    return this.adminRepository.save(admin);
+  }
+
+  async createRoleStudent(
+    assignRoleDto: AssignRoleDto,
+    id_formation: number,
+  ): Promise<Student> {
+    const { id_user, id_role } = assignRoleDto;
+
+    try {
+      this.logger.debug(`Finding user with id: ${id_user}`);
+      const user = await this.userRepository.findOne({
+        where: { id: id_user },
+      });
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      this.logger.debug(`Finding role with id: ${id_role}`);
+      const role = await this.roleRepository.findOne({
+        where: { id: id_role },
+      });
+      if (!role) {
+        throw new Error('Role not found');
+      }
+
+      const dateInscription = new Date().toISOString().split('T')[0];
+
+      this.logger.debug('Creating student entity');
+      const student = this.studentRepository.create({
+        user,
+        role,
+        dateInscription,
+        dateFin: null,
+      });
+
+      const savedStudent = await this.studentRepository.save(student);
+
+      const formation = await this.formationRepository.findOne({
+        where: { id: id_formation },
+      });
+      if (!formation) {
+        throw new Error('Formation not found');
+      }
+
+      const studentsFormation = this.studentsFormationRepository.create({
+        student: savedStudent,
+        formation: formation,
+      });
+
+      const savedStudentsFormation =
+        await this.studentsFormationRepository.save(studentsFormation);
+      this.logger.debug(
+        `Saved StudentsFormation entity with id: ${savedStudentsFormation.id}`,
+      );
+
+      return savedStudent;
+    } catch (error) {
+      this.logger.error('Error in createRoleStudent:', error);
+      throw error;
+    }
+  }
+
+  //---------CreateTeacher -----------------//
+  async createRoleTeacher(
+    assignRoleDto: AssignRoleDto,
+    id_cours: number[],
+  ): Promise<Teacher> {
+    const { id_user, id_role } = assignRoleDto;
+
+    try {
+      const user = await this.userRepository.findOne({
+        where: { id: id_user },
+      });
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      const role = await this.roleRepository.findOne({
+        where: { id: id_role },
+      });
+      if (!role) {
+        throw new Error('Role not found');
+      }
+
+      const teacher = this.teacherRepository.create({
+        user,
+        role,
+      });
+
+      const savedTeacher = await this.teacherRepository.save(teacher);
+
+      for (const id_course of id_cours) {
+        const course = await this.courseRepository.findOne({
+          where: { id: id_course },
+        });
+        if (!course) {
+          throw new Error(`Course with id ${id_course} not found`);
+        }
+
+        const teachersCourse = this.teachersCourseRepository.create({
+          teacher: savedTeacher,
+          course: course,
+        });
+
+        await this.teachersCourseRepository.save(teachersCourse);
+      }
+
+      return savedTeacher;
+    } catch (error) {
+      this.logger.error('Error in createRoleTeacher:', error);
+      throw error;
+    }
+  }
+
+  // -------------- Update User -----------------------//
 
   async updateUser(userId: number, userData: any): Promise<User> {
     const user = await this.userRepository.findOneOrFail({

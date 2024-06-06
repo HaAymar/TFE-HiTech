@@ -36,6 +36,11 @@ interface Course {
 	name: string;
 }
 
+interface AssignRoleDto {
+	id_user: number;
+	id_role: number;
+}
+
 interface CourseD {
 	courseId: number;
 	courseName: string;
@@ -66,7 +71,6 @@ interface CreateUser {
 
 const MembersFilter: React.FC = () => {
 	const [selectedUser, setSelectedUser] = useState<number | "">("");
-
 	const [selectedFormation, setSelectedFormation] = useState<number | "">("");
 	const [selectedCourses, setSelectedCourses] = useState<Array<number>>([]);
 
@@ -84,16 +88,20 @@ const MembersFilter: React.FC = () => {
 	const [phoneError, setPhoneError] = useState<string>("");
 	const [phoneNumber, setPhoneNumber] = useState<string>("");
 	const [selectedRole, setSelectedRole] = useState<string>("");
+
 	const allUsers = useRecoilValue<User[]>(fetchUsers);
 	const courses = useRecoilValue<Course[]>(fetchCourses);
 	const formations = useRecoilValue<any[]>(fetchFormations);
 	const [role, setRole] = useState<string>("");
-
+	console.log("role", role);
 	const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
 	const [showModalForm, setShowModalForm] = useState<boolean>(false);
 	const [showModalRole, setShowModalRole] = useState<boolean>(false);
+	// --- create role admin ---//
+	const [id_user, setIdUser] = useState<number>(0);
 
-	console.log(courses);
+	const [, setResponse] = useState<any>(null);
+	const [, setError] = useState<any>(null);
 
 	const roles: any[] = [
 		{ id: 1, name: "Student" },
@@ -126,16 +134,15 @@ const MembersFilter: React.FC = () => {
 		}
 	};
 
-	console.log("All user", allUsers);
 	const usersNoRole = allUsers.filter((user) => user.role === "-");
-	console.log(usersNoRole);
+
 	const renderDetailsList = (
 		items: { formationName?: string; courseName?: string }[]
 	) => {
 		return (
 			<ul
 				style={{
-					maxHeight: "100px",
+					maxHeight: "80px",
 					overflowY: "auto",
 				}}
 			>
@@ -187,9 +194,9 @@ const MembersFilter: React.FC = () => {
 
 		if (!name.trim() || !surname.trim() || !email.trim()) {
 			alert("Nom, prénom, et email sont requis.");
-			return; // Stoppe l'exécution si une des conditions n'est pas remplie
+			return;
 		}
-		console.log(newUser);
+		console.log("New user", newUser);
 		handleCloseModal();
 		try {
 			const response = await axios.post(`${BE_URL}users`, newUser, {
@@ -200,6 +207,7 @@ const MembersFilter: React.FC = () => {
 			console.log("The data was inserted correctly", response.data);
 
 			setFilteredUsers((prevUsers) => [...prevUsers, response.data]);
+			window.location.reload();
 		} catch (error) {
 			console.error("Error adding training", error);
 		}
@@ -261,8 +269,106 @@ const MembersFilter: React.FC = () => {
 				return [...prevSelectedCourses, courseId];
 			}
 		});
+		console.log("SelectedCourses", selectedCourses);
 	};
 
+	//---------------- Adding role --------------------//
+	const handleCreateRoleAdmin = async () => {
+		const assignRoleDto: AssignRoleDto = {
+			id_user,
+			id_role: 1,
+		};
+
+		handleCloseModal();
+		try {
+			const result = await axios.post(
+				`${BE_URL}users/role/admin`,
+				assignRoleDto,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+
+			setResponse(result.data);
+			setError(null);
+			window.location.reload();
+		} catch (err: any) {
+			setError(err.response ? err.response.data : "Error occurred");
+			setResponse(null);
+		}
+	};
+
+	const handleCreateRoleStudent = async () => {
+		setError(null);
+
+		const dataToSend = {
+			assignRoleDto: {
+				id_user,
+				id_role: 3,
+			},
+			id_formation: selectedFormation,
+		};
+		console.log(dataToSend);
+		try {
+			const response = await axios.post(
+				`${BE_URL}users/role/student`,
+				dataToSend,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+			setResponse(response.data);
+			setError(null);
+			window.location.reload();
+		} catch (err: any) {
+			setError(err.response ? err.response.data : "Error occurred");
+			setResponse(null);
+		}
+	};
+	const handleCreateRoleTeacher = async () => {
+		setError(null);
+
+		const dataToSend = {
+			assignRoleDto: {
+				id_user,
+				id_role: 2,
+			},
+			id_cours: selectedCourses,
+		};
+		console.log(dataToSend);
+		try {
+			const response = await axios.post(
+				`${BE_URL}users/role/teacher`,
+				dataToSend,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+			setResponse(response.data);
+			setError(null);
+			window.location.reload();
+		} catch (err: any) {
+			setError(err.response ? err.response.data : "Error occurred");
+			setResponse(null);
+		}
+	};
+
+	const handleCreateRole = () => {
+		if (role === "Admin") {
+			handleCreateRoleAdmin();
+		} else if (role === "Teacher") {
+			handleCreateRoleTeacher();
+		} else {
+			handleCreateRoleStudent();
+		}
+	};
+	console.log(selectedFormation);
 	useEffect(() => {
 		if (selectedRole === "") {
 			setFilteredUsers(allUsers);
@@ -272,6 +378,13 @@ const MembersFilter: React.FC = () => {
 			);
 		}
 	}, [allUsers, selectedRole]);
+
+	useEffect(() => {
+		if (selectedUser !== "") {
+			setIdUser(selectedUser as number);
+		}
+	}, [selectedUser]);
+
 	return (
 		<Container
 			className="containerTable"
@@ -385,7 +498,7 @@ const MembersFilter: React.FC = () => {
 								<th
 									style={{
 										textAlign: "center",
-										width: "250px",
+										width: "280px",
 									}}
 								>
 									Formation
@@ -393,7 +506,7 @@ const MembersFilter: React.FC = () => {
 								<th
 									style={{
 										textAlign: "center",
-										width: "200px",
+										width: "230px",
 									}}
 								>
 									Cours
@@ -821,7 +934,7 @@ const MembersFilter: React.FC = () => {
 					</Button>
 					<Button
 						variant="primary"
-						onClick={handleCreateUser}
+						onClick={handleCreateRole}
 						style={{ backgroundColor: "#5c9b9e", border: "none" }}
 					>
 						Ajouter
