@@ -1,6 +1,7 @@
 import "./style.css";
 
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
 	Button,
 	Card,
@@ -12,153 +13,197 @@ import {
 } from "react-bootstrap";
 import { useRecoilValue } from "recoil";
 
+import { BE_URL } from "../../config";
 import { collectTestState } from "../Stores/collecTestId";
 import { teacherCoursesState } from "../Stores/coursesState";
+import { fetchCreationTests } from "../Stores/testExtentState";
+import { userIdState } from "../Stores/userIdState";
 
-// Interface pour définir la structure d'un test
-interface ITest {
+interface Course {
 	id: number;
-	titre: string;
-	description: string;
-	date: string;
-	points: number;
-	courseId: number;
+	name: string;
 }
 
-// Composant principal
+interface Teacher {
+	id: number;
+}
+
+interface ITest {
+	id: number;
+	name: string;
+	dateTest: string;
+	description: string;
+	cotation: number;
+	validation: "Yes" | "No";
+	course: Course;
+	teacher: Teacher;
+}
+
 const FormulaireTest: React.FC = () => {
-	// États
 	const idFormation = useRecoilValue(collectTestState);
 	const [editingTestId, setEditingTestId] = useState<null | number>(null);
+	const teacherId = useRecoilValue(userIdState);
+	const currentTest = useRecoilValue(fetchCreationTests);
+	console.log("currentTest", currentTest);
+	const [editedDescription, setEditedDescription] = useState<string>("");
+	const [editedName, setEditedName] = useState<string>("");
+	const [editedDate, setEditedDate] = useState<string>("");
+	const [editedCotation, setEditedCotation] = useState<number | "">("");
 
-	const [editedDescription, setEditedDescription] = useState("");
-	const [editedTitre, setEditedTitre] = useState("");
-	const [editedDate, setEditedDate] = useState("");
-	const [editedPoints, setEditedPoints] = useState<number | "">("");
-
-	const [tests, setTests] = useState<ITest[]>([]);
-	const [showTestModal, setShowTestModal] = useState(false);
-	const [showListModal, setShowListModal] = useState(false);
+	const [tests, setTests] = useState<ITest[]>(currentTest);
+	console.log("tests", tests);
+	const [showTestModal, setShowTestModal] = useState<boolean>(false);
+	const [showListModal, setShowListModal] = useState<boolean>(false);
 	const [currentCourseId, setCurrentCourseId] = useState<number | null>(null);
 	const [currentTestId, setCurrentTestId] = useState<number | null>(null);
 
-	// États pour le formulaire
-	const [titre, setTitre] = useState("");
-	const [description, setDescription] = useState("");
-	const [date, setDate] = useState("");
-	const [points, setPoints] = useState<number | "">("");
+	const [name, setName] = useState<string>("");
+	const [description, setDescription] = useState<string>("");
+	const [dateTest, setDateTest] = useState<string>("");
+	const [cotation, setCotation] = useState<number | "">("");
 
-	// Fermer le modal de test
 	const handleCloseTestModal = () => {
 		setShowTestModal(false);
-		setCurrentTestId(null); // Réinitialiser le test sélectionné pour modification
+		setCurrentTestId(null);
 		resetForm();
 	};
 
 	const activerEdition = (test: ITest) => {
 		setEditingTestId(test.id);
-		setEditedDescription(test.description);
+		setEditedName(test.name ?? "");
+		setEditedDescription(test.description ?? "");
+		setEditedDate(test.dateTest);
+		setEditedCotation(test.cotation ?? "");
 	};
 
-	const sauvegarderModification = (testId: number) => {
-		const updatedTests = tests.map((test) => {
-			if (test.id === testId) {
-				return {
-					...test,
-					titre: editedTitre,
-					description: editedDescription,
-					date: editedDate,
-					// Assurez-vous que `points` est un nombre. Utilisez 0 ou une autre valeur par défaut si `editedPoints` est une chaîne vide.
-					points: editedPoints === "" ? 0 : editedPoints,
-				};
-			}
-			return test;
-		});
-		setTests(updatedTests);
-		setEditingTestId(null); // Sortir du mode d'édition
-		// Réinitialiser les états édités si nécessaire
+	const handleSaveTest = async (testId: number) => {
+		const updatedTest = {
+			name: editedName,
+			description: editedDescription,
+			date: editedDate,
+			cotation:
+				editedCotation === ""
+					? 0
+					: typeof editedCotation === "string"
+					? parseFloat(editedCotation)
+					: editedCotation,
+		};
+
+		try {
+			const response = await axios.put(
+				`${BE_URL}creationTest/modify/${testId}`,
+				updatedTest,
+				{
+					headers: { "Content-Type": "application/json" },
+				}
+			);
+			setTests((prev) =>
+				prev.map((test) =>
+					test.id === testId ? { ...test, ...response.data } : test
+				)
+			);
+			console.log(
+				`Test with id ${testId} was updated successfully.`,
+				response.data
+			);
+		} catch (error) {
+			console.error("Failed to update test:", error);
+		} finally {
+			setEditingTestId(null);
+		}
 	};
 
-	// Afficher le modal de test pour ajout ou modification
 	const handleShowTestModal = (courseId: number, testId?: number) => {
 		setCurrentCourseId(courseId);
 		if (testId !== undefined) {
 			const testToEdit = tests.find((test) => test.id === testId);
 			if (testToEdit) {
-				setTitre(testToEdit.titre);
-				setDescription(testToEdit.description);
-				setDate(testToEdit.date);
-				setPoints(testToEdit.points);
+				setName(testToEdit.name);
+				setDescription(testToEdit.description || "");
+				setDateTest(testToEdit.dateTest);
+				setCotation(testToEdit.cotation || "");
 				setCurrentTestId(testId);
 			}
 		}
 		setShowTestModal(true);
 	};
 
-	// Ajouter ou modifier un test
-	const ajouterOuModifierTest = () => {
+	const createTest = async () => {
 		if (currentCourseId === null) return;
-		if (currentTestId === null) {
-			// Ajout d'un nouveau test
-			const nouveauTest: ITest = {
-				id: Date.now(),
-				titre,
-				description,
-				date,
-				points: Number(points),
-				courseId: currentCourseId,
-			};
-			setTests([...tests, nouveauTest]);
-		} else {
-			// Mise à jour d'un test existant
-			setTests(
-				tests.map((test) =>
-					test.id === currentTestId
-						? {
-								...test,
-								titre,
-								description,
-								date,
-								points: Number(points),
-						  }
-						: test
-				)
+
+		const testDetails = {
+			name: name,
+			dateTest: dateTest,
+			description,
+			cotation: Number(cotation),
+			id_course: currentCourseId,
+			id_teacher: teacherId,
+		};
+
+		try {
+			const response = await axios.post(
+				`${BE_URL}creationTest`,
+				testDetails,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
 			);
+			console.log("Test created:", response.data);
+			setTests((prevTests) => [...prevTests, response.data]);
+			handleCloseTestModal();
+		} catch (error) {
+			console.error("Error adding test", error);
 		}
-		handleCloseTestModal();
 	};
 
-	// Afficher le modal de liste des tests
 	const handleShowListModal = (courseId: number) => {
 		setCurrentCourseId(courseId);
 		setShowListModal(true);
 	};
 
-	// Fermer le modal de liste des tests
 	const handleCloseListModal = () => setShowListModal(false);
 
-	// Supprimer un test
-	const supprimerTest = (id: number) => {
-		setTests(tests.filter((test) => test.id !== id));
+	const handleDeleteTest = async (id: number) => {
+		try {
+			await axios.delete(`${BE_URL}creationTest/delete/${id}`, {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			setTests(tests.filter((test) => test.id !== id));
+
+			console.log(`Test with id ${id} was deleted successfully.`);
+
+			handleCloseTestModal();
+		} catch (error) {
+			console.error(
+				"Erreur lors de la suppression de la formation",
+				error
+			);
+		}
 	};
 
-	// Réinitialiser le formulaire
 	const resetForm = () => {
-		setTitre("");
+		setName("");
 		setDescription("");
-		setDate("");
-		setPoints("");
+		setDateTest("");
+		setCotation("");
 		setCurrentTestId(null);
 	};
 
-	// Trouver les tests pour un cours donné
-	const trouverTestsParCours = (courseId: number) => {
-		return tests.filter((test) => test.courseId === courseId);
+	const findTestByCours = (courseId: number) => {
+		const cx = tests.filter((test) => test.course.id === courseId);
+		console.log("cc", courseId);
+		return cx;
 	};
 
 	const coursesT = useRecoilValue(teacherCoursesState);
 	console.log("courses", coursesT);
 
+	console.log("teacherId", teacherId);
 	const selectedFormationCourses = coursesT.filter(
 		(course: any) => course.formationId === idFormation
 	);
@@ -168,7 +213,10 @@ const FormulaireTest: React.FC = () => {
 	} else {
 		console.log("No data available for formations.");
 	}
-	console.log("Hey hey", nameFormation);
+	useEffect(() => {
+		console.log("Tests have been updated", tests);
+	}, [tests]);
+
 	return (
 		<Container
 			className="contentTest"
@@ -267,146 +315,130 @@ const FormulaireTest: React.FC = () => {
 				</Modal.Header>
 				<Modal.Body style={{ overflowY: "auto", maxHeight: "70vh" }}>
 					{currentCourseId &&
-					trouverTestsParCours(currentCourseId).length > 0 ? (
-						trouverTestsParCours(currentCourseId).map(
-							(test, index) => (
-								<div
-									key={test.id}
-									className="test-list-item mb-3"
-									style={{
-										display: "flex",
-										flexDirection: "column",
-										gap: "10px",
-									}}
-								>
-									<strong>
-										{index + 1}. {test.titre}
-									</strong>
+					findTestByCours(currentCourseId).length > 0 ? (
+						findTestByCours(currentCourseId).map((test, index) => (
+							<div
+								key={test.id}
+								className="test-list-item mb-3"
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									gap: "10px",
+								}}
+							>
+								<strong>
+									{index + 1}. {test.name}
+								</strong>
+								{editingTestId === test.id ? (
+									<>
+										<input
+											className="editText"
+											defaultValue={test.name}
+											onChange={(e) =>
+												setEditedName(e.target.value)
+											}
+										/>
+										<Form.Control
+											style={{
+												border: "none",
+												backgroundColor: "#dcdde0",
+											}}
+											as="textarea"
+											rows={3}
+											defaultValue={test.description}
+											onChange={(e) =>
+												setEditedDescription(
+													e.target.value
+												)
+											}
+										/>
+										<Form.Control
+											type="date"
+											defaultValue={test.dateTest}
+											onChange={(e) =>
+												setEditedDate(e.target.value)
+											}
+										/>
+										<Form.Control
+											type="number"
+											defaultValue={test.cotation.toString()}
+											onChange={(e) =>
+												setEditedCotation(
+													e.target.value === ""
+														? ""
+														: Number(e.target.value)
+												)
+											}
+										/>
+									</>
+								) : (
+									<>
+										<div>
+											<strong>Name:</strong> {test.name}
+										</div>
+
+										<div>
+											<strong>Description:</strong>{" "}
+											{test.description}
+										</div>
+										<div>
+											<strong>Date:</strong>{" "}
+											{test.dateTest}
+										</div>
+										<div>
+											<strong>Cotation:</strong>{" "}
+											{test.cotation}
+										</div>
+									</>
+								)}
+								<div style={{ display: "flex", gap: "10px" }}>
 									{editingTestId === test.id ? (
-										<>
-											<input
-												className="editText"
-												defaultValue={test.titre}
-												onChange={(e) =>
-													setEditedTitre(
-														e.target.value
-													)
-												}
-											/>
-											<Form.Control
-												style={{
-													border: "none",
-													backgroundColor: "#dcdde0",
-												}}
-												as="textarea"
-												rows={3}
-												defaultValue={test.description}
-												onChange={(e) =>
-													setEditedDescription(
-														e.target.value
-													)
-												}
-											/>
-											<Form.Control
-												type="date"
-												defaultValue={test.date}
-												onChange={(e) =>
-													setEditedDate(
-														e.target.value
-													)
-												}
-											/>
-											<Form.Control
-												type="number"
-												defaultValue={test.points.toString()}
-												onChange={(e) =>
-													setEditedPoints(
-														e.target.value === ""
-															? ""
-															: Number(
-																	e.target
-																		.value
-															  )
-													)
-												}
-											/>
-										</>
+										<Button
+											style={{
+												backgroundColor: "#40b9af",
+												border: "none",
+											}}
+											size="sm"
+											onClick={() =>
+												handleSaveTest(test.id)
+											}
+										>
+											Enregistrer
+										</Button>
 									) : (
 										<>
-											<div>
-												<strong>Titre:</strong>{" "}
-												{test.titre}
-											</div>
-
-											<div>
-												<strong>Description:</strong>{" "}
-												{test.description}
-											</div>
-											<div>
-												<strong>Date:</strong>{" "}
-												{test.date}
-											</div>
-											<div>
-												<strong>Points:</strong>{" "}
-												{test.points}
-											</div>
-										</>
-									)}
-									<div
-										style={{ display: "flex", gap: "10px" }}
-									>
-										{editingTestId === test.id ? (
 											<Button
-												variant="success"
+												style={{
+													backgroundColor: "#40b9af",
+													border: "none",
+												}}
 												size="sm"
 												onClick={() =>
-													sauvegarderModification(
-														test.id
-													)
+													activerEdition(test)
 												}
 											>
-												Sauvegarder
+												Modifier
 											</Button>
-										) : (
-											<>
-												<Button
-													style={{
-														backgroundColor:
-															"#40b9af",
-														border: "none",
-													}}
-													size="sm"
-													onClick={() =>
-														activerEdition(test)
-													}
-												>
-													Modifier
-												</Button>
-												<Button
-													variant="danger"
-													size="sm"
-													onClick={() =>
-														supprimerTest(test.id)
-													}
-												>
-													Supprimer
-												</Button>
-											</>
-										)}
-									</div>
+											<Button
+												variant="danger"
+												size="sm"
+												onClick={() =>
+													handleDeleteTest(test.id)
+												}
+											>
+												Supprimer
+											</Button>
+										</>
+									)}
 								</div>
-							)
-						)
+							</div>
+						))
 					) : (
 						<p>Aucun test trouvé pour ce cours.</p>
 					)}
 				</Modal.Body>
 
-				<Modal.Footer>
-					{/* <Button variant="secondary" onClick={handleCloseListModal}>
-						Fermer
-					</Button> */}
-				</Modal.Footer>
+				<Modal.Footer></Modal.Footer>
 			</Modal>
 
 			<Modal show={showTestModal} onHide={handleCloseTestModal}>
@@ -418,13 +450,21 @@ const FormulaireTest: React.FC = () => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form>
+					<Form
+						onSubmit={() => {
+							if (editingTestId !== null) {
+								handleSaveTest(editingTestId);
+							} else {
+								console.error("Test ID is null");
+							}
+						}}
+					>
 						<Form.Group className="mb-3">
-							<Form.Label>Titre du test</Form.Label>
+							<Form.Label>Nom du test</Form.Label>
 							<Form.Control
 								type="text"
-								value={titre}
-								onChange={(e) => setTitre(e.target.value)}
+								value={name}
+								onChange={(e) => setName(e.target.value)}
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3">
@@ -440,17 +480,17 @@ const FormulaireTest: React.FC = () => {
 							<Form.Label>Date</Form.Label>
 							<Form.Control
 								type="date"
-								value={date}
-								onChange={(e) => setDate(e.target.value)}
+								value={dateTest}
+								onChange={(e) => setDateTest(e.target.value)}
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3">
-							<Form.Label>Points de cotation</Form.Label>
+							<Form.Label>Cotation de cotation</Form.Label>
 							<Form.Control
 								type="number"
-								value={points}
+								value={cotation}
 								onChange={(e) =>
-									setPoints(
+									setCotation(
 										e.target.value === ""
 											? ""
 											: Number(e.target.value)
@@ -465,7 +505,7 @@ const FormulaireTest: React.FC = () => {
 						Annuler
 					</Button>
 					<Button
-						onClick={ajouterOuModifierTest}
+						onClick={createTest}
 						style={{
 							backgroundColor: "#40b9af",
 							border: "none",

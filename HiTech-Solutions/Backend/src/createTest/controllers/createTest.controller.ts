@@ -8,6 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 
+import { CreationTest } from '../../typeorm/entities/CreationTest';
 import { CreateCreationTestDto } from '../dtos/createTest.dto';
 import { CreationTestService } from '../services/createTest.service';
 
@@ -15,14 +16,9 @@ import { CreationTestService } from '../services/createTest.service';
 export class CreationTestController {
   constructor(private readonly creationTestService: CreationTestService) {}
 
-  @Get()
-  findAll() {
-    return this.creationTestService.findAll();
-  }
-
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.creationTestService.findOne(+id);
+  findAll(@Param('id') id_teacher: number): Promise<CreationTest[]> {
+    return this.creationTestService.findAll(id_teacher);
   }
 
   @Post()
@@ -30,7 +26,7 @@ export class CreationTestController {
     return this.creationTestService.create(creationTest);
   }
 
-  @Put(':id')
+  @Put('modify/:id')
   update(
     @Param('id') id: string,
     @Body() updateData: Partial<CreateCreationTestDto>,
@@ -38,8 +34,8 @@ export class CreationTestController {
     return this.creationTestService.update(+id, updateData);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.creationTestService.remove(+id);
+  @Delete('delete/:id')
+  remove(@Param('id') id: number) {
+    return this.creationTestService.remove(id);
   }
 }
