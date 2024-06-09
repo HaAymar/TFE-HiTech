@@ -45,8 +45,10 @@ export class CreationTestService {
       course = await this.courseRepository.findOne({
         where: { id: id_course },
       });
+
       teacher = await this.teacherRepository.findOne({
-        where: { id: id_teacher },
+        where: { user: { id: id_teacher } },
+        relations: ['user'],
       });
 
       if (!course || !teacher) {
