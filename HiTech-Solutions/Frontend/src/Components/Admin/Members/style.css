@@ -69,8 +69,8 @@
 .sticky-header th {
 	position: sticky;
 	top: 0;
-	z-index: 10; /* Lower than the dropdown */
-	background: white; /* Ensure the header is not transparent */
+	z-index: 10;
+	background: white;
 }
 
 .headerMembers {
@@ -82,16 +82,16 @@
 }
 
 .small-dropdown {
-	max-width: 150px; /* Adjust this value as needed */
+	max-width: 150px;
 }
 
 .small-dropdown .dropdown-item {
-	white-space: nowrap; /* Prevents text from wrapping */
-	overflow: hidden; /* Keeps the text within the button's bounds */
-	text-overflow: ellipsis; /* Adds an ellipsis if the text is too long */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .small-dropdown .dropdown-menu {
-	right: 0; /* Aligns the dropdown menu to the right of the button */
+	right: 0;
 }
 
 .descripText {

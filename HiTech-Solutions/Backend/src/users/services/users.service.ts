@@ -51,6 +51,8 @@ export class UsersService {
         u.Surname,
         u.Email,
         u.Password,
+        COALESCE(t.id, 0) AS TeacherId,
+        COALESCE(s.id, 0) AS StudentId,
         COALESCE(r.Name, 'Unknown') AS RoleName
       FROM
         Users u
@@ -101,21 +103,28 @@ export class UsersService {
 
         if (admin) {
           userDetails.role = 'Admin';
-        } else if (teacher) {
+          userDetails.details.id_admin = admin.id; // Assuming 'id' is the identifier for admin
+        }
+        if (teacher) {
           userDetails.role = 'Teacher';
+          userDetails.details.id_teacher = teacher.id; // Assuming 'id' is the identifier for teacher
           userDetails.details.courses = teacher.teachersCourses.map((tc) => ({
             courseId: tc.course.id,
             courseName: tc.course.name,
           }));
-        } else if (student) {
+        }
+        if (student) {
           userDetails.role = 'Student';
+          userDetails.details.id_student = student.id; // Assuming 'id' is the identifier for student
           userDetails.details.formations = student.studentsFormations.map(
             (sf) => ({
               formationId: sf.formation.id,
               formationName: sf.formation.name,
             }),
           );
-        } else {
+        }
+
+        if (!admin && !teacher && !student) {
           userDetails.role = '-';
         }
 

@@ -2,7 +2,7 @@ import axios from "axios";
 import { atom, selector } from "recoil";
 
 import { BE_URL } from "../../config";
-import { userIdState } from "./userIdState";
+import { teacherIdRoleState } from "./idRoleTeacher";
 
 interface Course {
 	id: number;
@@ -32,7 +32,7 @@ export const creationTestAtom = atom<CreationTest[]>({
 export const fetchCreationTests = selector<CreationTest[]>({
 	key: "fetchCreationTests",
 	get: async ({ get }): Promise<CreationTest[]> => {
-		const teacherId = get(userIdState);
+		const teacherId = get(teacherIdRoleState);
 		try {
 			const response = await axios.get<CreationTest[]>(
 				`${BE_URL}creationTest/${teacherId}`

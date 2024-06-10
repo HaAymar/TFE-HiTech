@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Formation } from './Formations';
 
@@ -19,4 +13,5 @@ export class Course {
   @ManyToOne(() => Formation)
   @JoinColumn({ name: 'id_formation' })
   formation: Formation;
+
 }

@@ -11,6 +11,8 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 
 import Logo from "../../Assets/pp.svg";
 import { BE_URL } from "../../config";
+import { studentIdRoleState } from "../Stores/idRoleState";
+import { teacherIdRoleState } from "../Stores/idRoleTeacher";
 import { userNameState } from "../Stores/nameUser";
 import { userRoleState } from "../Stores/roleUser";
 import { userIdState } from "../Stores/userIdState";
@@ -19,6 +21,8 @@ interface CustomJwtPayload {
 	RoleName: string;
 	UserId: number;
 	Name: string;
+	StudentId: string;
+	TeacherId: string;
 	Surname: string;
 }
 
@@ -29,7 +33,9 @@ const LoginPage: React.FC = () => {
 	const setUserId = useSetRecoilState(userIdState);
 	const navigate = useNavigate();
 	const [, setUserName] = useRecoilState(userNameState);
+	const [, setStudentId] = useRecoilState(studentIdRoleState);
 	const [, setUserRole] = useRecoilState(userRoleState);
+	const [, setTeacherId] = useRecoilState(teacherIdRoleState);
 	console.log(BE_URL);
 	const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -51,10 +57,12 @@ const LoginPage: React.FC = () => {
 
 				const initials = user.Name.charAt(0) + user.Surname.charAt(0);
 				const fullName = `${user.Name} ${user.Surname}`;
+				console.log("student", user.StudentId);
 				console.log("User login", initials);
 				setUserName(fullName);
 				setUserRole(user.RoleName);
-				// navigate(`/student?initials=${initials}`);
+				setStudentId(parseInt(user.StudentId, 10));
+				setTeacherId(parseInt(user.TeacherId, 10));
 
 				setUserId(user.UserId);
 				console.log("User login", user.UserId);

@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -23,6 +24,20 @@ export class CoursesController {
   @Get()
   findAll() {
     return this.coursesService.findCourses();
+  }
+
+  @Get('/student/:id')
+  getCoursesByStudent(@Param('id') studentId: number) {
+    return this.coursesService.findCoursesByStudentFormation(studentId);
+  }
+
+  @Get('tests/:studentId')
+  async getStudentTests(@Param('studentId') studentId: number) {
+    const tests = await this.coursesService.findAllTestsByStudentId(studentId);
+    if (tests.length === 0) {
+      throw new NotFoundException('No tests found for this student');
+    }
+    return tests;
   }
 
   @Get('/teacher/:userId')

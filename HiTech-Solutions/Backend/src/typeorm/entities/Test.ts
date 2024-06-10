@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreationTest } from './CreationTest';
 import { Student } from './Student';
@@ -27,9 +21,13 @@ export class Test {
   @JoinColumn({ name: 'id_teacher' })
   teacher: Teacher;
 
+   
+
   @Column()
   score: number;
 
   @Column({ type: 'enum', enum: ['Yes', 'No'], default: 'No' })
   validation: 'Yes' | 'No';
 }
+
+ 

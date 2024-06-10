@@ -47,6 +47,7 @@ interface CourseD {
 }
 
 interface UserDetail {
+	id: number;
 	formations?: Formation[];
 	courses?: CourseD[];
 }

@@ -25,218 +25,59 @@ import { FaDownload } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
 import { FaBookOpen } from "react-icons/fa6";
-import { ImCancelCircle } from "react-icons/im";
 import { IoIosMail } from "react-icons/io";
 import { PiCertificateFill } from "react-icons/pi";
 import { useRecoilValue } from "recoil";
 
 import Fof from "../../Assets/Student/profile.jpg";
 import NavBar from "../Navbar/NavBarDrawer/index";
+import { fetchAllCourseTest } from "../Stores/allCourseTestState";
+import { fetchCourseStudent } from "../Stores/formationStudentCourse";
 import { userNameState } from "../Stores/nameUser";
 
 moment.locale("fr");
 const localizer = momentLocalizer(moment);
 
-interface Interrogation {
-	id: number;
-	titre: string;
+interface Test {
+	testId: number;
+	courseId: number;
+	courseName: string;
+	testName: string;
+	testDate: string;
 	description: string;
-	date: string;
-	cotation: number;
-	passe: boolean;
+	cotation: string;
+	validation: string;
+	score: number;
+	teacherId: number;
+	courseTeacherId: number;
 }
 
-interface Cours {
-	id: number;
-	titre: string;
-	color: string;
-	interrogations: Interrogation[];
+interface TestStudent {
+	courseId: number;
+	courseName: string;
+	testId: number;
+	testName: string;
+	testDate: string;
+	description: string;
+	cotation: string;
+	validation: string;
+	score: number;
+	teacherId: number;
+	courseTeacherId: number;
 }
 
-interface Formation {
-	id: number;
-	nom: string;
-	cours: Cours[];
+interface GroupedTests {
+	courseId: number;
+	courseName: string;
+	tests: TestStudent[];
 }
 
 interface CourseEvent extends Event {
 	title: string;
 	start: Date;
 	end: Date;
-	color: string;
+	color?: string;
 }
-
-const formations: Formation[] = [
-	{
-		id: 1,
-		nom: "Tech PC et Réseaux",
-		cours: [
-			{
-				id: 101,
-				titre: "A/D_PC",
-				color: "#ff7f7f",
-				interrogations: [
-					{
-						id: 1001,
-						titre: "Chapitre 1",
-						description: "Intro à la programmation",
-						date: "2024-04-01",
-						cotation: 20,
-						passe: false,
-					},
-					{
-						id: 1002,
-						titre: "Chapitre 2",
-						description: "Structures de données",
-						date: "2024-04-15",
-						cotation: 20,
-						passe: false,
-					},
-					{
-						id: 1003,
-						titre: "Chapitre 4",
-						description: "Algorithmes avancés",
-						date: "2024-04-29",
-						cotation: 20,
-						passe: false,
-					},
-					{
-						id: 1004,
-						titre: "Examen Final",
-						description: "Test Final",
-						date: "2024-04-28",
-						cotation: 20,
-						passe: false,
-					},
-				],
-			},
-			{
-				id: 102,
-				titre: "RL(LAN)",
-				color: "#7f7fff",
-				interrogations: [
-					{
-						id: 2001,
-						titre: "Chapitre 1",
-						description: "Fondamentaux des réseaux",
-						date: "2024-05-01",
-						cotation: 20,
-						passe: true,
-					},
-					{
-						id: 2002,
-						titre: "Chapitre 2",
-						description: "Protocoles de communication",
-						date: "2024-05-15",
-						cotation: 20,
-						passe: true,
-					},
-					{
-						id: 2003,
-						titre: "Chapitre 3",
-						description: "Sécurité des réseaux",
-						date: "2024-05-29",
-						cotation: 20,
-						passe: false,
-					},
-				],
-			},
-			{
-				id: 103,
-				titre: "CONFIG_AVANCE",
-				color: "#7fff7f",
-				interrogations: [
-					{
-						id: 2001,
-						titre: "Chapitre 1",
-						description: "Fondamentaux des réseaux",
-						date: "2024-05-02",
-						cotation: 20,
-						passe: true,
-					},
-					{
-						id: 2002,
-						titre: "Chapitre 2",
-						description: "Protocoles de communication",
-						date: "2024-05-14",
-						cotation: 20,
-						passe: true,
-					},
-					{
-						id: 2003,
-						titre: "Chapitre 3",
-						description: "Sécurité des réseaux",
-						date: "2024-05-9",
-						cotation: 20,
-						passe: true,
-					},
-				],
-			},
-			{
-				id: 104,
-				titre: "MEO(IPv4)",
-				color: "#ffbf00",
-				interrogations: [
-					{
-						id: 2001,
-						titre: "Chapitre 1",
-						description: "Fondamentaux des réseaux",
-						date: "2024-05-10",
-						cotation: 20,
-						passe: true,
-					},
-					{
-						id: 2002,
-						titre: "Chapitre 2",
-						description: "Protocoles de communication",
-						date: "2024-05-17",
-						cotation: 20,
-						passe: false,
-					},
-					{
-						id: 2003,
-						titre: "Chapitre 3",
-						description: "Sécurité des réseaux",
-						date: "2024-06-1",
-						cotation: 20,
-						passe: false,
-					},
-				],
-			},
-			{
-				id: 105,
-				titre: "MEO(DNS)",
-				color: "#00bfff",
-				interrogations: [
-					{
-						id: 2001,
-						titre: "Chapitre 1",
-						description: "Fondamentaux des réseaux",
-						date: "2024-05-11",
-						cotation: 20,
-						passe: true,
-					},
-					{
-						id: 2002,
-						titre: "Chapitre 2",
-						description: "Protocoles de communication",
-						date: "2024-06-02",
-						cotation: 20,
-						passe: false,
-					},
-					{
-						id: 2003,
-						titre: "Chapitre 3",
-						description: "Sécurité des réseaux",
-						date: "2024-05-24",
-						cotation: 20,
-						passe: true,
-					},
-				],
-			},
-		],
-	},
-];
 
 const messages = {
 	allDay: "Journée",
@@ -254,28 +95,48 @@ const messages = {
 	showMore: (total: any) => `+ ${total} événement(s) supplémentaire(s)`,
 };
 
-const transformInterrogationsToEvents = (
-	formations: Formation[]
-): CourseEvent[] => {
-	const events: CourseEvent[] = [];
-	formations.forEach((formation) => {
-		formation.cours.forEach((cours) => {
-			cours.interrogations.forEach((interrogation) => {
+const Student: React.FC = () => {
+	const testsCours = useRecoilValue(fetchAllCourseTest);
+	const stuCours = useRecoilValue(fetchCourseStudent);
+	const [showCalendar, setShowCalendar] = useState<boolean>(true);
+	function groupTestsByCourse(student: Test[]): GroupedTests[] {
+		const groupedByCourse: { [key: number]: GroupedTests } = {};
+
+		student.forEach((test) => {
+			if (!groupedByCourse[test.courseId]) {
+				groupedByCourse[test.courseId] = {
+					courseId: test.courseId,
+					courseName: test.courseName,
+					tests: [],
+				};
+			}
+
+			groupedByCourse[test.courseId].tests.push(test);
+		});
+
+		return Object.values(groupedByCourse);
+	}
+	const groupedTests = groupTestsByCourse(testsCours);
+	console.log("groupedTests", groupedTests);
+
+	const transformInterrogationsToEvents = (
+		allTestCourses: GroupedTests[]
+	): CourseEvent[] => {
+		const events: CourseEvent[] = [];
+		allTestCourses.forEach((course) => {
+			course.tests.forEach((test) => {
 				events.push({
-					title: `${cours.titre}: ${interrogation.titre}`,
-					start: new Date(interrogation.date),
-					end: new Date(interrogation.date),
-					color: cours.color,
+					title: `${course.courseName}: ${test.testName}`,
+					start: new Date(test.testDate),
+					end: new Date(test.testDate),
 				});
 			});
 		});
-	});
-	return events;
-};
+		return events;
+	};
 
-const myEventsList = transformInterrogationsToEvents(formations);
+	const myEventsList = transformInterrogationsToEvents(groupedTests);
 
-const Student: React.FC = () => {
 	const eventStyleGetter = (
 		event: CourseEvent,
 		start: Date,
@@ -297,25 +158,47 @@ const Student: React.FC = () => {
 	};
 	const user = useRecoilValue(userNameState);
 
-	const [selectedCourse, setSelectedCourse] = useState<Cours | null>(null);
+	const [selectedCourse, setSelectedCourse] = useState<TestStudent[] | null>(
+		null
+	);
+
+	const [idSelect, setIDSelect] = useState<number>(0);
 	const isFormationComplete = false;
-	const handleCourseClick = (course: Cours) => {
-		setSelectedCourse(course);
+
+	const handleCourseClick = (courseId: number) => {
+		setShowCalendar(false);
+		setIDSelect(courseId);
+		const course = groupedTests.find(
+			(course) => course.courseId === courseId
+		);
+		if (course && course.tests) {
+			console.log("course.tests", courseId);
+			setSelectedCourse(course.tests);
+			return course.tests;
+		} else {
+			setSelectedCourse([]);
+			return [];
+		}
 	};
 
-	const calculateSuccessRate = (interrogations: Interrogation[]): number => {
-		const totalTests = interrogations.length;
-		const passedTests = interrogations.filter((test) => test.passe).length;
+	const cancelSelectedCourse = () => {
+		setShowCalendar(true);
+	};
+	const calculateSuccessRate = (testStu: TestStudent[]): number => {
+		const totalTests = testStu.length;
+		const passedTests = testStu.filter(
+			(test) => test.validation === "Yes"
+		).length;
+
 		return totalTests > 0 ? (passedTests / totalTests) * 100 : 0;
 	};
-	const cancelSelectedCourse = () => {
-		setSelectedCourse(null);
-	};
+
 	const getProgressBarColor = (
 		passedTests: number,
 		totalTests: number
 	): string => {
 		const percentage = (passedTests / totalTests) * 100;
+		console.log(passedTests, totalTests);
 		if (percentage >= 75) {
 			return "success";
 		} else if (percentage >= 50) {
@@ -472,31 +355,39 @@ const Student: React.FC = () => {
 							</div>
 
 							<ListGroup className="mb-3 listCourse">
-								{formations
-									.flatMap((formation) => formation.cours)
-									.map((course) => (
-										<ListGroup.Item
-											action
-											key={course.id}
-											onClick={() =>
-												handleCourseClick(course)
-											}
-											style={{
-												backgroundColor:
-													selectedCourse?.id ===
-													course.id
-														? "#3991b47c"
-														: "",
-												color:
-													selectedCourse?.id ===
-													course.id
-														? "white"
-														: "",
-											}}
-										>
-											{course.titre}
-										</ListGroup.Item>
-									))}
+								{stuCours.map((course) => (
+									<ListGroup.Item
+										action
+										key={course.id}
+										onClick={() =>
+											handleCourseClick(course.id)
+										}
+										style={{
+											backgroundColor:
+												selectedCourse &&
+												(selectedCourse.some(
+													(test) =>
+														test.courseId ===
+														course.id
+												) ||
+													idSelect === course.id)
+													? "#3991b47c"
+													: "",
+											color:
+												selectedCourse &&
+												(selectedCourse.some(
+													(test) =>
+														test.courseId ===
+														course.id
+												) ||
+													idSelect === course.id)
+													? "white"
+													: "",
+										}}
+									>
+										{course.name}
+									</ListGroup.Item>
+								))}
 							</ListGroup>
 							<div className="calendar-header">
 								<FaBook />
@@ -531,64 +422,58 @@ const Student: React.FC = () => {
 								</div>
 
 								<Button
+									href="https://discord.com/"
+									target="_blank"
+									rel="noopener noreferrer"
 									style={{
 										border: "none",
 										display: "flex",
 										alignItems: "center",
 										justifyContent: "center",
-										gap: "3px",
+										gap: "6px",
 										width: "150px",
 										backgroundColor: "#40b9af",
 										color: "white",
 									}}
 								>
 									<FaDiscord />
+
 									<div>Modules</div>
 								</Button>
 							</div>
 						</Col>
 						<Col md={4} className="mb-3">
-							{selectedCourse ? (
+							{groupedTests && !showCalendar ? (
 								<div className="contentCours">
-									<div className="calendar-header">
-										<div
-											style={{
-												display: "flex",
-												alignItems: "center",
-												justifyContent: "center",
-												gap: "50px",
-											}}
-										>
-											<div
-												style={{
-													display: "flex",
-													paddingTop: "5px",
-												}}
-											>
-												<h4>
-													<strong>
-														{selectedCourse.titre}
-													</strong>
-												</h4>
-											</div>
+									<div
+										className="calendar-header"
+										style={{
+											display: "flex",
 
-											<ImCancelCircle
-												style={{
-													color: "#a84334",
-												}}
-												onClick={cancelSelectedCourse}
-											/>
-										</div>
+											gap: "50px",
+										}}
+									>
+										<Button
+											style={{
+												backgroundColor: "#b33908",
+												border: "none",
+											}}
+											onClick={cancelSelectedCourse}
+										>
+											Fermer
+										</Button>
 									</div>
 									<div className="d-flex align-items-center mt-3">
 										<div>
 											<h5>
 												<strong>
 													Score:{" "}
-													{selectedCourse.interrogations &&
-														`${calculateSuccessRate(
-															selectedCourse.interrogations
-														).toFixed(2)}%`}
+													{selectedCourse &&
+													selectedCourse.length > 0
+														? `${calculateSuccessRate(
+																selectedCourse
+														  ).toFixed(2)}%`
+														: "N/A"}
 												</strong>
 											</h5>
 										</div>
@@ -596,107 +481,122 @@ const Student: React.FC = () => {
 											className="mb-2"
 											style={{ width: "150px" }}
 											now={
-												selectedCourse.interrogations
+												selectedCourse
 													? calculateSuccessRate(
-															selectedCourse.interrogations
+															selectedCourse
 													  )
 													: 0
 											}
 											variant={
-												selectedCourse.interrogations
+												selectedCourse
 													? getProgressBarColor(
-															selectedCourse.interrogations.filter(
-																(i) => i.passe
+															selectedCourse.filter(
+																(test) =>
+																	test.validation ===
+																	"Yes"
 															).length,
-															selectedCourse
-																.interrogations
-																.length
+															selectedCourse.length
 													  )
 													: "info"
 											}
 											label={`${
-												selectedCourse.interrogations
+												selectedCourse
 													? calculateSuccessRate(
-															selectedCourse.interrogations
+															selectedCourse
 													  ).toFixed(0)
 													: 0
 											}%`}
 										/>
 									</div>
 									<div className="detailsTest">
-										{selectedCourse.interrogations.map(
-											(evaluation, index) => (
-												<Col
-													key={index}
-													md={9}
-													className="mb-4"
-												>
-													<h5>
-														<strong>
-															{evaluation.titre}
-														</strong>{" "}
-														{evaluation.passe ? (
-															<FaCheck
-																style={{
-																	color: "green",
-																}}
-															/>
-														) : (
-															<AiOutlineClose
-																style={{
-																	color: "red",
-																}}
-															/>
-														)}
-													</h5>
-													<p>
-														{evaluation.description}
-													</p>
-													<p>
-														Date: {evaluation.date}
-													</p>
-												</Col>
+										{(selectedCourse?.length ?? 0) > 0 ? (
+											selectedCourse?.map(
+												(evaluation, index) => (
+													<Col
+														key={index}
+														md={9}
+														className="mb-4"
+													>
+														<h5>
+															<strong>
+																{
+																	evaluation.testName
+																}
+															</strong>{" "}
+															{evaluation.validation ===
+															"Yes" ? (
+																<FaCheck
+																	style={{
+																		color: "green",
+																	}}
+																/>
+															) : (
+																<AiOutlineClose
+																	style={{
+																		color: "red",
+																	}}
+																/>
+															)}
+														</h5>
+														<p>
+															{
+																evaluation.description
+															}
+														</p>
+														<p>
+															Date:{" "}
+															{
+																evaluation.testDate
+															}
+														</p>
+													</Col>
+												)
 											)
+										) : (
+											<div
+												style={{
+													display: "flex",
+													alignItems: "center",
+													justifyContent: "center",
+												}}
+											>
+												PAS DE TEST DANS CE COURS !
+											</div>
 										)}
 									</div>
 								</div>
 							) : (
-								<>
-									<div style={{ paddingBottom: "18%" }}>
-										<div className="calendar-header">
-											<FaCalendarAlt />
-											<div>
-												<h5>
-													<strong>
-														Calendrier pour les
-														tests{" "}
-													</strong>
-												</h5>{" "}
-											</div>
-										</div>
-										<div className="custom-calendar">
-											<Calendar
-												localizer={localizer}
-												events={myEventsList}
-												startAccessor="start"
-												endAccessor="end"
-												style={{
-													height: 400,
-													width: "100%",
-													backgroundColor: "white",
-													borderRadius: "15px",
-													padding: "2%",
-												}}
-												eventPropGetter={
-													eventStyleGetter
-												}
-												views={[Views.MONTH]}
-												defaultView={Views.MONTH}
-												messages={messages}
-											/>
+								<div style={{ paddingBottom: "18%" }}>
+									<div className="calendar-header">
+										<FaCalendarAlt />
+										<div>
+											<h5>
+												<strong>
+													Calendrier pour les tests{" "}
+												</strong>
+											</h5>
 										</div>
 									</div>
-								</>
+									<div className="custom-calendar">
+										<Calendar
+											localizer={localizer}
+											events={myEventsList}
+											startAccessor="start"
+											endAccessor="end"
+											style={{
+												height: 400,
+												width: "100%",
+												backgroundColor: "white",
+												borderRadius: "15px",
+												padding: "2%",
+											}}
+											eventPropGetter={eventStyleGetter}
+											views={[Views.MONTH]}
+											defaultView={Views.MONTH}
+											messages={messages}
+										/>
+									</div>
+								</div>
 							)}
 						</Col>
 					</Row>

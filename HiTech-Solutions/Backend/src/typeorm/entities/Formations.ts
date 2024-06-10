@@ -13,4 +13,6 @@ export class Formation {
 
   @Column({ nullable: true })
   photo: string;
+
+  
 }

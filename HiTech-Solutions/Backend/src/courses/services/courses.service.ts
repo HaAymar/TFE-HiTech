@@ -6,13 +6,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Course } from '../../typeorm/entities/Courses';
 import { CreationTest } from '../../typeorm/entities/CreationTest';
 import { Formation } from '../../typeorm/entities/Formations';
+import { Student } from '../../typeorm/entities/Student';
 import { StudentsFormation } from '../../typeorm/entities/StudentFormation';
 import { TeachersCourse } from '../../typeorm/entities/TeachCourses';
+import { Test } from '../../typeorm/entities/Test';
 import { User } from '../../typeorm/entities/User';
 
 @Injectable()
 export class CoursesService {
   constructor(
+    @InjectRepository(CreationTest)
+    private creationTestRepository: Repository<CreationTest>,
+    @InjectRepository(Student)
+    private studentRepository: Repository<Student>,
+    @InjectRepository(StudentsFormation)
+    private studentsFormationRepository: Repository<StudentsFormation>,
     @InjectRepository(Course)
     private courseRepository: Repository<Course>,
     @InjectRepository(TeachersCourse)
@@ -23,6 +31,8 @@ export class CoursesService {
     private usersRepository: Repository<User>,
     @InjectRepository(TeachersCourse)
     private teacherCoursesRepository: Repository<TeachersCourse>,
+    @InjectRepository(Test)
+    private testRepository: Repository<Test>,
     private connection: Connection,
     private readonly dataSource: DataSource,
   ) {}
@@ -37,6 +47,56 @@ export class CoursesService {
       .innerJoin('c.formation', 'f')
       .where('f.name = :formationName', { formationName })
       .getMany();
+  }
+
+  async findCoursesByStudentFormation(studentId: number): Promise<Course[]> {
+    const studentFormations = await this.studentsFormationRepository.find({
+      where: { student: { id: studentId } },
+      relations: ['formation'],
+    });
+
+    let courses: Course[] = [];
+    for (let stuf of studentFormations) {
+      const formationCourses = await this.courseRepository.find({
+        where: { formation: { id: stuf.formation.id } },
+      });
+      courses = courses.concat(formationCourses);
+    }
+
+    return courses;
+  }
+
+  async findAllTestsByStudentId(studentId: number): Promise<any[]> {
+    try {
+      const tests = await this.testRepository
+        .createQueryBuilder('test')
+        .leftJoinAndSelect('test.creationTest', 'creationTest')
+        .leftJoinAndSelect('creationTest.course', 'course')
+        .leftJoinAndSelect('creationTest.teacher', 'creationTeacher')
+        .leftJoinAndSelect('test.teacher', 'courseTeacher')
+        .where('test.student.id = :studentId', { studentId })
+        .orderBy('creationTest.dateTest', 'DESC')
+        .getMany();
+
+      return tests.map((test) => ({
+        testId: test.id,
+        courseId: test.creationTest.course.id,
+        courseName: test.creationTest.course.name,
+        testName: test.creationTest.name,
+        testDate: test.creationTest.dateTest,
+        description: test.creationTest.description,
+        cotation: test.creationTest.cotation,
+        validation: test.validation,
+        score: test.score,
+
+        teacherId: test.creationTest.teacher.id,
+
+        courseTeacherId: test.teacher.id,
+      }));
+    } catch (error) {
+      console.error('Failed to fetch tests:', error);
+      throw new Error('Error retrieving tests for student: ' + studentId);
+    }
   }
 
   async addCourseToFormation(
@@ -59,54 +119,11 @@ export class CoursesService {
     return savedCourse;
   }
 
-  // async findTeacherCourses(teacherId: number): Promise<Course[]> {
-  //   const courses = await this.courseRepository
-  //     .createQueryBuilder('course')
-  //     .innerJoinAndSelect('course.teacherCourses', 'teacherCourse')
-  //     .innerJoinAndSelect('teacherCourse.user', 'user')
-  //     .innerJoinAndSelect('course.formation', 'formation')
-  //     .where('user.id = :teacherId', { teacherId })
-  //     .andWhere('user.roleId = :roleId', { roleId: 2 })
-  //     .getMany();
-
-  //   return courses;
-  // }
-
-  // async findTeacherCourses(userId: number): Promise<any[]> {
-  //   const teacher = await this.usersRepository
-  //     .createQueryBuilder('user')
-  //     .leftJoinAndSelect('user.teachers', 'teacher')
-  //     .where('user.id = :userId', { userId })
-  //     .getOne();
-
-  //   if (!teacher || !teacher.teachers) {
-  //     throw new Error('Aucun enseignant trouvé pour cet utilisateur');
-  //   }
-  //   console.log(teacher);
-  //   const teacherCourses = await this.teacherCoursesRepository
-  //     .createQueryBuilder('teachersCourse')
-  //     .innerJoinAndSelect('teachersCourse.course', 'course')
-  //     .innerJoinAndSelect('course.formation', 'formation') // Joindre la formation à laquelle le cours appartient
-  //     .where('teachersCourse.teacher.id = :teacherId', {
-  //       teacherId: teacher.id,
-  //     })
-  //     .getMany();
-
-  //   // Puisque le résultat comprend des entités TeachersCourse, extrayez les parties nécessaires
-  //   return teacherCourses.map((tc) => ({
-  //     courseId: tc.course.id, // Supposant que votre entité Course a un champ id
-  //     courseName: tc.course.name, // Supposant que votre entité Course a un champ name
-  //     formationId: tc.course.formation.id, // Accéder à l'ID de la formation à travers la relation
-  //     formationName: tc.course.formation.name, // Supposant que votre entité Formation a un champ name
-  //   }));
-  // }
-
   async findTeacherCourses(userId: number): Promise<any[]> {
-    // Démarrage de la requête en utilisant l'entité 'User'
     const usersWithCourses = await this.usersRepository
       .createQueryBuilder('user')
-      .leftJoinAndSelect('user.teachers', 'teacher') // Assurez-vous que la relation est bien configurée
-      .leftJoinAndSelect('teacher.teachersCourses', 'teachersCourse') // Relation One-to-Many vers TeachersCourse
+      .leftJoinAndSelect('user.teachers', 'teacher')
+      .leftJoinAndSelect('teacher.teachersCourses', 'teachersCourse')
       .leftJoinAndSelect('teachersCourse.course', 'course')
       .leftJoinAndSelect('course.formation', 'formation')
       .where('user.id = :userId', { userId })

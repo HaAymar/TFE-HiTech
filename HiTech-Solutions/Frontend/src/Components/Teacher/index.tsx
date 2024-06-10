@@ -196,14 +196,12 @@ const FormulaireTest: React.FC = () => {
 
 	const findTestByCours = (courseId: number) => {
 		const cx = tests.filter((test) => test.course.id === courseId);
-		console.log("cc", courseId);
+		console.log("cc", cx);
 		return cx;
 	};
 
 	const coursesT = useRecoilValue(teacherCoursesState);
-	console.log("courses", coursesT);
 
-	console.log("teacherId", teacherId);
 	const selectedFormationCourses = coursesT.filter(
 		(course: any) => course.formationId === idFormation
 	);
