@@ -416,7 +416,7 @@ const CreationFormations: React.FC = () => {
 								<th
 									style={{
 										textAlign: "center",
-										width: "200px",
+										width: "220px",
 									}}
 								>
 									Titre
@@ -433,7 +433,7 @@ const CreationFormations: React.FC = () => {
 								<th
 									style={{
 										textAlign: "center",
-										width: "200px",
+										width: "230px",
 									}}
 								>
 									Cours
@@ -441,10 +441,10 @@ const CreationFormations: React.FC = () => {
 								<th
 									style={{
 										textAlign: "center",
-										width: "200px",
+										width: "150px",
 									}}
 								>
-									Actions
+									Outils
 								</th>
 							</tr>
 						</thead>
@@ -478,8 +478,8 @@ const CreationFormations: React.FC = () => {
 										{editingFormationId === formation.id ? (
 											<textarea
 												className="descripEdit"
-												rows={6}
-												cols={50}
+												rows={8}
+												cols={58}
 												value={editedDescription}
 												onChange={(e) =>
 													setEditedDescription(
@@ -488,7 +488,14 @@ const CreationFormations: React.FC = () => {
 												}
 											/>
 										) : (
-											formation.description
+											<div
+												style={{
+													maxHeight: "180px",
+													overflowY: "auto",
+												}}
+											>
+												{formation.description}
+											</div>
 										)}
 									</td>
 									<td style={{ textAlign: "center" }}>
