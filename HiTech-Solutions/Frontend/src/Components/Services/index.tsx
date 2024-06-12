@@ -18,13 +18,13 @@ const Services: React.FC = () => {
 
 	const selectImage = (formationName: string) => {
 		switch (formationName) {
-			case "Admin réseaux":
+			case "Tech PC et Réseaux":
 				return admin;
-			case "Dev web":
+			case "Dev Web":
 				return dev;
-			case "Eléctronique":
+			case "Initiation en IT":
 				return elec;
-			case "Télécom":
+			case "Helpdesk IT":
 				return telecom;
 			default:
 				return defaultImage;

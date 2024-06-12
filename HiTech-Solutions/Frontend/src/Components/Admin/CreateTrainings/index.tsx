@@ -361,21 +361,15 @@ const CreationFormations: React.FC = () => {
 			<div className="headerDashboard">
 				<div>
 					<h4>
-						<b>Gestion des formations</b>
+						<b>Gestionnaire des formations</b>
 					</h4>
-					<h6>Filtrer par : </h6>{" "}
-					<select
+					<h6
 						style={{
-							border: "none",
-							borderRadius: "5px",
-							padding: "4px",
-							borderColor: "#ccc",
+							fontFamily: "Arial, sans-serif",
 						}}
 					>
-						<option value="">Choisir une option</option>
-						<option value="option1">A</option>
-						<option value="option2">a</option>
-					</select>
+						La liste des formations existantes{" "}
+					</h6>{" "}
 				</div>
 				<p className="descripText">
 					Pour pouvoir ajouter une nouvelle formation ou un cours,

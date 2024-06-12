@@ -1,6 +1,4 @@
 .custom-card {
-	/* max-width: 300px;
-	max-height: 600px; */
 	margin: auto;
 }
 .read-more-link {
@@ -43,9 +41,7 @@
 }
 
 .card-description {
-	overflow: hidden;
-
-	/* text-overflow: ellipsis; */
+	overflow: auto;
 	max-height: 200px;
 }
 @media (max-width: 768px) {

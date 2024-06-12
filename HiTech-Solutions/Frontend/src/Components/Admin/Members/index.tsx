@@ -419,9 +419,10 @@ const MembersFilter: React.FC = () => {
 					</select>
 				</div>
 				<p className="descripText">
-					Pour pouvoir ajouter une nouvelle formation ou un cours,
-					cliquez sur les boutons qui se trouvent sur votre droite
-					selon votre choix.{" "}
+					Pour pouvoir ajouter un nouveau membre, cliquez sur le
+					bouton "Ajouter un membre" et suivez les instructions avant
+					de lui attribuer un rôle en cliquant sur le bouton "Ajouter
+					rôle".
 				</p>
 
 				<div className="addButton">

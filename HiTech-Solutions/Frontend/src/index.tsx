@@ -15,12 +15,21 @@ import Page404 from "./Components/Page 404/index";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import RoleDrawer from "./Components/RoleDrawer/index";
 import FormationService from "./Components/Services/index";
+import SupportIT from "./Components/SupportIT/index";
 import FormulerTest from "./Components/Teacher/index";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <Home />,
+	},
+	{
+		path: "/depannage",
+		element: <SupportIT />,
+	},
+	{
+		path: "/contact",
+		element: <SupportIT />,
 	},
 	{
 		path: "/formation",
