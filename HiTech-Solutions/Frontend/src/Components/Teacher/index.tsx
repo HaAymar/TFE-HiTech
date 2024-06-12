@@ -60,6 +60,7 @@ const FormulaireTest: React.FC = () => {
 	const [name, setName] = useState<string>("");
 	const [description, setDescription] = useState<string>("");
 	const [dateTest, setDateTest] = useState<string>("");
+	const today = new Date().toISOString().split("T")[0];
 	const [cotation, setCotation] = useState<number | "">("");
 
 	const handleCloseTestModal = () => {
@@ -480,6 +481,7 @@ const FormulaireTest: React.FC = () => {
 								type="date"
 								value={dateTest}
 								onChange={(e) => setDateTest(e.target.value)}
+								min={today}
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3">

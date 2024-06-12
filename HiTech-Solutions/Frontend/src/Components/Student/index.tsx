@@ -26,6 +26,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
 import { FaBookOpen } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
+import { MdOutlineRemove } from "react-icons/md";
 import { PiCertificateFill } from "react-icons/pi";
 import { useRecoilValue } from "recoil";
 
@@ -118,7 +119,7 @@ const Student: React.FC = () => {
 	}
 	const groupedTests = groupTestsByCourse(testsCours);
 	console.log("groupedTests", groupedTests);
-
+	const today = new Date().toISOString().split("T")[0];
 	const transformInterrogationsToEvents = (
 		allTestCourses: GroupedTests[]
 	): CourseEvent[] => {
@@ -517,25 +518,34 @@ const Student: React.FC = () => {
 														md={9}
 														className="mb-4"
 													>
-														<h5>
+														<h5 key={index}>
 															<strong>
 																{
 																	evaluation.testName
 																}
 															</strong>{" "}
-															{evaluation.validation ===
-															"Yes" ? (
+															{new Date(
+																evaluation.testDate
+															) >
+															new Date(today) ? (
+																<MdOutlineRemove
+																	style={{
+																		color: "grey",
+																	}}
+																/> // Si la date n'est pas encore arrivée
+															) : evaluation.validation ===
+															  "Yes" ? (
 																<FaCheck
 																	style={{
 																		color: "green",
 																	}}
-																/>
+																/> // Si validation est "Yes"
 															) : (
 																<AiOutlineClose
 																	style={{
 																		color: "red",
 																	}}
-																/>
+																/> // Si validation est "No"
 															)}
 														</h5>
 														<p>
