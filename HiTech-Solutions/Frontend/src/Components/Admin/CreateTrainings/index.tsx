@@ -241,6 +241,7 @@ const CreationFormations: React.FC = () => {
 
 			if (response.status === 201) {
 				setFormations((prev) => [...prev, response.data]);
+				window.location.reload();
 			}
 		} catch (error) {
 			console.error("Error adding training", error);
