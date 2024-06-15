@@ -19,7 +19,7 @@ async function bootstrap() {
   const corsOptions = {
     // origin: [process.env.SITE_URL, 'http://localhost:3000'],
     origin: true,
-    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   };

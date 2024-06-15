@@ -99,7 +99,9 @@ const LoginPage: React.FC = () => {
 				<img src={Logo} alt="Logo HiTech-Solutions" />
 			</div>
 			<Container className="ContLogin">
-				<h2 className="mb-4 text-center">Connexion</h2>
+				<h2 className="mb-4 text-center" style={{ color: "white" }}>
+					Connexion
+				</h2>
 				<div className="d-flex justify-content-center">
 					<Form onSubmit={handleLogin}>
 						<Form.Group className="mb-4">

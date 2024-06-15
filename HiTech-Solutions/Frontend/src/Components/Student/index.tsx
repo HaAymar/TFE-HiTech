@@ -532,20 +532,20 @@ const Student: React.FC = () => {
 																	style={{
 																		color: "grey",
 																	}}
-																/> // Si la date n'est pas encore arrivée
+																/>
 															) : evaluation.validation ===
 															  "Yes" ? (
 																<FaCheck
 																	style={{
 																		color: "green",
 																	}}
-																/> // Si validation est "Yes"
+																/>
 															) : (
 																<AiOutlineClose
 																	style={{
 																		color: "red",
 																	}}
-																/> // Si validation est "No"
+																/>
 															)}
 														</h5>
 														<p>
@@ -558,6 +558,14 @@ const Student: React.FC = () => {
 															{
 																evaluation.testDate
 															}
+														</p>
+														<p>
+															Points obtenu:{" "}
+															<strong>
+																{
+																	evaluation.score
+																}
+															</strong>
 														</p>
 													</Col>
 												)

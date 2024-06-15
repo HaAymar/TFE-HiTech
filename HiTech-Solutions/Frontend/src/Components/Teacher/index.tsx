@@ -445,7 +445,7 @@ const FormulaireTest: React.FC = () => {
 					<Modal.Title>
 						{currentTestId
 							? "Modifier un Test"
-							: "Ajouter un Nouveau Test"}
+							: "Ajouter un nouveau Test"}
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -485,7 +485,7 @@ const FormulaireTest: React.FC = () => {
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3">
-							<Form.Label>Cotation de cotation</Form.Label>
+							<Form.Label>Cotation </Form.Label>
 							<Form.Control
 								type="number"
 								value={cotation}

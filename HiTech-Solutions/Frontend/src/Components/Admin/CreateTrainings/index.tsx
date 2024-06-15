@@ -266,7 +266,7 @@ const CreationFormations: React.FC = () => {
 				(formation) => formation.id !== id
 			);
 			setFormations(updatedFormations);
-
+			window.location.reload();
 			console.log(`Formation with id ${id} was deleted successfully.`);
 
 			handleCloseModal();

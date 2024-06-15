@@ -17,6 +17,7 @@ import RoleDrawer from "./Components/RoleDrawer/index";
 import FormationService from "./Components/Services/index";
 import SupportIT from "./Components/SupportIT/index";
 import FormulerTest from "./Components/Teacher/index";
+import Validation from "./Components/Teacher/Validation/index";
 
 const router = createBrowserRouter([
 	{
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
 			{
 				path: "teacher",
 				element: <FormulerTest />,
+			},
+			{
+				path: "etudiants",
+				element: <Validation />,
 			},
 		],
 	},

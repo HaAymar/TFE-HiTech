@@ -51,7 +51,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 	const [displayFormation, setDisplayFormation] = useState(false);
 	const [, setDisplayTest] = useState(false);
 	const [, setDisplayTroubleshooting] = useState(false);
-
+	const [, setDisplayStudent] = useState(false);
 	const setCollectId = useSetRecoilState(collectTestState);
 	const name = useRecoilValue(userNameState);
 	const roleUser = useRecoilValue(userRoleState);
@@ -73,6 +73,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 			setDisplayFormation(false);
 			setDisplayTroubleshooting(false);
 			setDisplayTest(true);
+			setDisplayStudent(false);
 			navigateWithQuery("/drawer/teacher");
 		});
 	};
@@ -83,7 +84,17 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 			setDisplayFormation(false);
 			setDisplayTroubleshooting(true);
 			setDisplayTest(false);
+			setDisplayStudent(false);
 			navigateWithQuery("/drawer/members");
+		});
+	};
+	const toogleStudent = () => {
+		startTransition(() => {
+			setDisplayFormation(false);
+			setDisplayTroubleshooting(false);
+			setDisplayTest(false);
+			setDisplayStudent(true);
+			navigateWithQuery("/drawer/etudiants");
 		});
 	};
 
@@ -240,12 +251,19 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 										{role === "teacher" && (
 											<>
 												<div className="members">
-													<div>
+													<div
+														onClick={toogleStudent}
+													>
 														<CDBSidebarMenuItem
 															icon="user"
 															className="hoverColor"
 														>
-															Students{" "}
+															<Link
+																style={{}}
+																to={`/drawer/etudiants`}
+															>
+																Etudiants{" "}
+															</Link>
 														</CDBSidebarMenuItem>
 													</div>
 												</div>
@@ -292,12 +310,14 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 																			<Link
 																				to={`/drawer/teacher`}
 																				style={{
-																					color: "rgb(158, 156, 156)",
+																					color: "rgb(194, 188, 188)",
 																				}}
 																			>
-																				{
-																					formation.name
-																				}
+																				<strong>
+																					{
+																						formation.name
+																					}
+																				</strong>
 																			</Link>
 																		</CDBSidebarMenuItem>
 																	</div>

@@ -1,0 +1,131 @@
+.contentCard {
+	height: 400px;
+	overflow-y: auto;
+}
+
+.formStyle {
+	padding: 20px;
+}
+
+body {
+	background-color: #f4f4f9;
+	font-family: Arial, sans-serif;
+}
+
+.container-custom {
+	width: 80%;
+	background-color: #dadde0;
+	border-radius: 15px;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+	justify-content: center;
+}
+
+h2 {
+	text-align: center;
+	color: #314353;
+}
+
+h4,
+h5 {
+	color: #314353;
+}
+
+.contentCard {
+	margin-top: 20px;
+}
+
+.cardValidation {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	margin-bottom: 20px;
+	padding: 20px;
+}
+
+.formStyle {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.courseRow {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 15px;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+}
+
+.courseTitle {
+	flex: 1;
+	font-size: 1.1em;
+	font-weight: bold;
+	color: #314353;
+}
+
+.testCheckboxes {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.btn-submit {
+	background-color: #314353;
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	align-self: flex-start;
+}
+
+.btn-submit:hover {
+	background-color: #415a77;
+}
+
+.success-checkbox,
+.danger-checkbox {
+	cursor: not-allowed;
+}
+
+.success-checkbox[disabled]:checked + label,
+.danger-checkbox[disabled]:checked + label {
+	color: #888;
+}
+.title {
+	color: #333;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.form-group-custom {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.form-group-custom label {
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.custom-select {
+	border: 2px solid #314353;
+	border: none;
+	border-radius: 15px;
+	padding: 8px;
+	font-size: 16px;
+	color: #333;
+	background-color: #f4f4f9;
+	transition: all 0.3s ease;
+}
+
+.custom-select:focus {
+	border-color: #314353;
+	outline: none;
+	box-shadow: 0 0 5px #314353;
+}
