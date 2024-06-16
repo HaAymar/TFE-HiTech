@@ -31,7 +31,6 @@ const StudentValidation: React.FC = () => {
 	const [students, setStudents] = useState<StudentTestsDTO[]>([]);
 	const [selectedCourse, setSelectedCourse] = useState<string>("");
 	const [isEditingEnabled, setIsEditingEnabled] = useState<boolean>(false);
-	const [point, setPoint] = useState<number>(0);
 
 	useEffect(() => {
 		setStudents(studentsTest);
@@ -66,7 +65,7 @@ const StudentValidation: React.FC = () => {
 			score: newPoints,
 			validation: newValidation,
 		};
-		setPoint(newPoints);
+
 		setStudents(updatedStudents);
 
 		const testId =
