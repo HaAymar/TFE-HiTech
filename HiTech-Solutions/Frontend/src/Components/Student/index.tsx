@@ -30,7 +30,7 @@ import { MdOutlineRemove } from "react-icons/md";
 import { PiCertificateFill } from "react-icons/pi";
 import { useRecoilValue } from "recoil";
 
-import Fof from "../../Assets/Student/profile.jpg";
+import Profile from "../../Assets/Student/profile.jpg";
 import NavBar from "../Navbar/NavBarDrawer/index";
 import { fetchAllCourseTest } from "../Stores/allCourseTestState";
 import { fetchCourseStudent } from "../Stores/formationStudentCourse";
@@ -232,7 +232,7 @@ const Student: React.FC = () => {
 						<Col md={3} className=" mb-3 profile-column">
 							<div className="profile-header">
 								<Image
-									src={Fof}
+									src={Profile}
 									roundedCircle
 									style={{
 										width: "100px",
@@ -256,7 +256,7 @@ const Student: React.FC = () => {
 										textAlign: "center",
 									}}
 								>
-									Formation en Tech PC et Réseaux
+									Formation en Helpdesk IT
 								</p>
 								<div className="certificate-section">
 									<PiCertificateFill className="certificate-icon" />

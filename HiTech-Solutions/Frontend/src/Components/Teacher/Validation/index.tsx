@@ -31,6 +31,7 @@ const StudentValidation: React.FC = () => {
 	const [students, setStudents] = useState<StudentTestsDTO[]>([]);
 	const [selectedCourse, setSelectedCourse] = useState<string>("");
 	const [isEditingEnabled, setIsEditingEnabled] = useState<boolean>(false);
+	const [point, setPoint] = useState<number>(0);
 
 	useEffect(() => {
 		setStudents(studentsTest);
@@ -61,7 +62,11 @@ const StudentValidation: React.FC = () => {
 		updatedStudents[studentIndex].courses[courseIndex].tests[
 			testIndex
 		].points = newPoints;
-
+		const validate = {
+			score: newPoints,
+			validation: newValidation,
+		};
+		setPoint(newPoints);
 		setStudents(updatedStudents);
 
 		const testId =
@@ -69,15 +74,11 @@ const StudentValidation: React.FC = () => {
 				.testId;
 
 		try {
-			await axios.patch(
-				`${BE_URL}tests/${testId}`,
-				{ validation: newValidation, points: newPoints },
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
+			await axios.patch(`${BE_URL}tests/${testId}`, validate, {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 
 			console.log(
 				`Validation and points updated successfully for test id ${testId}`

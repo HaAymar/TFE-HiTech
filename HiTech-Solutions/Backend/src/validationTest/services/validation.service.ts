@@ -84,7 +84,7 @@ export class ValidationService {
     if (!test) {
       throw new NotFoundException(`Test with ID ${testId} not found`);
     }
-
+    test.score = updateValidationDTO.score;
     test.validation = updateValidationDTO.validation;
     return this.testRepository.save(test);
   }
