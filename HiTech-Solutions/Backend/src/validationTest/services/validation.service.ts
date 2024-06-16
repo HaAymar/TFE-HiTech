@@ -1,6 +1,10 @@
 import { Repository } from 'typeorm';
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Test } from '../../typeorm/entities/Test';
@@ -21,6 +25,7 @@ export interface CourseTestsDTO {
 export interface StudentTestsDTO {
   studentName: string;
   studentSurname: string;
+  studentFormation?: string;
   courses: CourseTestsDTO[];
 }
 
@@ -32,47 +37,60 @@ export class ValidationService {
   ) {}
 
   async getAllTests(): Promise<StudentTestsDTO[]> {
-    const tests = await this.testRepository.find({
-      relations: [
-        'student',
-        'student.user',
-        'creationTest',
-        'creationTest.course',
-      ],
-    });
-
-    const studentMap: { [key: string]: StudentTestsDTO } = {};
-
-    tests.forEach((test) => {
-      const studentKey = `${test.student.user.name} ${test.student.user.surname}`;
-      const courseKey = test.creationTest.course.name;
-
-      if (!studentMap[studentKey]) {
-        studentMap[studentKey] = {
-          studentName: test.student.user.name,
-          studentSurname: test.student.user.surname,
-          courses: [],
-        };
-      }
-
-      let course = studentMap[studentKey].courses.find(
-        (c) => c.courseName === courseKey,
-      );
-
-      if (!course) {
-        course = { courseName: courseKey, tests: [] };
-        studentMap[studentKey].courses.push(course);
-      }
-
-      course.tests.push({
-        testId: test.id,
-        testName: test.creationTest.name,
-        validation: test.validation,
-        points: test.score,
+    try {
+      const tests = await this.testRepository.find({
+        relations: [
+          'student',
+          'student.user',
+          'creationTest',
+          'creationTest.course',
+          'student.studentsFormations',
+          'student.studentsFormations.formation',
+        ],
       });
-    });
 
-    return Object.values(studentMap);
+      const studentMap: { [key: string]: StudentTestsDTO } = {};
+
+      tests.forEach((test) => {
+        const studentKey = `${test.student.user.name} ${test.student.user.surname}`;
+        const courseKey = test.creationTest.course.name;
+
+        if (!studentMap[studentKey]) {
+          const studentFormation =
+            test.student.studentsFormations.length > 0
+              ? test.student.studentsFormations[0].formation.name
+              : undefined;
+
+          studentMap[studentKey] = {
+            studentName: test.student.user.name,
+            studentSurname: test.student.user.surname,
+            studentFormation,
+            courses: [],
+          };
+        }
+
+        let course = studentMap[studentKey].courses.find(
+          (c) => c.courseName === courseKey,
+        );
+
+        if (!course) {
+          course = { courseName: courseKey, tests: [] };
+          studentMap[studentKey].courses.push(course);
+        }
+
+        course.tests.push({
+          testId: test.id,
+          testName: test.creationTest.name,
+          validation: test.validation,
+          points: test.score,
+        });
+      });
+
+      return Object.values(studentMap);
+    } catch (error) {
+      console.error('Error fetching tests:', error);
+      throw new InternalServerErrorException('Failed to fetch tests');
+    }
   }
 
   async updateValidation(

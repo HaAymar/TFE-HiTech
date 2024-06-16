@@ -23,6 +23,7 @@ export interface CourseTestsDTO {
 export interface StudentTestsDTO {
 	studentName: string;
 	studentSurname: string;
+	studentFormation: string;
 	courses: CourseTestsDTO[];
 }
 
@@ -124,7 +125,7 @@ const StudentValidation: React.FC = () => {
 					<h2 className="title">Validation des étudiants</h2>
 					<div className="form-group-custom">
 						<label htmlFor="course-select">
-							Trier par formation :
+							<h5>Trier par formation :</h5>
 						</label>
 						<select
 							id="course-select"
@@ -162,6 +163,19 @@ const StudentValidation: React.FC = () => {
 											{student.studentName}{" "}
 											{student.studentSurname}
 										</strong>
+										<span
+											style={{
+												float: "right",
+												fontFamily:
+													"Roboto, Arial, sans-serif",
+												color: "#40b9af",
+											}}
+										>
+											<strong>
+												Formation :{" "}
+												{student.studentFormation}
+											</strong>
+										</span>
 									</h4>
 									{student.courses.map(
 										(course, courseIndex) => (
