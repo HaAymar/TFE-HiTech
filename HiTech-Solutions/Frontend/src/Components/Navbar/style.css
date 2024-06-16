@@ -7,3 +7,20 @@
 	backdrop-filter: blur(10px);
 	padding-left: 20px;
 }
+.search-bar {
+	min-width: 350px;
+	border-radius: 20px;
+	border: none;
+	background-color: #ffffffd2;
+}
+
+@media (max-width: 768px) {
+	.search-bar {
+		min-width: 100%;
+		width: 100%;
+	}
+}
+
+.navbar-nav {
+	align-items: center;
+}

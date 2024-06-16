@@ -140,10 +140,9 @@ const NavBar: React.FC = () => {
 						<Form.Control
 							type="search"
 							placeholder="Recherche"
-							className="me-3 mr-100 w-75"
+							className="me-3 mr-100 w-75 search-bar"
 							aria-label="Search"
 							style={{
-								minWidth: "350px",
 								borderRadius: "20px",
 								border: "none",
 								backgroundColor: "#ffffffd2",
