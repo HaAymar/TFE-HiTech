@@ -204,12 +204,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 																}
 															>
 																<CDBSidebarMenuItem className="hoverColor1">
-																	<Link
-																		style={{
-																			color: "rgb(158, 156, 156)",
-																		}}
-																		to="/drawer/formations"
-																	>
+																	<Link to="/drawer/formations">
 																		Formations
 																	</Link>
 																</CDBSidebarMenuItem>
@@ -309,9 +304,6 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role }) => {
 																		<CDBSidebarMenuItem className="hoverColor1">
 																			<Link
 																				to={`/drawer/teacher`}
-																				style={{
-																					color: "rgb(194, 188, 188)",
-																				}}
 																			>
 																				<strong>
 																					{
