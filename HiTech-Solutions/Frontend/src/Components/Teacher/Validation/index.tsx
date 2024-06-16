@@ -36,8 +36,6 @@ const StudentValidation: React.FC = () => {
 		setStudents(studentsTest);
 	}, [studentsTest]);
 
-	// ...
-
 	const handleEditValidation = async (
 		studentIndex: number,
 		courseIndex: number,
